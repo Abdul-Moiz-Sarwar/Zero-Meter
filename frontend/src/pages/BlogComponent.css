@@ -1,0 +1,22 @@
+/* BlogComponent.css */
+.blog-container {
+    display: flex; 
+    margin-bottom: 20px; 
+  }
+  
+  .image-container {
+    width: 300px; 
+    margin-right: 20px;
+    margin-left: 20px;
+    margin-top: 40px;
+  }
+  
+  .image-container img {
+    width: 100%;
+    height: auto; 
+  }
+  
+  .content-container {
+    flex: 1; 
+  }
+  

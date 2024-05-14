@@ -1,0 +1,29 @@
+.individual-blog {
+    margin: 20px auto; 
+    max-width: 800px; 
+  }
+  
+  .blog-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .blog-image {
+    display: block;
+    margin: 20px auto; 
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .author-date {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; 
+  }
+  
+  .author,
+  .date {
+    font-style: italic;
+  }
+  

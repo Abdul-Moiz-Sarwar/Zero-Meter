@@ -1,42 +1,144 @@
-#root {
-  max-width: 1280px;
+/* App.css */
+
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+}
+
+.navbar {
+  flex: 0 0 auto; 
+}
+
+.container {
+  max-width: 1200px; 
   margin: 0 auto;
-  padding: 2rem;
+  padding: 20px; 
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+
+.sidebar {
+  position: fixed;
+  left: -200px; 
+  top: 55px;
+  bottom: 0;
+  width: 200px;
+  background-color: #282c34;
+  transition: left 0.3s ease; 
+}
+
+.sidebar.open {
+  left: 0; 
+}
+
+.toggle-button {
+  position: absolute;
+  top: 0;
+  right: -30px;
+  background: none;
+  border: none;
+  color: rgb(20, 20, 20);
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.sidebar-nav {
+  margin-top: 20px;
+  padding: 0;
+  list-style-type: none;
+}
+
+.sidebar-nav li {
+  margin-bottom: 10px;
+}
+
+.sidebar-nav li a {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar-nav li a:hover {
+  background-color: #555;
+}
+
+.main-content {
+  flex: 1; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 0; 
+}
+
+.why-choose-us {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.why-choose-us-title {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-@keyframes logo-spin {
+.why-choose-us-list {
+  list-style: none;
+  padding: 0;
+}
+
+.why-choose-us-list li {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.why-choose-us-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+
+.welcome-text {
+  font-size: 48px;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+}
+
+@keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
   }
   to {
     transform: rotate(360deg);
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }

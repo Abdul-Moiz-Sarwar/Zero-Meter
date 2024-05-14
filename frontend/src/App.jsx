@@ -1,35 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Blogs from './pages/Blogs';
+import AboutUs from './pages/AboutUs'
+import IndividualBlogPage from './pages/IndividualBlogPage'; 
+import Footer from './components/Footer';
+import LandingPage from './pages/landingpage';
+import blog1 from './pages/images/blog1.png';
+import blog2 from './pages/images/blog2.jpg';
+import blog3 from './pages/images/blog3.jpg';
 import './App.css'
+import ContactUs from './pages/ContactUs';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+    const blogs = [
+        { 
+          id: 1, 
+          title: 'Are New Cars Worth Buying?', 
+          author: 'John Doe', 
+          date: 'May 1, 2024', 
+          summary: 'In this post, we evaluate the pros and cons of buying new cars than second-hand ones. Find out more!',
+          image: blog1,
+          content: `
+            <p>Hello Readers!</p>
+            <p>There are some amazing new cars in Pakistan, and today we will be looking into the top 5 of them, so gear up to join us on this journey! Authored by John Doe, this thought-provoking piece navigates through the myriad of considerations that consumers face when contemplating a new automobile purchase. Through a balanced analysis of factors such as depreciation rates, warranty coverage, and technological advancements, the article aims to equip readers with the knowledge necessary to make informed decisions. By exploring both the advantages and drawbacks of opting for a new vehicle over a used alternative, the narrative provides readers with a comprehensive overview of the new car market. With its insightful commentary and pragmatic approach, "Are New Cars Worth Buying?" serves as an indispensable guide for individuals navigating the complex terrain of automotive purchasing.</p>
+            <p>Happy Buying!</p>
+          `,
+        },
+        { 
+            id: 2, 
+            title: 'Top 5 New Cars In Pakistan', 
+            author: 'Jane Smith', 
+            date: 'May 5, 2024', 
+            summary: 'Find out all about the top 5 new cars trending in Pakistan. Read more to know all details!',
+            image: blog2, 
+            content: `
+            <p>Hello Readers!</p>
+            <p>There are some amazing new cars in Pakistan, and today we will be looking into the top 5 of them, so gear up to join us on this journey! Authored by John Doe, this thought-provoking piece navigates through the myriad of considerations that consumers face when contemplating a new automobile purchase. Through a balanced analysis of factors such as depreciation rates, warranty coverage, and technological advancements, the article aims to equip readers with the knowledge necessary to make informed decisions. By exploring both the advantages and drawbacks of opting for a new vehicle over a used alternative, the narrative provides readers with a comprehensive overview of the new car market. With its insightful commentary and pragmatic approach, "Are New Cars Worth Buying?" serves as an indispensable guide for individuals navigating the complex terrain of automotive purchasing.</p>
+            <p>Happy Buying!</p>
+          `,
+          }, { 
+            id: 3, 
+            title: 'Upcoming Electric Cars of Tomorrow', 
+            author: 'Jane Smith', 
+            date: 'May 15, 2024', 
+            summary: 'Dive into a world of electric cars as we discuss all about it in this article!',
+            image: blog3, 
+            content: `
+            <p>Hello Readers!</p>
+            <p>There are some amazing new cars in Pakistan, and today we will be looking into the top 5 of them, so gear up to join us on this journey! Authored by John Doe, this thought-provoking piece navigates through the myriad of considerations that consumers face when contemplating a new automobile purchase. Through a balanced analysis of factors such as depreciation rates, warranty coverage, and technological advancements, the article aims to equip readers with the knowledge necessary to make informed decisions. By exploring both the advantages and drawbacks of opting for a new vehicle over a used alternative, the narrative provides readers with a comprehensive overview of the new car market. With its insightful commentary and pragmatic approach, "Are New Cars Worth Buying?" serves as an indispensable guide for individuals navigating the complex terrain of automotive purchasing.</p>
+            <p>Happy Buying!</p>
+          `,
+        },
+      ];
+      
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/blogs" element={<Blogs />} />
+          <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} />} /> 
+          <Route path="/about" element={<AboutUs />} /> 
+          <Route path="/contact" element={<ContactUs />} /> 
+        </Routes>
+        <Footer />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;
