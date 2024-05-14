@@ -11,6 +11,8 @@ import blog2 from './pages/images/blog2.jpg';
 import blog3 from './pages/images/blog3.jpg';
 import './App.css'
 import ContactUs from './pages/ContactUs';
+import SignUp from './pages/SignUpPage'
+import LogIn from './pages/LogInPage'
 
 function App() {
     const blogs = [
@@ -64,6 +66,8 @@ function App() {
           <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} />} /> 
           <Route path="/about" element={<AboutUs />} /> 
           <Route path="/contact" element={<ContactUs />} /> 
+          <Route path="/signup" element={<SignUp />} /> 
+          <Route path="/login" element={<LogIn />} /> 
         </Routes>
         <Footer />
       </div>

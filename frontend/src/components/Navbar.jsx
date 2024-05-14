@@ -29,6 +29,12 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/contact">Contact Us</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/signup">Sign Up</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/login">Log In</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
                     </ul>
                 </div>
             </div>
