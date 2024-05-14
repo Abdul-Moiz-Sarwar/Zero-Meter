@@ -25,7 +25,7 @@ const SignupForm = () => {
 
     return (
         <div className="container mt-5">
-            <form onSubmit={handleSubmit}>
+s            <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="username" className="form-label">Username</label>
                     <input type="text" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} placeholder="Enter your username" required />

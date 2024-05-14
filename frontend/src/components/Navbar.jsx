@@ -18,7 +18,7 @@ const Navbar = () => {
                             <Link className="nav-link" to="/">Home</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="#">Vehicles</Link>
+                            <Link className="nav-link" to="/vehicles">Vehicles</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/blogs">Blogs</Link>
@@ -34,6 +34,12 @@ const Navbar = () => {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/login">Log In</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/dealerprofile">Dealer Profile</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/invoices">Invoices</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
                     </ul>
                 </div>
