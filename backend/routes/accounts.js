@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const user = require("../controllers/accounts");
+const account = require("../controllers/accounts");
 
-router.post("/signup", user.signup);
-router.post("/login", user.login);
-router.get("/refresh", user.refreshToken, user.verifyRefresh);
-router.post("/logout", user.verifyToken, user.logout);
-router.get("/getUser",user.verifyToken, user.getUser)
+router.post("/signup", account.signup);
+router.post("/login", account.login);
+router.get("/refresh", account.refreshToken, account.verifyRefresh);
+router.post("/logout", account.verifyToken, account.logout);
+router.get("/getUser",account.verifyToken, account.getUser)
 module.exports = router;

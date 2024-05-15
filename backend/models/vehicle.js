@@ -4,16 +4,16 @@ const Schema = mongoose.Schema;
 const Model = mongoose.model;
 
 const VehicleSchema = new Schema({
+    dealership:{
+        type: Schema.ObjectId,
+        required: true,
+    },
     testdrive: {
         type: Boolean,
         required: true
     },
-    status: {
+    status: { //sold, unsold
         type: String,
-        required: true
-    },
-    datesold: {
-        type: Date,
         required: true
     },
     buyprice: {
@@ -24,10 +24,46 @@ const VehicleSchema = new Schema({
         type: Number,
         required: true
     },
+    datesold: {
+        type: Date,
+        required: true
+    },
     datecreated: {
         type: Date,
         required: true
-    }
+    },
+    type: { //bike, car
+        type: String,
+        required: true
+    },
+    company: {
+        type: String,
+        required: true
+    },
+    model: {
+        type: String,
+        required: true
+    },
+    varient: {
+        type: String,
+        required: true
+    },
+    year: {
+        type: Number,
+        required: true
+    },
+    power: {
+        type: Number,
+        required: true
+    },
+    color: {
+        type: String,
+        required: true
+    },
+    mileage: {
+        type: Number,
+        required: true
+    },
 });
 
 const vehicle = new Model('Vehicle', VehicleSchema)

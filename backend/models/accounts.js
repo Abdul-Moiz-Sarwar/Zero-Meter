@@ -31,7 +31,7 @@ const userSchema = new Schema({
         required: true,
         minlength: 6
     },
-    type: {//user, admin, biller, ia
+    type: {//user, admin, dealer
         type : String,
         required: true
     },

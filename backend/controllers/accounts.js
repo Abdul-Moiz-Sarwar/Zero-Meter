@@ -3,6 +3,63 @@ const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
 const JWT_SECRET_KEY = "3nLp$JKl@1oP#9jKq!5&7bFg$S@%h2D"
 
+
+const login = async (req, res) => {
+    const { email, password } = req.body;
+
+    //check if data is complete
+    const requiredFields = ['email','password']
+    const missingFields = requiredFields.filter(field => !(field in req.body));
+    if(missingFields.length > 0){
+        return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
+    }
+    
+    let existingUser;
+    try {
+        existingUser = await Accounts.User.findOne({email: email});
+    } catch (err) {
+        console.log(err);
+    }
+    if (!existingUser) {
+        return res.status(400).json({message: "User not found, Please sign up."})
+    }
+    else{
+        if (existingUser.status == "blocked") {
+            return res.status(400).json({message: "Your account is blocked please contact our support."})
+        }
+    }
+
+    const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
+    if(!isPasswordCorrect){
+        return res.status(400).json({message: "Invaild Email/Password"})
+    }
+    if (existingUser.dealership) {
+        try {
+            const dealer = await Accounts.Dealership.findOne({ _id: existingUser.dealership._id, status: "verified" });
+            if (!dealer) {
+                return res.status(400).json({ message: "Dealership not verified." });
+            }
+        } catch (err) {
+            console.log(err);
+            return res.status(500).json({ message: "Internal server error" });
+        }
+    }
+
+    const token = jwt.sign({id: existingUser._id}, JWT_SECRET_KEY,{
+        expiresIn: "1hr"
+    });
+    if (req.cookies[`${existingUser._id}`]) {
+        req.cookies[`${existingUser._id}`] = ""
+    }
+    res.cookie(String(existingUser._id), token, {
+        path:"/",
+        expires: new Date(Date.now() + 1000 * 30 * 3600),
+        httpOnly: true,
+        sameSite: "lax",
+    })
+    return res.status(200).json({message: "Successfully Logged In", user: existingUser, token});
+}
+
 const signup = async (req,res) => {
     const { username, email, password, type, phone, dealership, registration, cnic } = req.body;
 
@@ -177,7 +234,7 @@ const signup = async (req,res) => {
             email: req.body.email,
             phone: req.body.phone,
             cnic: req.body.cnic,
-            type: "admin",
+            type: "dealer",
             address: req.body.address,
             city: req.body.city,
             country: req.body.country,
@@ -198,64 +255,7 @@ const signup = async (req,res) => {
     }
 }
 
-const login = async (req, res) => {
-    const { email, password } = req.body;
-
-    //check if data is complete
-    const requiredFields = ['email','password']
-    const missingFields = requiredFields.filter(field => !(field in req.body));
-    if(missingFields.length > 0){
-        return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
-    }
-    
-    let existingUser;
-    try {
-        existingUser = await Accounts.User.findOne({email: email});
-    } catch (err) {
-        console.log(err);
-    }
-    if (!existingUser) {
-        return res.status(400).json({message: "User not found, Please sign up."})
-    }
-    else{
-        if (existingUser.status == "blocked") {
-            return res.status(400).json({message: "Your account is blocked please contact our support."})
-        }
-    }
-
-    const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
-    if(!isPasswordCorrect){
-        return res.status(400).json({message: "Invaild Email/Password"})
-    }
-    if(existingUser.dealership){
-        try{
-            dealer = Accounts.Dealership.findOne({name:dealership})
-            if(dealer.status == "unverified"){
-                return res.status(400).json({message:"Your Dealership is not yet Verified"})
-            }
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-
-    const token = jwt.sign({id: existingUser._id}, JWT_SECRET_KEY,{
-        expiresIn: "35s"
-    });
-    if (req.cookies[`${existingUser._id}`]) {
-        req.cookies[`${existingUser._id}`] = ""
-    }
-    res.cookie(String(existingUser._id), token, {
-        path:"/",
-        expires: new Date(Date.now() + 1000 * 30),
-        httpOnly: true,
-        sameSite: "lax",
-    })
-    return res.status(200).json({message: "Successfully Logged In", user: existingUser, token});
-}
-
-const verifyToken = (req,res,next) => {   
-        
+const verifyToken = (req, res, next) => {
     const cookies = req.headers.cookie;
     if (!cookies) {
         return res.status(404).json({ message: "Cookies not found" });
@@ -264,16 +264,14 @@ const verifyToken = (req,res,next) => {
     if (!token) {
         return res.status(404).json({ message: "Token not found" });
     }
-    jwt.verify(String(token), JWT_SECRET_KEY, (err,user) => {
-        if (err){
-            return res.status(400).json({message: "Invalid Token"})
+    jwt.verify(String(token), JWT_SECRET_KEY, (err, user) => {
+        if (err) {
+            return res.status(400).json({ message: "Invalid Token" });
         }
-        console.log(user.id);
         req.id = user.id;
+        next();
     });
-    console.log("verified successfully")
-    next();
-};
+}
 
 const verifyRefresh = (req,res) => {   
         
@@ -289,11 +287,10 @@ const verifyRefresh = (req,res) => {
         if (err){
             return res.status(400).json({message: "Invalid Token"})
         }
-        console.log(user.id);
         req.id = user.id;
     });
     return res.status(200).json({ message: "Token Refreshed and Verified Successfully" });
-};
+}
 
 const refreshToken = (req,res,next) => {
     
@@ -314,7 +311,7 @@ const refreshToken = (req,res,next) => {
         req.cookies[`${user.id}`] = "";
 
         const token = jwt.sign({id: user.id}, JWT_SECRET_KEY, {
-            expiresIn: "35s"
+            expiresIn: "1hr"
         });
         console.log("Re-generated Token\n", token);
         res.cookie(String(user.id), token, {
@@ -357,6 +354,22 @@ const getUser = async(req, res) => {
         return res.status(404).json({message: "User not found"})
     }
     return res.status(200).json({user});
+}
+
+const isDealer = (req, res, next) => {
+    let user;
+    try{
+        user = Accounts.User.findById(req.id, "-password");
+    } catch (err) {
+        return new Error(err)
+    }
+    if (!user) {
+        return res.status(404).json({message: "User not found"})
+    }
+    if (user.type == "dealer"){
+        next()
+    }
+    return res.status(403).json("Unauthorized Access");
 }
 
 const isAdmin = (req, res, next) => {
@@ -434,3 +447,4 @@ module.exports.isAdmin = isAdmin;
 module.exports.isUser = isUser;
 module.exports.isBiller = isBiller;
 module.exports.isIA = isIA;
+module.exports.isDealer = isDealer;
