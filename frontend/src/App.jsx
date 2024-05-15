@@ -1,5 +1,5 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Blogs from './pages/Blogs';
 import AboutUs from './pages/AboutUs';
@@ -21,7 +21,13 @@ import image3 from './pages/images/fordcar.jpg';
 import blog1 from './pages/images/blog1.png';
 import blog2 from './pages/images/blog2.jpg';
 import blog3 from './pages/images/blog3.jpg';
-
+//Ads
+import ad1 from './pages/images/ad1.jpg';
+import ad2 from './pages/images/ad2.jpg';
+import ad3 from './pages/images/ad3.jpg';
+import AdListPage from './pages/AdListPage';
+import AdDetailPage from './pages/AdDetailPage'; // Import the AdDetailPage component
+import AdEditPage from './pages/AdEditPage'; // Import the AdEditPage component
 
 const vehicles = [
   {
@@ -87,7 +93,36 @@ const vehicles = [
   // Add more vehicles as needed
 ];
 
+
 function App() {
+
+  const [ads, setAds] = useState([
+    {
+      id: 1,
+      title: 'Ad 1',
+      description: 'Description of Ad 1',
+      imageUrl: ad1,
+      startDate: '2024-05-01',
+      endDate: '2024-05-10'
+    },
+    {
+      id: 2,
+      title: 'Ad 2',
+      description: 'Description of Ad 2',
+      imageUrl: ad2,
+      startDate: '2024-05-05',
+      endDate: '2024-05-15'
+    },
+    {
+      id: 3,
+      title: 'Ad 3',
+      description: 'Description of Ad 3',
+      imageUrl: ad3,
+      startDate: '2024-05-05',
+      endDate: '2024-05-15'
+    },
+    // Add more ads as needed
+  ]);
 
   const invoices = [
     {
@@ -150,6 +185,18 @@ function App() {
       `,
     },
   ];
+
+  const handleSaveAd = (formData, id) => {
+    if (id) {
+      const updatedAds = ads.map(ad => (ad.id === id ? { ...ad, ...formData } : ad));
+      setAds(updatedAds);
+    } else {
+      const newAd = { id: ads.length + 1, ...formData };
+      setAds([...ads, newAd]);
+    }
+  };
+
+
   return (
     <Router>
       <div className="App">
@@ -161,13 +208,17 @@ function App() {
           <Route path="/about" element={<AboutUs />} /> 
           <Route path="/contact" element={<ContactUs />} /> 
           <Route path="/signup" element={<SignUp />} /> 
-          <Route path="/login" element={<LogIn />} /> 
+           <Route path="/login" element={<LogIn />} />     
           <Route path="/dealerprofile" element={<DealerProfilePage />} /> 
           <Route path="/vehicles" element={<ViewVehiclesPage />} /> 
           <Route path="/vehicles/:id" element={<DetailVehiclePage vehicles={vehicles} />} /> {/* Update route */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
           <Route path="/invoices/:id" element={<DetailInvoicePage invoices={invoices} />} />
-          <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} /> {/* Add route for Dealer Analytics */}
+          <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} />
+          <Route path="/ads" element={<AdListPage />} />
+          <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
+         <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
+          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />*
         </Routes>
         <Footer />
       </div>

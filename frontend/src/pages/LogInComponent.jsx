@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({
@@ -14,9 +14,9 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/accounts/login', formData, {withCredentials: true})
-        .then( (res,err) => {console.log(res.data);})
-        .catch( (res,err) => {console.log(err);});
+     //   axios.post('http://localhost:3000/accounts/login', formData, {withCredentials: true})
+       // .then( (res,err) => {console.log(res.data);})
+        //.catch( (res,err) => {console.log(err);});
         console.log(formData);
     };
 

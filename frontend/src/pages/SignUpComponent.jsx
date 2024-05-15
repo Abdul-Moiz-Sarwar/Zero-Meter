@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+//import axios from 'axios';
 
 const SignupForm = () => {
     const [formData, setFormData] = useState({
@@ -21,9 +21,9 @@ const SignupForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios.post('http://localhost:3000/accounts/signup', formData)
-        .then( (res,err) => {console.log(res.data);})
-        .catch( (res,err) => {console.log(err);});
+       // axios.post('http://localhost:3000/accounts/signup', formData)
+        //.then( (res,err) => {console.log(res.data);})
+        //.catch( (res,err) => {console.log(err);});
         console.log(formData);
     };
 

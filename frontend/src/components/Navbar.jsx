@@ -32,7 +32,7 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/signup">Sign Up</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
-                        <li className="nav-item">
+                         <li className="nav-item">
                             <Link className="nav-link" to="/login">Log In</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
                         <li className="nav-item">
@@ -43,6 +43,9 @@ const Navbar = () => {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/dealer-analytics">Analytics</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/ads">Ads</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
                     </ul>
                 </div>
