@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({
@@ -13,7 +14,9 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you can handle form submission, such as sending data to the server
+        axios.post('http://localhost:3000/accounts/login', formData, {withCredentials: true})
+        .then( (res,err) => {console.log(res.data);})
+        .catch( (res,err) => {console.log(err);});
         console.log(formData);
     };
 
@@ -30,7 +33,7 @@ const LoginForm = () => {
                     <label htmlFor="password" className="form-label">Password</label>
                     <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" required />
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+                <button type="submit" className="btn btn-primary">Login</button>
             </form>
         </div>
     );

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const SignupForm = () => {
     const [formData, setFormData] = useState({
@@ -9,7 +10,8 @@ const SignupForm = () => {
         phone: '',
         address: '',
         city: '',
-        country: ''
+        country: '',
+        cnic: '',
     });
 
     const handleChange = (e) => {
@@ -19,7 +21,9 @@ const SignupForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you can handle form submission, such as sending data to the server
+        axios.post('http://localhost:3000/accounts/signup', formData)
+        .then( (res,err) => {console.log(res.data);})
+        .catch( (res,err) => {console.log(err);});
         console.log(formData);
     };
 
@@ -42,10 +46,8 @@ s            <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="type" className="form-label">Type</label>
                     <select className="form-select" id="type" name="type" value={formData.type} onChange={handleChange} required>
-                        <option value="">Select type</option>
-                        <option value="customer">Customer</option>
-                        <option value="dealer">Dealer</option>
-                        <option value="dealer">Admin</option>
+                        <option value="user">User</option>
+                        <option value="dealership">Dealership</option>
                     </select>
                 </div>
                 <div className="mb-3">
@@ -63,6 +65,10 @@ s            <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="country" className="form-label">Country</label>
                     <input type="text" className="form-control" id="country" name="country" value={formData.country} onChange={handleChange} placeholder="Enter your country" required />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="country" className="form-label">Cnic</label>
+                    <input type="text" className="form-control" id="cnic" name="cnic" value={formData.country} onChange={handleChange} placeholder="Enter your cnic" required />
                 </div>
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
