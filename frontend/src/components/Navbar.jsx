@@ -41,6 +41,9 @@ const Navbar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/invoices">Invoices</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/dealer-analytics">Analytics</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
                     </ul>
                 </div>
             </div>

@@ -14,6 +14,7 @@ import ViewVehiclesPage from './pages/ViewVehicles';
 import DetailVehiclePage from './pages/VehicleDetails'; // Import DetailVehiclePage
 import ViewInvoicesPage from './pages/ViewInvoicesPage'; // Import ViewInvoicesPage
 import DetailInvoicePage from './pages/DetailInvoicePage'; // Import DetailInvoicePage
+import ViewDealerAnalyticsPage from './pages/DealerAnalyticsPage'; // Import ViewDealerAnalyticsPage
 import image1 from './pages/images/civic.jpg';
 import image2 from './pages/images/Tuscon.jpg';
 import image3 from './pages/images/fordcar.jpg';
@@ -166,7 +167,7 @@ function App() {
           <Route path="/vehicles/:id" element={<DetailVehiclePage vehicles={vehicles} />} /> {/* Update route */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
           <Route path="/invoices/:id" element={<DetailInvoicePage invoices={invoices} />} />
-
+          <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} /> {/* Add route for Dealer Analytics */}
         </Routes>
         <Footer />
       </div>
