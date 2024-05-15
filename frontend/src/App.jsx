@@ -1,34 +1,55 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+//Components
 import Navbar from './components/Navbar';
-import Blogs from './pages/Blogs';
-import AboutUs from './pages/AboutUs';
-import IndividualBlogPage from './pages/IndividualBlogPage'; 
 import Footer from './components/Footer';
-import LandingPage from './pages/landingpage';
-import ContactUs from './pages/ContactUs';
 import SignUp from './pages/SignUpPage';
 import LogIn from './pages/LogInPage';
+
+//Basic Pages
+import AboutUs from './pages/AboutUs';
+import ContactUs from './pages/ContactUs';
+import LandingPage from './pages/landingpage';
 import DealerProfilePage from './pages/DealerProfilePage';
-import ViewVehiclesPage from './pages/ViewVehicles';
-import DetailVehiclePage from './pages/VehicleDetails'; // Import DetailVehiclePage
-import ViewInvoicesPage from './pages/ViewInvoicesPage'; // Import ViewInvoicesPage
-import DetailInvoicePage from './pages/DetailInvoicePage'; // Import DetailInvoicePage
-import ViewDealerAnalyticsPage from './pages/DealerAnalyticsPage'; // Import ViewDealerAnalyticsPage
-import image1 from './pages/images/civic.jpg';
-import image2 from './pages/images/Tuscon.jpg';
-import image3 from './pages/images/fordcar.jpg';
+import ViewDealerAnalyticsPage from './pages/DealerAnalyticsPage'; 
+
+//Blogs
+import Blogs from './pages/Blogs';
+import IndividualBlogPage from './pages/IndividualBlogPage'; 
 import blog1 from './pages/images/blog1.png';
 import blog2 from './pages/images/blog2.jpg';
 import blog3 from './pages/images/blog3.jpg';
+
+//Vehicles
+import ViewVehiclesPage from './pages/ViewVehicles';
+import DetailVehiclePage from './pages/VehicleDetails'; 
+import image1 from './pages/images/civic.jpg';
+import image2 from './pages/images/Tuscon.jpg';
+import image3 from './pages/images/fordcar.jpg';
+
+//Invoice
+import ViewInvoicesPage from './pages/ViewInvoicesPage'; 
+import DetailInvoicePage from './pages/DetailInvoicePage'; 
+
 //Ads
 import ad1 from './pages/images/ad1.jpg';
 import ad2 from './pages/images/ad2.jpg';
 import ad3 from './pages/images/ad3.jpg';
 import AdListPage from './pages/AdListPage';
-import AdDetailPage from './pages/AdDetailPage'; // Import the AdDetailPage component
-import AdEditPage from './pages/AdEditPage'; // Import the AdEditPage component
+import AdDetailPage from './pages/AdDetailPage';
+import AdEditPage from './pages/AdEditPage';
 import UserAdListPage from './pages/UserAdListPage';
+
+//Payment
+import PaymentPage from './pages/PaymentPage';
+
+
+//User Profile
+import UserProfilePage from './pages/UserProfilePage';
+import EditUserProfilePage from './pages/EditUserProfilePage';
+import profile1 from './pages/images/profile.png'
+
 
 const vehicles = [
   {
@@ -187,6 +208,14 @@ function App() {
     },
   ];
 
+  const userData = {
+    avatar: profile1, // Placeholder image URL
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phone: '123-456-7890',
+    address: '123 Street, City, Country',
+  };
+
   const handleSaveAd = (formData, id) => {
     if (id) {
       const updatedAds = ads.map(ad => (ad.id === id ? { ...ad, ...formData } : ad));
@@ -222,6 +251,9 @@ function App() {
           <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />*
           <Route path="/userads" element={<UserAdListPage />} />
           <Route path="/userads/:id" element={<AdDetailPage ads={ads} />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/userprofile" element={<UserProfilePage />} />
+          <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
         </Routes>
         <Footer />
       </div>
