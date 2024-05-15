@@ -28,6 +28,7 @@ import ad3 from './pages/images/ad3.jpg';
 import AdListPage from './pages/AdListPage';
 import AdDetailPage from './pages/AdDetailPage'; // Import the AdDetailPage component
 import AdEditPage from './pages/AdEditPage'; // Import the AdEditPage component
+import UserAdListPage from './pages/UserAdListPage';
 
 const vehicles = [
   {
@@ -219,6 +220,8 @@ function App() {
           <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
          <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
           <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />*
+          <Route path="/userads" element={<UserAdListPage />} />
+          <Route path="/userads/:id" element={<AdDetailPage ads={ads} />} />
         </Routes>
         <Footer />
       </div>
