@@ -104,7 +104,7 @@ const deleteVehicle = (req, res) => {
         .catch((err) => {console.log(err);})
     } catch (error) {
         console.error('Error fetching vehicle:', error);
-        res.status(500).json({ error: 'Internal Server Error during GET ALL VEHICLES' });
+        res.status(500).json({ error: 'Internal Server Error during Delete Vehicle' });
     }
 }
 

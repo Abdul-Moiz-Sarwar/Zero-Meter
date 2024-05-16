@@ -6,16 +6,16 @@ const account = require('../controllers/accounts')
 //get all blogs
 router.get('/', account.verifyToken, blog.getBlogs)
 
-//get one vehicle
+//get one blog
 router.get('/:id', account.verifyToken, blog.getBlog)
 
-//add one vehicle
+//add one blog
 router.post('/', account.verifyToken, account.isAdmin, blog.addBlog)
 
-//update one vehicle
+//update one blog
 router.put('/:id', account.verifyToken, account.isAdmin, blog.updateBlog)
 
-//delete one vehicle
+//delete one blog
 router.delete('/:id', account.verifyToken, account.isAdmin, blog.deleteBlog)
 
 module.exports = router

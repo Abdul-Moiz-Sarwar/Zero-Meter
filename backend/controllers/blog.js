@@ -1,6 +1,6 @@
 const blog = require('../models/blog')
 
-//get all vehicles
+//get all blogs
 const getBlogs = (req, res) => { 
     try{
         blog.find()
@@ -12,7 +12,7 @@ const getBlogs = (req, res) => {
     }
 }
 
-//get one vehicle
+//get one blog
 const getBlog = async (req, res) => {
     try {
         const blogData = await blog.findOne({ _id: req.params.id});
@@ -26,7 +26,7 @@ const getBlog = async (req, res) => {
     }
 }
 
-//add one vehicle
+//add one blog
 const addBlog = (req, res) => {
     const requiredFields = ['title', 'body'];
     const missingFields = requiredFields.filter(field => !(field in req.body));
@@ -48,7 +48,7 @@ const addBlog = (req, res) => {
     }
 }
 
-//update one vehicle
+//update one blog
 const updateBlog = (req, res) => {
     try{
         blog.findOneAndUpdate(
@@ -68,7 +68,7 @@ const updateBlog = (req, res) => {
     }
 }
 
-//delete one vehicle
+//delete one blog
 const deleteBlog = (req, res) => {
     try{
         blog.findOneAndDelete({_id:req.params.id})
@@ -76,7 +76,7 @@ const deleteBlog = (req, res) => {
         .catch((err) => {console.log(err);})
     } catch (error) {
         console.error('Error fetching blog:', error);
-        res.status(500).json({ error: 'Internal Server Error during GET ALL VEHICLES' });
+        res.status(500).json({ error: 'Internal Server Error during Delete Blog' });
     }
 }
 

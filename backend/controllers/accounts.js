@@ -357,22 +357,49 @@ const getUser = async(req, res) => {
 }
 
 const isDealer = (req, res, next) => {
-    Accounts.User.findOne({_id:req.id, type:"dealer"}, "-password")
-    .then(()=>{next()})
-    .catch(()=>{res.status(403).json("Unauthorized Access");})
+    Accounts.User.findOne({_id: req.id, type: "dealer"}, "-password")
+        .then((data) => {
+            if (data) {
+                next();
+            } else {
+                return res.status(403).json("Unauthorized Access");
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json("Internal Server Error");
+        });
 }
 
 const isAdmin = (req, res, next) => {
-    Accounts.User.findOne({_id:req.id, type:"admin"}, "-password")
-    .then(()=>{next()})
-    .catch(()=>{res.status(403).json("Unauthorized Access");})
+    Accounts.User.findOne({_id: req.id, type: "admin"}, "-password")
+        .then((data) => {
+            if (data) {
+                next();
+            } else {
+                return res.status(403).json("Unauthorized Access");
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json("Internal Server Error");
+        });
 }
 
 const isUser = (req, res, next) => {
-    Accounts.User.findOne({_id:req.id, type:"user"}, "-password")
-    .then(()=>{next()})
-    .catch(()=>{res.status(403).json("Unauthorized Access");})
-}
+    Accounts.User.findOne({_id: req.id, type: "user"}, "-password")
+        .then((data) => {
+            if (data) {
+                next();
+            } else {
+                return res.status(403).json("Unauthorized Access");
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            return res.status(500).json("Internal Server Error");
+        });
+};
 
 module.exports.logout = logout;
 module.exports.signup = signup;
