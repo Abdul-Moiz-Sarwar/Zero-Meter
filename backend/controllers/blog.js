@@ -28,7 +28,7 @@ const getBlog = async (req, res) => {
 
 //add one vehicle
 const addBlog = (req, res) => {
-    const requiredFields = ['title', 'body', 'write'];
+    const requiredFields = ['title', 'body'];
     const missingFields = requiredFields.filter(field => !(field in req.body));
     if(missingFields.length > 0){
         return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });

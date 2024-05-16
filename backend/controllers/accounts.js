@@ -357,83 +357,21 @@ const getUser = async(req, res) => {
 }
 
 const isDealer = (req, res, next) => {
-    let user;
-    try{
-        user = Accounts.User.findById(req.id, "-password");
-    } catch (err) {
-        return new Error(err)
-    }
-    if (!user) {
-        return res.status(404).json({message: "User not found"})
-    }
-    if (user.type == "dealer"){
-        next()
-    }
-    return res.status(403).json("Unauthorized Access");
+    Accounts.User.findOne({_id:req.id, type:"dealer"}, "-password")
+    .then(()=>{next()})
+    .catch(()=>{res.status(403).json("Unauthorized Access");})
 }
 
 const isAdmin = (req, res, next) => {
-    let user;
-    try{
-        user = Accounts.User.findById(req.id, "-password");
-    } catch (err) {
-        return new Error(err)
-    }
-    if (!user) {
-        return res.status(404).json({message: "User not found"})
-    }
-    if (user.type == "admin"){
-        next()
-    }
-    return res.status(403).json("Unauthorized Access");
-}
-
-const isBiller = (req, res, next) => {
-    let user;
-    try{
-        user = Accounts.User.findById(req.id, "-password");
-    } catch (err) {
-        return new Error(err)
-    }
-    if (!user) {
-        return res.status(404).json({message: "User not found"})
-    }
-    if (user.type == "biller"){
-        next()
-    }
-    return res.status(403).json("Unauthorized Access");
-}
-
-const isIA = (req, res, next) => {
-    let user;
-    try{
-        user = Accounts.User.findById(req.id, "-password");
-    } catch (err) {
-        return new Error(err)
-    }
-    if (!user) {
-        return res.status(404).json({message: "User not found"})
-    }
-    if (user.type == "ia"){
-        next()
-    }
-    return res.status(403).json("Unauthorized Access");
+    Accounts.User.findOne({_id:req.id, type:"admin"}, "-password")
+    .then(()=>{next()})
+    .catch(()=>{res.status(403).json("Unauthorized Access");})
 }
 
 const isUser = (req, res, next) => {
-    let user;
-    try{
-        user = Accounts.User.findById(req.id, "-password");
-    } catch (err) {
-        return new Error(err)
-    }
-    if (!user) {
-        return res.status(404).json({message: "User not found"})
-    }
-    if (user.type == "user"){
-        next()
-    }
-    return res.status(403).json("Unauthorized Access");
+    Accounts.User.findOne({_id:req.id, type:"user"}, "-password")
+    .then(()=>{next()})
+    .catch(()=>{res.status(403).json("Unauthorized Access");})
 }
 
 module.exports.logout = logout;
@@ -445,6 +383,4 @@ module.exports.verifyRefresh = verifyRefresh;
 module.exports.getUser = getUser;
 module.exports.isAdmin = isAdmin;
 module.exports.isUser = isUser;
-module.exports.isBiller = isBiller;
-module.exports.isIA = isIA;
 module.exports.isDealer = isDealer;

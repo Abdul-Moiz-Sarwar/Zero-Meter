@@ -3,6 +3,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const VehicleRouter = require('./routes/vehicle')
 const AccountRouter = require('./routes/accounts')
+const BlogRouter = require('./routes/blog')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
@@ -25,5 +26,6 @@ mongoose.connect(uri)
 
 app.use('/vehicles',VehicleRouter)
 app.use('/accounts',AccountRouter)
+app.use('/blogs',BlogRouter)
 
 app.listen(3000, () => console.log("listening on port 3000"))

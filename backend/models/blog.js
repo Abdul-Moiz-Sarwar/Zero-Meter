@@ -22,5 +22,5 @@ const BlogSchema = new Schema({
     },
 })
 
-const blog = new Model('blog', blogSchema);
+const blog = new Model('blog', BlogSchema);
 module.exports = blog
