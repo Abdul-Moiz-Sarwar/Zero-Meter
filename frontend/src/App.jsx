@@ -14,7 +14,7 @@ import LandingPage from './pages/landingpage';
 import DealerProfilePage from './pages/DealerProfilePage';
 import ViewDealerAnalyticsPage from './pages/DealerAnalyticsPage'; 
 
-//Blogs
+//Blogs (User and Dealer)
 import Blogs from './pages/Blogs';
 import IndividualBlogPage from './pages/IndividualBlogPage'; 
 import blog1 from './pages/images/blog1.png';
@@ -56,6 +56,12 @@ import DealerListPage from './pages/DealerListPage';
 import DealerDetailsPage from './pages/DealerDetailsPage';
 import dealer1 from './pages/images/crowley.jpg';
 import dealer2 from './pages/images/toyota.png';
+
+//Admin Blog
+import AdminBlogs from './pages/AdminBlogs';
+import AdminIndividualBlogPage from './pages/AdminIndividualBlogPage';
+import AdminIndividualBlogEditPage from './pages/AdminIndividualBlogEditPage';
+
 
 const vehicles = [
   {
@@ -173,7 +179,7 @@ function App() {
     }
   ];  
 
-  const blogs = [
+  const [blogs, setBlogs] = useState([
     { 
       id: 1, 
       title: 'Are New Cars Worth Buying?', 
@@ -212,7 +218,7 @@ function App() {
         <p>Happy Buying!</p>
       `,
     },
-  ];
+  ]);
 
   const userData = {
     avatar: profile1, // Placeholder image URL
@@ -251,6 +257,15 @@ function App() {
     }
   };
 
+  const handleDeleteBlog = (id) => {
+    const updatedBlogs = blogs.filter(blog => blog.id !== id);
+    setBlogs(updatedBlogs);
+  };
+
+  const handleSaveBlog = (formData, id) => {
+    const updatedBlogs = blogs.map(blog => (blog.id === id ? { ...blog, ...formData } : blog));
+    setBlogs(updatedBlogs);
+  };
   return (
     <Router>
       <div className="App">
@@ -281,6 +296,10 @@ function App() {
           <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
           <Route path="/dealers" element={<DealerListPage dealers={dealers} />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
+          <Route path="/admin/blogs" element={<AdminBlogs blogs={blogs} onDelete={handleDeleteBlog} onSave={handleSaveBlog}  />} />
+          <Route path="/admin/blogs/add" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
+          <Route path="/admin/blogs/:id/edit" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
+          <Route path="/admin/blogs/:id" element={<AdminIndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
         </Routes>
         </DealerService>
         <Footer />

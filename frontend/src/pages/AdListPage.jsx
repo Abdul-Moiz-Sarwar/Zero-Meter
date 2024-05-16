@@ -46,7 +46,6 @@ const AdListPage = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }}>Advertisements Chosen For You!</h1>
       <Link to="/ads/edit/new">Add New Ad</Link> {/* Link to the ad edit page for adding new ad */}
       <AdListComponent ads={ads} onDelete={handleDelete} />
     </div>
