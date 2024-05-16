@@ -62,6 +62,10 @@ import AdminBlogs from './pages/AdminBlogs';
 import AdminIndividualBlogPage from './pages/AdminIndividualBlogPage';
 import AdminIndividualBlogEditPage from './pages/AdminIndividualBlogEditPage';
 
+//Admin Ads
+import AdminAdListPage from './pages/AdminAdListPage';
+import AdminAdDetailPage from './pages/AdminAdDetailPage';
+
 
 const vehicles = [
   {
@@ -300,6 +304,8 @@ function App() {
           <Route path="/admin/blogs/add" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
           <Route path="/admin/blogs/:id/edit" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
           <Route path="/admin/blogs/:id" element={<AdminIndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
+          <Route path="/admin/ads" element={<AdminAdListPage />} />
+          <Route path="/admin/ads/:id" element={<AdminAdDetailPage ads={ads} />} />
         </Routes>
         </DealerService>
         <Footer />

@@ -62,6 +62,9 @@ const Navbar = () => {
                         <li className="nav-item">
                         <Link className="nav-link" to="/admin/blogs">Admin Blogs</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/admin/ads">Admin Ads</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
                     </ul>
                 </div>
             </div>
