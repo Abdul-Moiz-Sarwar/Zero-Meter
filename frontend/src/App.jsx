@@ -73,7 +73,9 @@ import analytic3 from './pages/images/analytics3.png';
 import AdminAnalyticsPage from './pages/AdminAnalyticsPage';
 import MainAdminPage from './pages/MainAdminPage';
 
-
+//Admin View Dealers Page
+import AdminDealerListPage from './pages/AdminDealerListPage';
+import AdminDealerDetailsPage from './pages/AdminDealerDetailsPage';
 
 const vehicles = [
   {
@@ -338,6 +340,8 @@ function App() {
           <Route path="/admin/ads" element={<AdminAdListPage />} />
           <Route path="/admin/ads/:id" element={<AdminAdDetailPage ads={ads} />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage analytics={analytics}/>}/>
+          <Route path="/admin/dealers" element={<AdminDealerListPage dealers={dealers} />} />
+          <Route path="/admin/dealers/:id" element={<AdminDealerDetailsPage dealers={dealers}/>} />
         </Routes>
         </DealerService>
         <Footer />
