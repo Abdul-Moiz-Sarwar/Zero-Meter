@@ -10,12 +10,12 @@ router.get('/', account.verifyToken, vehicle.getVehicles)
 router.get('/:id', account.verifyToken, vehicle.getVehicle)
 
 //add one vehicle
-router.post('/', account.verifyToken, vehicle.addVehicles)
+router.post('/', account.verifyToken, vehicle.addVehicle)
 
 //update one vehicle
-router.put('/:id', account.verifyToken, vehicle.updateVehicles)
+router.put('/:id', account.verifyToken, vehicle.updateVehicle)
 
 //delete one vehicle
-router.delete('/:id', account.verifyToken, vehicle.deleteVehicles)
+router.delete('/:id', account.verifyToken, vehicle.deleteVehicle)
 
 module.exports = router

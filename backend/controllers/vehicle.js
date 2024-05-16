@@ -27,7 +27,7 @@ const getVehicle = async (req, res) => {
 }
 
 //add one vehicle
-const addVehicles = (req, res) => {
+const addVehicle = (req, res) => {
     const requiredFields = ['testdrive', 'status', 'datesold', 'buyprice', 'sellprice',
     'type', 'company', 'model', 'varient', 'year','power','color','mileage'];
     const missingFields = requiredFields.filter(field => !(field in req.body));
@@ -56,12 +56,12 @@ const addVehicles = (req, res) => {
         .catch((err) => {console.log(err);})
     } catch (error) {
         console.error('Error fetching vehicle:', error);
-        res.status(500).json({ error: 'Internal Server Error during GET ALL VEHICLES' });
+        res.status(500).json({ error: 'Internal Server Error during Add Vehicle' });
     }
 }
 
 //update one vehicle
-const updateVehicles = (req, res) => {
+const updateVehicle = (req, res) => {
     try{
         vehicle.findOneAndUpdate(
             {_id:req.params.id,dealership:req.id},{
@@ -92,12 +92,12 @@ const updateVehicles = (req, res) => {
         .catch((err) => {console.log(err);})
     } catch (error) {
         console.error('Error fetching vehicle:', error);
-        res.status(500).json({ error: 'Internal Server Error during GET ALL VEHICLES' });
+        res.status(500).json({ error: 'Internal Server Error during Update Vehicle' });
     }
 }
 
 //delete one vehicle
-const deleteVehicles = (req, res) => {
+const deleteVehicle = (req, res) => {
     try{
         vehicle.findOneAndDelete({_id:req.params.id,dealership:req.id})
         .then((data) => {res.send(data);})
@@ -110,9 +110,9 @@ const deleteVehicles = (req, res) => {
 
 module.exports.getVehicle = getVehicle
 module.exports.getVehicles = getVehicles
-module.exports.updateVehicles = updateVehicles
-module.exports.addVehicles = addVehicles
-module.exports.deleteVehicles = deleteVehicles
+module.exports.updateVehicle = updateVehicle
+module.exports.addVehicle = addVehicle
+module.exports.deleteVehicle = deleteVehicle
 
 
 
