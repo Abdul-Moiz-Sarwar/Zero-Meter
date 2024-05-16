@@ -50,6 +50,12 @@ import UserProfilePage from './pages/UserProfilePage';
 import EditUserProfilePage from './pages/EditUserProfilePage';
 import profile1 from './pages/images/profile.png'
 
+//Dealer List/Details
+import DealerService from './pages/DealerService';
+import DealerListPage from './pages/DealerListPage';
+import DealerDetailsPage from './pages/DealerDetailsPage';
+import dealer1 from './pages/images/crowley.jpg';
+import dealer2 from './pages/images/toyota.png';
 
 const vehicles = [
   {
@@ -216,6 +222,25 @@ function App() {
     address: '123 Street, City, Country',
   };
 
+  const dealers = [
+    {
+      id: 1,
+      name: 'Crowley Motorss',
+      email: 'dealer1@example.com',
+      address: '123 Street, City, Country',
+      image: dealer1,
+    },
+    {
+      id: 2,
+      name: 'Toyota',
+      email: 'dealer2@example.com',
+      address: '456 Street, City, Country',
+      image: dealer2,
+    },
+    // Add more dummy dealers as needed
+  ];
+
+
   const handleSaveAd = (formData, id) => {
     if (id) {
       const updatedAds = ads.map(ad => (ad.id === id ? { ...ad, ...formData } : ad));
@@ -226,11 +251,11 @@ function App() {
     }
   };
 
-
   return (
     <Router>
       <div className="App">
         <Navbar />
+        <DealerService>
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/blogs" element={<Blogs />} />
@@ -254,7 +279,10 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/userprofile" element={<UserProfilePage />} />
           <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
+          <Route path="/dealers" element={<DealerListPage dealers={dealers} />} />
+          <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
         </Routes>
+        </DealerService>
         <Footer />
       </div>
     </Router>

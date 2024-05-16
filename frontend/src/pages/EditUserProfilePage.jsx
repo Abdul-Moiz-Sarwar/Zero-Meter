@@ -17,9 +17,12 @@ const EditUserProfilePage = ({ userData, onUpdate }) => {
 
   // Handle form submission
   const handleSubmit = (e) => {
+    alert('Payment saved');
+
     e.preventDefault();
     // Update user details
     onUpdate(formData);
+
     // Redirect user back to profile page
     // You can use React Router's useHistory hook here to navigate programmatically
     // Example: history.push('/profile');
