@@ -1,0 +1,37 @@
+.welcome-text {
+    font-size: 48px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0; 
+  }
+  
+  .why-choose-us {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .why-choose-us-title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .why-choose-us-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .why-choose-us-list li {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .why-choose-us-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  

@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+//  <img src="C:\Users\techzone\Documents\1.6th semester\Web Prog\vehiclerental\src\assests\ZeroMeterlogo.png" className="logo" alt="Logo" />
 const Navbar = () => {
     return (
         <div className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
-                <Link className="navbar-brand" to="/">
-                    <img src="C:\Users\techzone\Documents\1.6th semester\Web Prog\vehiclerental\src\assests\ZeroMeterlogo.png" className="logo" alt="Logo" />
+                <Link className="navbar-brand" to="/">                  
                     Zero Meter
                 </Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +26,7 @@ const Navbar = () => {
                             <Link className="nav-link" to="/about">About Us</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/contact">Contact Us</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/contact">Contact Us</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/signup">Sign Up</Link> {/* Update link to redirect to Contact Us page */}
@@ -64,6 +63,9 @@ const Navbar = () => {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin/ads">Admin Ads</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/admin/analytics">Admin Analytics</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
                     </ul>
                 </div>

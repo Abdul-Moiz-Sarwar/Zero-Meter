@@ -66,6 +66,14 @@ import AdminIndividualBlogEditPage from './pages/AdminIndividualBlogEditPage';
 import AdminAdListPage from './pages/AdminAdListPage';
 import AdminAdDetailPage from './pages/AdminAdDetailPage';
 
+//Admin Analytics
+import analytic1 from './pages/images/analytics1.png'
+import analytic2 from './pages/images/analytics2.png';
+import analytic3 from './pages/images/analytics3.png';
+import AdminAnalyticsPage from './pages/AdminAnalyticsPage';
+import MainAdminPage from './pages/MainAdminPage';
+
+
 
 const vehicles = [
   {
@@ -261,6 +269,29 @@ function App() {
     }
   };
 
+
+  const analytics = [
+    {
+      image: analytic1,
+      sales: 1000,
+      profit: 500,
+      reach: '10,000'
+    },
+    {
+      image: analytic2,
+      sales: 1500,
+      profit: 700,
+      reach: '15,000'
+    },
+    {
+      image: analytic3,
+      sales: 2000,
+      profit: 1000,
+      reach: '20,000'
+    }
+  ];
+
+
   const handleDeleteBlog = (id) => {
     const updatedBlogs = blogs.filter(blog => blog.id !== id);
     setBlogs(updatedBlogs);
@@ -306,6 +337,7 @@ function App() {
           <Route path="/admin/blogs/:id" element={<AdminIndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
           <Route path="/admin/ads" element={<AdminAdListPage />} />
           <Route path="/admin/ads/:id" element={<AdminAdDetailPage ads={ads} />} />
+          <Route path="/admin/analytics" element={<AdminAnalyticsPage analytics={analytics}/>}/>
         </Routes>
         </DealerService>
         <Footer />
@@ -314,4 +346,4 @@ function App() {
   );
 }
 
-export default App;
+export default App;   

@@ -5,6 +5,8 @@ import pricetag from './images/tag.png'
 import support from './images/customer-service.png'
 import map from './images/map.png'
 import carstore from './images/carstore.jpg'
+import './landingpage.css'
+
 const LandingPage = () => {
     return (
         <div className="landing-page">
