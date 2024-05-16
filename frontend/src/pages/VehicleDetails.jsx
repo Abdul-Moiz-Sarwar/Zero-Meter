@@ -14,7 +14,6 @@ const VehicleDetails = ({ vehicles }) => {
     <div>
       <h2>Details and More!</h2>
 
-      {/* Display vehicle details using VehicleDetailComponent */}
       <VehicleDetailComponent vehicle={vehicle} />
     </div>
   );

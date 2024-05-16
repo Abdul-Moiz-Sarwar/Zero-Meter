@@ -4,7 +4,7 @@ import image1 from './images/civic.jpg';
 import image2 from './images/Tuscon.jpg'
 import image3 from './images/fordcar.jpg';
 
-const ViewVehiclesPage = () => {
+const AdminViewVehiclesPage = () => {
     
     const vehicles = [
         {
@@ -94,9 +94,9 @@ const ViewVehiclesPage = () => {
     return (
         <div className="container mt-5">
             <h1 className="mb-4">View Vehicles</h1>
-            <VehicleListComponent vehicles={vehicles} /> {/* Pass vehicles array as a prop */}
+            <VehicleListComponent vehicles={vehicles} isAdmin={true} /> 
         </div>
     );
 }
 
-export default ViewVehiclesPage;
+export default AdminViewVehiclesPage;

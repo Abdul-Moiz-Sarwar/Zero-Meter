@@ -30,7 +30,6 @@ const LandingPage = () => {
                 </div>
                 
                 <p>Ready to get started? Explore our range of vehicles and book your rental online today!</p>
-                <button className="btn btn-primary">Browse Vehicles</button>
             </div>
         </div>
     );

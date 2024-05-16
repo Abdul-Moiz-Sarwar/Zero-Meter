@@ -21,8 +21,8 @@ import blog1 from './pages/images/blog1.png';
 import blog2 from './pages/images/blog2.jpg';
 import blog3 from './pages/images/blog3.jpg';
 
-//Vehicles
-import ViewVehiclesPage from './pages/ViewVehicles';
+// Admin Vehicles
+import ViewVehiclesPage from './pages/AdminViewVehicles';
 import DetailVehiclePage from './pages/VehicleDetails'; 
 import image1 from './pages/images/civic.jpg';
 import image2 from './pages/images/Tuscon.jpg';
@@ -57,6 +57,10 @@ import DealerDetailsPage from './pages/DealerDetailsPage';
 import dealer1 from './pages/images/crowley.jpg';
 import dealer2 from './pages/images/toyota.png';
 
+//Dealer Vehicles
+import DealerVehicleListPage from './pages/DealerVehicleListPage';
+import VehicleFormComponent from './pages/VehicleFormComponent';
+
 //Admin Blog
 import AdminBlogs from './pages/AdminBlogs';
 import AdminIndividualBlogPage from './pages/AdminIndividualBlogPage';
@@ -76,13 +80,36 @@ import MainAdminPage from './pages/MainAdminPage';
 //Admin View Dealers Page
 import AdminDealerListPage from './pages/AdminDealerListPage';
 import AdminDealerDetailsPage from './pages/AdminDealerDetailsPage';
+import VehicleDetails from './pages/VehicleDetails';
 
-const vehicles = [
-  {
-      id: 1,
-      title: 'Vehicle 1',
-      image: image1,
-      price: '$10,000',
+function App() {
+
+  const [vehicles, setVehicles] = useState([
+    {
+        id: 1,
+        title: 'Vehicle 1',
+        image: image1,
+        price: '$10,000',
+        specifications: {
+            type: 'Car',
+            company: 'Toyota',
+            model: 'Corolla',
+            variant: 'GLi',
+            modelYear: '2022',
+            engineSize: '1.6L',
+            horsePower: '120hp',
+            color: 'Black',
+            mileage: '25,000 km',
+            transmission: 'Automatic',
+            topSpeed: '180 km/h',
+            rating: '4.5/5'
+        }
+    },
+    {
+      id: 2,
+      title: 'Tuscan 2024',
+      image: image2,
+      price: '$30,000',
       specifications: {
           type: 'Car',
           company: 'Toyota',
@@ -99,50 +126,27 @@ const vehicles = [
       }
   },
   {
-    id: 2,
-    title: 'Tuscan 2024',
-    image: image2,
-    price: '$30,000',
-    specifications: {
-        type: 'Car',
-        company: 'Toyota',
-        model: 'Corolla',
-        variant: 'GLi',
-        modelYear: '2022',
-        engineSize: '1.6L',
-        horsePower: '120hp',
-        color: 'Black',
-        mileage: '25,000 km',
-        transmission: 'Automatic',
-        topSpeed: '180 km/h',
-        rating: '4.5/5'
-    }
-},
-{
-    id: 3,
-    title: 'Ford Ranger',
-    image: image3,
-    price: '$30,000',
-    specifications: {
-        type: 'Car',
-        company: 'Toyota',
-        model: 'Corolla',
-        variant: 'GLi',
-        modelYear: '2022',
-        engineSize: '1.6L',
-        horsePower: '120hp',
-        color: 'Black',
-        mileage: '25,000 km',
-        transmission: 'Automatic',
-        topSpeed: '180 km/h',
-        rating: '4.5/5'
-    }
-},
-  // Add more vehicles as needed
-];
-
-
-function App() {
+      id: 3,
+      title: 'Ford Ranger',
+      image: image3,
+      price: '$30,000',
+      specifications: {
+          type: 'Car',
+          company: 'Toyota',
+          model: 'Corolla',
+          variant: 'GLi',
+          modelYear: '2022',
+          engineSize: '1.6L',
+          horsePower: '120hp',
+          color: 'Black',
+          mileage: '25,000 km',
+          transmission: 'Automatic',
+          topSpeed: '180 km/h',
+          rating: '4.5/5'
+      }
+  },
+    // Add more vehicles as needed
+  ]);
 
   const [ads, setAds] = useState([
     {
@@ -303,12 +307,37 @@ function App() {
     const updatedBlogs = blogs.map(blog => (blog.id === id ? { ...blog, ...formData } : blog));
     setBlogs(updatedBlogs);
   };
+
+  const handleSaveVehicle = (formData) => {
+    const updatedVehicles = [...vehicles];
+    // Check if the vehicle already exists
+    const index = updatedVehicles.findIndex(vehicle => vehicle.id === formData.id);
+    if (index !== -1) {
+        // If exists, update it
+        updatedVehicles[index] = formData;
+    } else {
+        // If doesn't exist, add it
+        formData.id = updatedVehicles.length + 1;
+        updatedVehicles.push(formData);
+    }
+    setVehicles(updatedVehicles);
+};
+
+const handleDeleteVehicle = (id) => {
+    if (window.confirm('Are you sure you want to delete this vehicle?')) {
+        const updatedVehicles = vehicles.filter(vehicle => vehicle.id !== id);
+        setVehicles(updatedVehicles);
+    }
+};
+
   return (
     <Router>
       <div className="App">
         <Navbar />
         <DealerService>
         <Routes>
+
+          {/*Basic Pages */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} />} /> 
@@ -316,16 +345,22 @@ function App() {
           <Route path="/contact" element={<ContactUs />} /> 
           <Route path="/signup" element={<SignUp />} /> 
            <Route path="/login" element={<LogIn />} />     
-          <Route path="/dealerprofile" element={<DealerProfilePage />} /> 
-          <Route path="/vehicles" element={<ViewVehiclesPage />} /> 
-          <Route path="/vehicles/:id" element={<DetailVehiclePage vehicles={vehicles} />} /> {/* Update route */}
+
+          {/*Dealer Pages */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
           <Route path="/invoices/:id" element={<DetailInvoicePage invoices={invoices} />} />
+          <Route path="/dealerprofile" element={<DealerProfilePage />} />
           <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} />
           <Route path="/ads" element={<AdListPage />} />
           <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
-         <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
-          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />*
+          <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
+          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
+          <Route path="/vehicles" element={<DealerVehicleListPage vehicles={vehicles} onDelete={handleDeleteVehicle} />} />
+          <Route path="/vehicles/add" element={<VehicleFormComponent vehicles={vehicles} />} />
+          <Route path="/vehicles/edit/:id" element={<VehicleFormComponent vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
+          <Route path="/vehicles/:id" element={<VehicleDetails vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
+
+          {/*User Pages */}
           <Route path="/userads" element={<UserAdListPage />} />
           <Route path="/userads/:id" element={<AdDetailPage ads={ads} />} />
           <Route path="/payment" element={<PaymentPage />} />
@@ -333,6 +368,10 @@ function App() {
           <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
           <Route path="/dealers" element={<DealerListPage dealers={dealers} />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
+
+          {/*Admin Pages */}
+          <Route path="/admin/vehicles" element={<ViewVehiclesPage isAdmin={true}/>} /> 
+          <Route path="/admin/vehicles/:id" element={<DetailVehiclePage vehicles={vehicles} />} />    
           <Route path="/admin/blogs" element={<AdminBlogs blogs={blogs} onDelete={handleDeleteBlog} onSave={handleSaveBlog}  />} />
           <Route path="/admin/blogs/add" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
           <Route path="/admin/blogs/:id/edit" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
@@ -342,6 +381,7 @@ function App() {
           <Route path="/admin/analytics" element={<AdminAnalyticsPage analytics={analytics}/>}/>
           <Route path="/admin/dealers" element={<AdminDealerListPage dealers={dealers} />} />
           <Route path="/admin/dealers/:id" element={<AdminDealerDetailsPage dealers={dealers}/>} />
+
         </Routes>
         </DealerService>
         <Footer />

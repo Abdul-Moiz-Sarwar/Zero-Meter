@@ -17,7 +17,7 @@ const Navbar = () => {
                             <Link className="nav-link" to="/">Home</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/vehicles">Vehicles</Link>
+                            <Link className="nav-link" to="/admin/vehicles">Admin Vehicles</Link>
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/blogs">Blogs</Link>
@@ -69,6 +69,9 @@ const Navbar = () => {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/admin/dealers">Admin Dealers</Link> {/* Update link to redirect to Contact Us page */}
+                        </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/vehicles">Dealer Vehicles</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
                     </ul>
                 </div>

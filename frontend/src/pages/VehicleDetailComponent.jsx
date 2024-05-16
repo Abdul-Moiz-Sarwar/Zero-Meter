@@ -11,7 +11,6 @@ const VehicleDetailComponent = ({ vehicle }) => {
             <div className="col-md-6">
                 <h2>{title}</h2>
                 <p>Price: {price}</p>
-                {/* Add other details here */}
                 <ul>
                     {Object.entries(specifications).map(([key, value]) => (
                         <li key={key}><strong>{key}:</strong> {value}</li>
