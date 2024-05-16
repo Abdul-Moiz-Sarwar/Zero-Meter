@@ -1,14 +1,16 @@
 const uri = require('./secret')
 const express = require('express')
 const mongoose = require('mongoose')
-const VehicleRouter = require('./routes/vehicle')
-const AccountRouter = require('./routes/accounts')
-const PaymentRouter = require('./routes/payment')
-const BlogRouter = require('./routes/blog')
-const AdRouter = require('./routes/ad')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+
+const AccountRouter = require('./routes/accounts')
+const VehicleRouter = require('./routes/vehicle')
+const PaymentRouter = require('./routes/payment')
+const InvoiceRouter = require('./routes/invoice')
+const BlogRouter = require('./routes/blog')
+const AdRouter = require('./routes/ad')
 
 const app = express()
 
@@ -28,7 +30,8 @@ mongoose.connect(uri)
 
 app.use('/vehicles',VehicleRouter)
 app.use('/accounts',AccountRouter)
-app.use('/payment',PaymentRouter)
+app.use('/payments',PaymentRouter)
+app.use('/invoices',InvoiceRouter)
 app.use('/blogs',BlogRouter)
 app.use('/ads',AdRouter)
 

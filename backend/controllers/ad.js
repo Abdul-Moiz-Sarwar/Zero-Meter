@@ -8,7 +8,7 @@ const getAds = (req, res) => {
         .catch((err) => {console.log(err);})
     } catch (error) {
         console.error('Error fetching ads:', error);
-        res.status(500).json({ error: 'Internal Server Error during GET ALL PAYMENTS' });
+        res.status(500).json({ error: 'Internal Server Error during GET ALL ADS' });
     }
 }
 
@@ -22,7 +22,7 @@ const getAd = async (req, res) => {
         return res.status(200).json(AdData);
     } catch (error) {
         console.error('Error fetching ad:', error);
-        return res.status(500).json({ error: 'Internal Server Error during GET PAYMENT' });
+        return res.status(500).json({ error: 'Internal Server Error during GET AD' });
     }
 }
 

@@ -10,12 +10,12 @@ router.get('/', account.verifyToken, ad.getAds)
 router.get('/:id', account.verifyToken, ad.getAd)
 
 //add one ad
-router.post('/', account.verifyToken, account.isAdmin, ad.addAd)
+router.post('/', account.verifyToken, account.isDealer, ad.addAd)
 
 //update one ad
-router.put('/:id', account.verifyToken, account.isAdmin, ad.updateAd)
+router.put('/:id', account.verifyToken, account.isDealer, ad.updateAd)
 
 //delete one ad
-router.delete('/:id', account.verifyToken, account.isAdmin, ad.deleteAd)
+router.delete('/:id', account.verifyToken, account.isDealer, ad.deleteAd)
 
 module.exports = router

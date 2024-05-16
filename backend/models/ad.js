@@ -12,6 +12,10 @@ const AdSchema = new Schema({
         type: Number,
         required: true
     },
+    datecreated: {
+        type: Date,
+        required: true
+    },
 })
 
 const ad = new Model('ad', AdSchema);
