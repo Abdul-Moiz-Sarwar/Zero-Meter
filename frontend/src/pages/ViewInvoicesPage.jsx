@@ -3,7 +3,6 @@ import React from 'react';
 import InvoiceListComponent from './InvoiceListComponent';
 
 const ViewInvoicesPage = () => {
-  // Dummy data for invoices
   const invoices = [
     {
       id: 1,

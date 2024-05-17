@@ -73,7 +73,7 @@ import MainAdminPage from './pages/MainAdminPage';
 
 //Admin View Dealers Page
 import AdminDealerListPage from './pages/AdminDealerListPage';
-import AdminDealerDetailsPage from './pages/AdminDealerDetailsPage';
+import AdminDealerDetailsPage from './extra/AdminDealerDetailsPage';
 
 function App() {
 
@@ -361,6 +361,7 @@ function App() {
     };
     fetchUser()
   },[]);
+
   
   return (
     <Router>
@@ -388,16 +389,20 @@ function App() {
           <Route path="/blogs/edit/:id" element={<IndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
           <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
 
-          {/*Dealer Pages */}
+          {/*Invoices */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
           <Route path="/invoices/:id" element={<DetailInvoicePage invoices={invoices} />} />
+
+          {/*View all Dealers*/}
+          <Route path="/dealers" element={<DealerListPage dealers={dealers} role='admin' />} />
+          <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
+
           <Route path="/dealerprofile" element={<DealerProfilePage />} />
           <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} />
           <Route path="/ads" element={<AdListPage />} />
           <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
           <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
-          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
-        
+          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />        
          
           {/*User Pages */}
           <Route path="/userads" element={<UserAdListPage />} />
@@ -405,10 +410,8 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/userprofile" element={<UserProfilePage />} />
           <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
-          <Route path="/dealers" element={<DealerListPage dealers={dealers} />} />
-          <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
-          {/*Admin Pages */}
-          
+
+          {/*Admin Pages */}          
           <Route path="/admin/ads" element={<AdminAdListPage />} />
           <Route path="/admin/ads/:id" element={<AdminAdDetailPage ads={ads} />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage analytics={analytics}/>}/>
