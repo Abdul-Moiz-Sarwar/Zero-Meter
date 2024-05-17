@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 //Components
@@ -21,9 +21,10 @@ import blog1 from './pages/images/blog1.png';
 import blog2 from './pages/images/blog2.jpg';
 import blog3 from './pages/images/blog3.jpg';
 
-// Admin Vehicles
-import ViewVehiclesPage from './pages/AdminViewVehicles';
-import DetailVehiclePage from './pages/VehicleDetails'; 
+// Vehicles
+import ViewVehiclesPage from './pages/VehiclesPage';
+import VehicleFormComponent from './pages/VehicleFormComponent';
+import VehicleDetails from './pages/VehicleDetails';
 import image1 from './pages/images/civic.jpg';
 import image2 from './pages/images/Tuscon.jpg';
 import image3 from './pages/images/fordcar.jpg';
@@ -57,10 +58,6 @@ import DealerDetailsPage from './pages/DealerDetailsPage';
 import dealer1 from './pages/images/crowley.jpg';
 import dealer2 from './pages/images/toyota.png';
 
-//Dealer Vehicles
-import DealerVehicleListPage from './pages/DealerVehicleListPage';
-import VehicleFormComponent from './pages/VehicleFormComponent';
-
 //Admin Blog
 import AdminBlogs from './pages/AdminBlogs';
 import AdminIndividualBlogPage from './pages/AdminIndividualBlogPage';
@@ -80,9 +77,41 @@ import MainAdminPage from './pages/MainAdminPage';
 //Admin View Dealers Page
 import AdminDealerListPage from './pages/AdminDealerListPage';
 import AdminDealerDetailsPage from './pages/AdminDealerDetailsPage';
-import VehicleDetails from './pages/VehicleDetails';
 
 function App() {
+
+  const role="admin";
+  /*
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    // Fetch user data from backend
+    const fetchUserData = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/accounts/getUser', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                }
+            });
+            const userData = await response.json();
+            setUser(userData.user);
+            console.log(userData);
+
+            // Check if user data includes the role field
+            if (userData.user && userData.user.type) {
+                setRole(userData.user.type);
+                console.log("User type:", userData.user.type); // Log user type here
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+        }
+    };
+    fetchUserData();
+}, []);*/
+
+
 
   const [vehicles, setVehicles] = useState([
     {
@@ -323,13 +352,6 @@ function App() {
     setVehicles(updatedVehicles);
 };
 
-const handleDeleteVehicle = (id) => {
-    if (window.confirm('Are you sure you want to delete this vehicle?')) {
-        const updatedVehicles = vehicles.filter(vehicle => vehicle.id !== id);
-        setVehicles(updatedVehicles);
-    }
-};
-
   return (
     <Router>
       <div className="App">
@@ -344,7 +366,13 @@ const handleDeleteVehicle = (id) => {
           <Route path="/about" element={<AboutUs />} /> 
           <Route path="/contact" element={<ContactUs />} /> 
           <Route path="/signup" element={<SignUp />} /> 
-          <Route path="/login" element={<LogIn />} />     
+          <Route path="/login" element={<LogIn />} />  
+
+          {/*Vehicles */}   
+          <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} /> 
+          <Route path="/vehicles/add" element={<VehicleFormComponent vehicles={vehicles} />} />
+          <Route path="/vehicles/edit/:id" element={<VehicleFormComponent vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
+          <Route path="/vehicles/:id" element={<VehicleDetails vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
 
           {/*Dealer Pages */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
@@ -355,11 +383,8 @@ const handleDeleteVehicle = (id) => {
           <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
           <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
           <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
-          <Route path="/vehicles" element={<DealerVehicleListPage vehicles={vehicles} onDelete={handleDeleteVehicle} />} />
-          <Route path="/vehicles/add" element={<VehicleFormComponent vehicles={vehicles} />} />
-          <Route path="/vehicles/edit/:id" element={<VehicleFormComponent vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
-          <Route path="/vehicles/:id" element={<VehicleDetails vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
-
+        
+         
           {/*User Pages */}
           <Route path="/userads" element={<UserAdListPage />} />
           <Route path="/userads/:id" element={<AdDetailPage ads={ads} />} />
@@ -370,8 +395,6 @@ const handleDeleteVehicle = (id) => {
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
 
           {/*Admin Pages */}
-          <Route path="/admin/vehicles" element={<ViewVehiclesPage isAdmin={true}/>} /> 
-          <Route path="/admin/vehicles/:id" element={<DetailVehiclePage vehicles={vehicles} />} />    
           <Route path="/admin/blogs" element={<AdminBlogs blogs={blogs} onDelete={handleDeleteBlog} onSave={handleSaveBlog}  />} />
           <Route path="/admin/blogs/add" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
           <Route path="/admin/blogs/:id/edit" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />

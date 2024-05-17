@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import VehicleListComponent from './VehicleListComponent'; // Import your VehicleListComponent
-import VehicleFormComponent from './VehicleFormComponent'; // Import your VehicleFormComponent
+import VehicleListComponent from '../pages/VehicleListComponent'; // Import your VehicleListComponent
+import VehicleFormComponent from '../pages/VehicleFormComponent'; // Import your VehicleFormComponent
 
 const DealerVehicleListPage = ({ vehicles, onDelete }) => {
     const navigate = useNavigate();

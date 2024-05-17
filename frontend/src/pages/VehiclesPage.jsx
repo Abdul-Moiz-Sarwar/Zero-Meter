@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import VehicleListComponent from './VehicleListComponent';
+import { Link } from 'react-router-dom';
 import image1 from './images/civic.jpg';
-import image2 from './images/Tuscon.jpg'
+import image2 from './images/Tuscon.jpg';
 import image3 from './images/fordcar.jpg';
 
-const AdminViewVehiclesPage = () => {
-    
-    const vehicles = [
+const VehiclesPage = ({ role }) => {
+    const initialVehicles = [
         {
             id: 1,
             title: 'Toyota Civic',
@@ -90,13 +90,27 @@ const AdminViewVehiclesPage = () => {
         },
         // Add more vehicles as needed
     ];
-    
+
+    const [vehicles, setVehicles] = useState(initialVehicles);
+
+    const handleDeleteVehicle = (id) => {
+        if (window.confirm('Are you sure you want to delete this vehicle?')) {
+            const updatedVehicles = vehicles.filter(vehicle => vehicle.id !== id);
+            setVehicles(updatedVehicles);
+        }
+    };
+
     return (
         <div className="container mt-5">
             <h1 className="mb-4">View Vehicles</h1>
-            <VehicleListComponent vehicles={vehicles} isAdmin={true} /> 
+            {role !== 'admin' && (
+                <div className="mb-3">
+                    <Link to="/vehicles/add" className="btn btn-primary mb-3">Add Vehicle</Link>
+                </div>
+            )}
+            <VehicleListComponent vehicles={vehicles} role={role} onDelete={handleDeleteVehicle} />
         </div>
     );
-}
+};
 
-export default AdminViewVehiclesPage;
+export default VehiclesPage;
