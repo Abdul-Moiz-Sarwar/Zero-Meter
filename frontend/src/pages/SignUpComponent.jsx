@@ -1,7 +1,7 @@
 import React, { useState,useRef,useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
 
-//import axios from 'axios';
+import axios from 'axios';
 
 const containerStyle = {
     width: '80vw',
@@ -31,10 +31,7 @@ const SignupForm = () => {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
-                    setCenter({ lat: latitude, lng: longitude });
-                    
-                    
-                    
+                    setCenter({ lat: latitude, lng: longitude });      
                 },
                 (error) => {
                     console.error('Error fetching location:', error);
@@ -50,10 +47,6 @@ const SignupForm = () => {
         const bounds = new window.google.maps.LatLngBounds(center);
         map.fitBounds(bounds);
     }, [center]);
-
-    
-
-    
 
     const handleMapClick = (event) => {
         setMarkerPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
@@ -77,10 +70,12 @@ const SignupForm = () => {
     };
 
     const handleSubmit = (e) => {
+        console.log(e);
+        console.log(formData);
         e.preventDefault();
-       // axios.post('http://localhost:3000/accounts/signup', formData)
-        //.then( (res,err) => {console.log(res.data);})
-        //.catch( (res,err) => {console.log(err);});
+        axios.post('http://localhost:3000/accounts/signup', formData)
+        .then( (res,err) => {console.log(res.data);})
+        .catch( (res,err) => {console.log(err);});
         console.log(formData);
     };
 
@@ -102,13 +97,6 @@ s            <form onSubmit={handleSubmit}>
                     <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" required />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="type" className="form-label">Type</label>
-                    <select className="form-select" id="type" name="type" value={formData.type} onChange={handleChange} required>
-                        <option value="user">User</option>
-                        <option value="dealership">Dealership</option>
-                    </select>
-                </div>
-                <div className="mb-3">
                     <label htmlFor="phone" className="form-label">Phone</label>
                     <input type="tel" className="form-control" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" required />
                 </div>
@@ -125,34 +113,65 @@ s            <form onSubmit={handleSubmit}>
                     <input type="text" className="form-control" id="country" name="country" value={formData.country} onChange={handleChange} placeholder="Enter your country" required />
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="country" className="form-label">Cnic</label>
-                    <input type="text" className="form-control" id="cnic" name="cnic" value={formData.country} onChange={handleChange} placeholder="Enter your cnic" required />
+                    <label htmlFor="cnic" className="form-label">Cnic</label>
+                    <input type="text" className="form-control" id="cnic" name="cnic" value={formData.cnic} onChange={handleChange} placeholder="Enter your cnic" required />
                 </div>
+                <div className="mb-3">
+                    <label htmlFor="type" className="form-label">Type</label>
+                    <select className="form-select" id="type" name="type" value={formData.type} onChange={handleChange} required>
+                        <option value="user">User</option>
+                        <option value="dealership">Dealership</option>
+                    </select>
+                </div>
+
+
                 
+                    {isLoaded &&formData.type=='dealership' ? (
+                        <>
+                            <div className="mb-3">
+                                <label htmlFor="dealershipname" className="form-label">Dealership Name</label>
+                                <input type="text" className="form-control" id="dealershipname" name="dealershipname" value={formData.dealershipname} onChange={handleChange} placeholder="Enter your dealership name" required />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="registration" className="form-label">Dealership Registration Number</label>
+                                <input type="text" className="form-control" id="registration" name="registration" value={formData.registration} onChange={handleChange} placeholder="Enter your registration number" required />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="instagram" className="form-label">Intagram Link</label>
+                                <input type="text" className="form-control" id="instagram" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="Enter your instagram link" required />
+                            </div>
+                            <div className="mb-3">
+                                <label htmlFor="facebook" className="form-label">Facebook Link</label>
+                                <input type="text" className="form-control" id="facebook" name="facebook" value={formData.facebook} onChange={handleChange} placeholder="Enter your facebook link" required />
+                            </div>
+                            <div className="mb-3">
+                                <GoogleMap
+                                    mapContainerStyle={containerStyle}
+                                    center={center}
+                                    zoom={9.85}
+                                    onLoad={onLoad}
+                                    options={{ mapTypeControl: false }}
+                                    onClick={handleMapClick}
+                                >
+                                    
+                                    {markerPosition && <Marker position={markerPosition} />}
+                                    {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+                                </GoogleMap>
+                            </div>
+                        </>
+                    ) : (
+                        <></> // Empty fragment if map is not loaded
+                    )}
+                <div className="d-flex justify-content-center">
+                    <button type="submit" className="btn btn-primary">Submit</button>
+                </div>
             </form>
         </div>
 
 
-{isLoaded &&formData.type=='dealership' ? (
-    <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={9.85}
-        onLoad={onLoad}
-        options={{ mapTypeControl: false }}
-        onClick={handleMapClick}
-    >
-        
-        {markerPosition && <Marker position={markerPosition} />}
-        {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
-    </GoogleMap>
-) : (
-    <></> // Empty fragment if map is not loaded
-)}
 
-<div className="d-flex justify-content-center">
-<button type="submit" className="btn btn-primary">Submit</button>
-</div>
+
+
 </>
     );
 }

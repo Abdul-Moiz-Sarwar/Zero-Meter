@@ -344,7 +344,7 @@ const handleDeleteVehicle = (id) => {
           <Route path="/about" element={<AboutUs />} /> 
           <Route path="/contact" element={<ContactUs />} /> 
           <Route path="/signup" element={<SignUp />} /> 
-           <Route path="/login" element={<LogIn />} />     
+          <Route path="/login" element={<LogIn />} />     
 
           {/*Dealer Pages */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />

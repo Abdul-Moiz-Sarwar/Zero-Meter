@@ -61,7 +61,7 @@ const login = async (req, res) => {
 }
 
 const signup = async (req,res) => {
-    const { username, email, password, type, phone, dealership, registration, cnic } = req.body;
+    const { username, email, password, type, phone, dealershipname, registration, cnic } = req.body;
 
     if(type == 'user'){
         //check if data is complete
@@ -135,17 +135,19 @@ const signup = async (req,res) => {
 
     }
     else if(type == "dealership"){
+        
         //check if data in request is complete
-        const requiredFields = ['username', 'email','password','type','phone','address','city','country','dealership','registration']
+        const requiredFields = ['username', 'email','password','type','phone','address','city','country','dealershipname','registration']
         const missingFields = requiredFields.filter(field => !(field in req.body));
         if(missingFields.length > 0){
             return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
         }
 
         //check if dealership already exists
+        
         let existingUser;
         try {
-            existingUser = await Accounts.Dealership.findOne({dealership:dealership});
+            existingUser = await Accounts.Dealership.findOne({dealership:dealershipname});
         }
         catch (err) {
             console.log(err);
@@ -162,7 +164,9 @@ const signup = async (req,res) => {
         if (existingUser) {
             return res.status(400).json({message: "dealership with this registration already exists"})
         }
-
+        
+            
+        console.log("hello")
         //check if user already exists
         try {
             existingUser = await Accounts.User.findOne({username:(username + '@' + dealership)});

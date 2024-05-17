@@ -47,6 +47,8 @@ const Blogs = () => {
     },
   ];
 
+  //fetch all blogs from backend to display publically
+
   return (
     <div className="blogs-container">
       {blogs.map(blog => (
