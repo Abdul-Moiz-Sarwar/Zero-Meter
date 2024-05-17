@@ -65,6 +65,13 @@ import analytic2 from './pages/images/analytics2.png';
 import analytic3 from './pages/images/analytics3.png';
 import AnalyticsPage from './pages/AnalyticsPage';
 
+//User List
+import UserList from './pages/UserList';
+import UserDetail from './pages/UserDetails';
+import profil1 from './pages/images/profile.png';
+import profile2 from './pages/images/woman.png';
+import profile3 from './pages/images/profile3.png';
+
 function App() {
 
   // const role="admin";
@@ -254,7 +261,7 @@ function App() {
     },
   ]);
 
-  const userData = {
+  const userDat = {
     avatar: profile1, // Placeholder image URL
     name: 'John Doe',
     email: 'john.doe@example.com',
@@ -280,6 +287,29 @@ function App() {
     // Add more dummy dealers as needed
   ];
 
+  const [userData, setUserData] = useState([
+    {
+      id: 1,
+      avatar: profile1,
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      phone: '123-456-7890',
+    },
+    {
+      id: 2,
+      avatar: profile2,
+      name: 'Casie Ford',
+      email: 'casieford@example.com',
+      phone: '524-456-7890',
+    },
+    {
+      id: 3,
+      avatar: profile3,
+      name: 'Alexa Mercedes',
+      email: 'alexa@example.com',
+      phone: '533-986-4522',
+    },
+  ]);
 
   const handleSaveAd = (formData, id) => {
     if (id) {
@@ -322,6 +352,11 @@ function App() {
   const handleSaveBlog = (formData, id) => {
     const updatedBlogs = blogs.map(blog => (blog.id === id ? { ...blog, ...formData } : blog));
     setBlogs(updatedBlogs);
+  };
+
+  const handleDeleteUser = (id) => {
+    const updatedUsers = userData.filter(user => user.id !== id);
+    setUserData(updatedUsers);
   };
 
   const handleSaveVehicle = (formData) => {
@@ -395,14 +430,17 @@ function App() {
 
           {/*Analytics */}          
           <Route path="/analytics" element={<AnalyticsPage analytics={analytics}/>}/>
-          
+
           <Route path="/dealerprofile" element={<DealerProfilePage />} />
          
           {/*User Pages */}
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/userprofile" element={<UserProfilePage />} />
-          <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
+          <Route path="/edit-profile" element={<EditUserProfilePage userDat={userDat} />} />
 
+          {/*User Lists */}
+          <Route path="/userlist" element={<UserList userData={userData} onDelete={handleDeleteUser} />} />
+          <Route path="/userlist/:id" element={<UserDetail userData={userData} />} />
         </Routes>
         <Footer />
       </div>

@@ -1,7 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AdListComponent = ({ ads, onDelete, role }) => {
+  const navigate = useNavigate();
+
+  const handleBuyNow = (adId) => {
+    navigate(`/payment`);
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {ads.map(ad => (
@@ -20,6 +26,9 @@ const AdListComponent = ({ ads, onDelete, role }) => {
           )}
           { role === 'dealer' && (
             <Link to={`/ads/edit/${ad.id}`} className="btn btn-secondary" style={{ margin: '5px' }}>Edit</Link>
+          )}
+           { (role === 'user') && (
+            <button onClick={() => handleBuyNow(ad.id)} style={{ marginLeft: '10px' }}>Buy Now</button>
           )}
         </div>
       ))}
