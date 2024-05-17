@@ -15,7 +15,7 @@ import LandingPage from './pages/landingpage';
 
 //Dealer Profile Page
 import DealerProfilePage from './pages/DealerProfilePage';
-import ViewDealerAnalyticsPage from './pages/DealerAnalyticsPage'; 
+import ViewDealerAnalyticsPage from './extra/DealerAnalyticsPage'; 
 
 //Blogs 
 import Blogs from './pages/Blogs';
@@ -63,7 +63,7 @@ import dealer2 from './pages/images/toyota.png';
 import analytic1 from './pages/images/analytics1.png'
 import analytic2 from './pages/images/analytics2.png';
 import analytic3 from './pages/images/analytics3.png';
-import AdminAnalyticsPage from './pages/AdminAnalyticsPage';
+import AnalyticsPage from './pages/AnalyticsPage';
 
 function App() {
 
@@ -392,16 +392,16 @@ function App() {
           <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
           <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />    
 
+
+          {/*Analytics */}          
+          <Route path="/analytics" element={<AnalyticsPage analytics={analytics}/>}/>
+          
           <Route path="/dealerprofile" element={<DealerProfilePage />} />
-          <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} />    
          
           {/*User Pages */}
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/userprofile" element={<UserProfilePage />} />
           <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
-
-          {/*Admin Pages */}          
-          <Route path="/admin/analytics" element={<AdminAnalyticsPage analytics={analytics}/>}/>
 
         </Routes>
         <Footer />

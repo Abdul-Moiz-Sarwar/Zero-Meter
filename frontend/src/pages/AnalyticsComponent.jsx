@@ -1,7 +1,6 @@
-// DealerAnalyticsComponent.js
 import React from 'react';
 
-const DealerAnalyticsComponent = ({ dealerAnalyticsData }) => {
+const AnalyticsComponent = ({ dealerAnalyticsData }) => {
   return (
     <div>
       <h2>Total Sales: {dealerAnalyticsData.totalSales}</h2>
@@ -16,4 +15,4 @@ const DealerAnalyticsComponent = ({ dealerAnalyticsData }) => {
   );
 }
 
-export default DealerAnalyticsComponent;
+export default AnalyticsComponent;
