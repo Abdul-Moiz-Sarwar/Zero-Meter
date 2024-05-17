@@ -72,40 +72,11 @@ import profil1 from './pages/images/profile.png';
 import profile2 from './pages/images/woman.png';
 import profile3 from './pages/images/profile3.png';
 
+//Checkout Page
+import CheckoutPage from './pages/CheckoutPage';
+
+
 function App() {
-
-  // const role="admin";
-  /*
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Fetch user data from backend
-    const fetchUserData = async () => {
-        try {
-            const response = await fetch('http://localhost:3000/accounts/getUser', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': Bearer ${localStorage.getItem('token')}
-                }
-            });
-            const userData = await response.json();
-            setUser(userData.user);
-            console.log(userData);
-
-            // Check if user data includes the role field
-            if (userData.user && userData.user.type) {
-                setRole(userData.user.type);
-                console.log("User type:", userData.user.type); // Log user type here
-            }
-        } catch (error) {
-            console.error('Error fetching user data:', error);
-        }
-    };
-    fetchUserData();
-}, []);*/
-
-
 
   const [vehicles, setVehicles] = useState([
     {
@@ -170,6 +141,17 @@ function App() {
   },
     // Add more vehicles as needed
   ]);
+
+  const addd=[
+    {
+      id: 1,
+      title: 'Ad 1',
+      description: 'Description of Ad 1',
+      imageUrl: ad1,
+      startDate: '2024-05-01',
+      endDate: '2024-05-10'
+    },
+  ];
 
   const [ads, setAds] = useState([
     {
@@ -343,7 +325,6 @@ function App() {
     }
   ];
 
-
   const handleDeleteBlog = (id) => {
     const updatedBlogs = blogs.filter(blog => blog.id !== id);
     setBlogs(updatedBlogs);
@@ -402,13 +383,13 @@ function App() {
           <Route path="/login" element={<LogIn />} />  
 
           {/*Vehicles */}   
-          <Route path="/vehicles" element={<ViewVehiclesPage role='admin' />} /> 
+          <Route path="/vehicles" element={<ViewVehiclesPage role='dealer' />} /> 
           <Route path="/vehicles/add" element={<VehicleFormComponent vehicles={vehicles} />} />
           <Route path="/vehicles/edit/:id" element={<VehicleFormComponent vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
           <Route path="/vehicles/:id" element={<VehicleDetails vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
 
           {/*Blogs */}
-          <Route path="/blogs" element={<Blogs role='admin'  />} />
+          <Route path="/blogs" element={<Blogs role='user'  />} />
           <Route path="/blogs/add" element={<IndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
           <Route path="/blogs/edit/:id" element={<IndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
           <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
@@ -418,7 +399,7 @@ function App() {
           <Route path="/invoices/:id" element={<DetailInvoicePage invoices={invoices} />} />
 
           {/*View all Dealers*/}
-          <Route path="/dealers" element={<DealerListPage dealers={dealers} role='admin' />} />
+          <Route path="/dealers" element={<DealerListPage dealers={dealers} role='user' />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
 
           {/*Ads*/}
@@ -426,7 +407,6 @@ function App() {
           <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
           <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
           <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />    
-
 
           {/*Analytics */}          
           <Route path="/analytics" element={<AnalyticsPage analytics={analytics}/>}/>
@@ -441,6 +421,10 @@ function App() {
           {/*User Lists */}
           <Route path="/userlist" element={<UserList userData={userData} onDelete={handleDeleteUser} />} />
           <Route path="/userlist/:id" element={<UserDetail userData={userData} />} />
+
+          {/*Checkout */}
+          <Route path="/checkout" element={<CheckoutPage ad={addd}/>} />
+
         </Routes>
         <Footer />
       </div>
