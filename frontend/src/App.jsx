@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import axios from 'axios';
 
 //Components
 import Navbar from './components/Navbar';
@@ -80,7 +81,7 @@ import AdminDealerDetailsPage from './pages/AdminDealerDetailsPage';
 
 function App() {
 
-  const role="admin";
+  // const role="admin";
   /*
   const [user, setUser] = useState(null);
 
@@ -92,7 +93,7 @@ function App() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': Bearer ${localStorage.getItem('token')}
                 }
             });
             const userData = await response.json();
@@ -350,7 +351,21 @@ function App() {
         updatedVehicles.push(formData);
     }
     setVehicles(updatedVehicles);
-};
+  };
+
+  const [role, setRole] = useState('');
+  useEffect(() =>{
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/accounts/getUser', { withCredentials: true });
+        setRole(res.data.user.type);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+    fetchUser()
+  },[]);
+  
 
   return (
     <Router>
@@ -413,4 +428,4 @@ function App() {
   );
 }
 
-export default App;   
+export default App;
