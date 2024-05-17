@@ -93,7 +93,7 @@ function App() {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    'Authorization': Bearer ${localStorage.getItem('token')}
                 }
             });
             const userData = await response.json();
@@ -428,4 +428,4 @@ function App() {
   );
 }
 
-export default App;   
+export default App;
