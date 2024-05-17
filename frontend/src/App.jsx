@@ -12,6 +12,8 @@ import LogIn from './pages/LogInPage';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import LandingPage from './pages/landingpage';
+
+//Dealer Profile Page
 import DealerProfilePage from './pages/DealerProfilePage';
 import ViewDealerAnalyticsPage from './pages/DealerAnalyticsPage'; 
 
@@ -42,11 +44,9 @@ import ad3 from './pages/images/ad3.jpg';
 import AdListPage from './pages/AdListPage';
 import AdDetailPage from './pages/AdDetailPage';
 import AdEditPage from './pages/AdEditPage';
-import UserAdListPage from './pages/UserAdListPage';
 
 //Payment
 import PaymentPage from './pages/PaymentPage';
-
 
 //User Profile
 import UserProfilePage from './pages/UserProfilePage';
@@ -54,26 +54,16 @@ import EditUserProfilePage from './pages/EditUserProfilePage';
 import profile1 from './pages/images/profile.png'
 
 //Dealer List/Details
-import DealerService from './pages/DealerService';
 import DealerListPage from './pages/DealerListPage';
 import DealerDetailsPage from './pages/DealerDetailsPage';
 import dealer1 from './pages/images/crowley.jpg';
 import dealer2 from './pages/images/toyota.png';
-
-//Admin Ads
-import AdminAdListPage from './pages/AdminAdListPage';
-import AdminAdDetailPage from './pages/AdminAdDetailPage';
 
 //Admin Analytics
 import analytic1 from './pages/images/analytics1.png'
 import analytic2 from './pages/images/analytics2.png';
 import analytic3 from './pages/images/analytics3.png';
 import AdminAnalyticsPage from './pages/AdminAnalyticsPage';
-import MainAdminPage from './pages/MainAdminPage';
-
-//Admin View Dealers Page
-import AdminDealerListPage from './pages/AdminDealerListPage';
-import AdminDealerDetailsPage from './extra/AdminDealerDetailsPage';
 
 function App() {
 
@@ -367,7 +357,6 @@ function App() {
     <Router>
       <div className="App">
         <Navbar />
-        <DealerService>
         <Routes>
 
           {/*Basic Pages */}
@@ -397,29 +386,24 @@ function App() {
           <Route path="/dealers" element={<DealerListPage dealers={dealers} role='admin' />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
 
-          <Route path="/dealerprofile" element={<DealerProfilePage />} />
-          <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} />
-          <Route path="/ads" element={<AdListPage />} />
+          {/*Ads*/}
+          <Route path="/ads" element={<AdListPage role='dealer'/>} />
           <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
           <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
-          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />        
+          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />    
+
+          <Route path="/dealerprofile" element={<DealerProfilePage />} />
+          <Route path="/dealer-analytics" element={<ViewDealerAnalyticsPage />} />    
          
           {/*User Pages */}
-          <Route path="/userads" element={<UserAdListPage />} />
-          <Route path="/userads/:id" element={<AdDetailPage ads={ads} />} />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/userprofile" element={<UserProfilePage />} />
           <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
 
           {/*Admin Pages */}          
-          <Route path="/admin/ads" element={<AdminAdListPage />} />
-          <Route path="/admin/ads/:id" element={<AdminAdDetailPage ads={ads} />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage analytics={analytics}/>}/>
-          <Route path="/admin/dealers" element={<AdminDealerListPage dealers={dealers} />} />
-          <Route path="/admin/dealers/:id" element={<AdminDealerDetailsPage dealers={dealers}/>} />
 
         </Routes>
-        </DealerService>
         <Footer />
       </div>
     </Router>

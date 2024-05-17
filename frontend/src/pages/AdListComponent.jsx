@@ -1,8 +1,7 @@
-// AdListComponent.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const AdListComponent = ({ ads, onDelete }) => {
+const AdListComponent = ({ ads, onDelete, role }) => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {ads.map(ad => (
@@ -14,9 +13,14 @@ const AdListComponent = ({ ads, onDelete }) => {
             <p>End Date: {ad.endDate}</p>
           </div>
           <p style={{ textAlign: 'center' }}>{ad.description}</p>
-          <Link to={`/ads/${ad.id}`}>View Details</Link> {/* Link to ad detail page */}
-          <button onClick={() => onDelete(ad.id)}>Delete</button> {/* Delete button */}
-          <Link to={`/ads/edit/${ad.id}`}>Edit</Link> {/* Link to ad edit page */}
+          <Link to={`/ads/${ad.id}`} className="btn btn-primary" style={{ display: 'block', margin: '10px auto' }}>View Details</Link> 
+
+          { (role === 'admin' || role === 'dealer') && (
+            <button onClick={() => onDelete(ad.id)} className="btn btn-danger" style={{ margin: '5px' }}>Delete</button>
+          )}
+          { role === 'dealer' && (
+            <Link to={`/ads/edit/${ad.id}`} className="btn btn-secondary" style={{ margin: '5px' }}>Edit</Link>
+          )}
         </div>
       ))}
     </div>

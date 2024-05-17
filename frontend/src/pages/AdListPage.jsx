@@ -6,7 +6,7 @@ import ad1 from './images/ad1.jpg'
 import ad2 from './images/ad2.jpg'
 import ad3 from './images/ad3.jpg'
 
-const AdListPage = () => {
+const AdListPage = ({role}) => {
   // Dummy data for ads
   const [ads, setAds] = useState([
     {
@@ -46,8 +46,12 @@ const AdListPage = () => {
 
   return (
     <div>
+       {role === 'dealer' && (
+        <>
       <Link to="/ads/edit/new">Add New Ad</Link> {/* Link to the ad edit page for adding new ad */}
-      <AdListComponent ads={ads} onDelete={handleDelete} />
+      </>
+      )}
+      <AdListComponent ads={ads} onDelete={handleDelete} role={role} />
     </div>
   );
 }
