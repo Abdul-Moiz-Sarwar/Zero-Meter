@@ -59,9 +59,6 @@ const Navbar = () => {
                             <Link className="nav-link" to="/dealers">View Dealers</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
                         <li className="nav-item">
-                        <Link className="nav-link" to="/admin/blogs">Admin Blogs</Link>
-                        </li>
-                        <li className="nav-item">
                             <Link className="nav-link" to="/admin/ads">Admin Ads</Link> {/* Update link to redirect to Contact Us page */}
                         </li>
                         <li className="nav-item">

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './BlogComponent.css'; 
 
-const BlogComponent = ({ blog }, {role}, onDelete) => {
+const BlogComponent = ({ blog, role, onDelete }) => {
   return (
     <div className="blog-container">
       <div className="image-container">
@@ -14,8 +14,7 @@ const BlogComponent = ({ blog }, {role}, onDelete) => {
         <p>Date: {blog.date}</p>
         <p>{blog.summary}</p>
         <Link to={`/blogs/${blog.id}`}>Read More</Link>
-        {role !== 'admin' && 
-        (
+        {role === 'admin' && (
           <>
             <button className="btn btn-danger me-2" onClick={() => onDelete(blog.id)}>Delete</button>
             <Link to={`/blogs/edit/${blog.id}`} className="btn btn-secondary">Edit</Link>
@@ -24,6 +23,6 @@ const BlogComponent = ({ blog }, {role}, onDelete) => {
       </div>
     </div>
   );
-}
+};
 
 export default BlogComponent;

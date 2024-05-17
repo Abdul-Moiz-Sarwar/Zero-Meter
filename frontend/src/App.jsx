@@ -15,9 +15,10 @@ import LandingPage from './pages/landingpage';
 import DealerProfilePage from './pages/DealerProfilePage';
 import ViewDealerAnalyticsPage from './pages/DealerAnalyticsPage'; 
 
-//Blogs (User and Dealer)
+//Blogs 
 import Blogs from './pages/Blogs';
 import IndividualBlogPage from './pages/IndividualBlogPage'; 
+import IndividualBlogEditPage from './pages/IndividualBlogEditPage';
 import blog1 from './pages/images/blog1.png';
 import blog2 from './pages/images/blog2.jpg';
 import blog3 from './pages/images/blog3.jpg';
@@ -58,11 +59,6 @@ import DealerListPage from './pages/DealerListPage';
 import DealerDetailsPage from './pages/DealerDetailsPage';
 import dealer1 from './pages/images/crowley.jpg';
 import dealer2 from './pages/images/toyota.png';
-
-//Admin Blog
-import AdminBlogs from './pages/AdminBlogs';
-import AdminIndividualBlogPage from './pages/AdminIndividualBlogPage';
-import AdminIndividualBlogEditPage from './pages/AdminIndividualBlogEditPage';
 
 //Admin Ads
 import AdminAdListPage from './pages/AdminAdListPage';
@@ -366,7 +362,6 @@ function App() {
     fetchUser()
   },[]);
   
-
   return (
     <Router>
       <div className="App">
@@ -376,18 +371,22 @@ function App() {
 
           {/*Basic Pages */}
           <Route path="/" element={<LandingPage />} />
-          <Route path="/blogs" element={<Blogs />} />
-          <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} />} /> 
           <Route path="/about" element={<AboutUs />} /> 
           <Route path="/contact" element={<ContactUs />} /> 
           <Route path="/signup" element={<SignUp />} /> 
           <Route path="/login" element={<LogIn />} />  
 
           {/*Vehicles */}   
-          <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} /> 
+          <Route path="/vehicles" element={<ViewVehiclesPage role='admin' />} /> 
           <Route path="/vehicles/add" element={<VehicleFormComponent vehicles={vehicles} />} />
           <Route path="/vehicles/edit/:id" element={<VehicleFormComponent vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
           <Route path="/vehicles/:id" element={<VehicleDetails vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
+
+          {/*Blogs */}
+          <Route path="/blogs" element={<Blogs role='admin'  />} />
+          <Route path="/blogs/add" element={<IndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
+          <Route path="/blogs/edit/:id" element={<IndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
+          <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
 
           {/*Dealer Pages */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
@@ -408,12 +407,8 @@ function App() {
           <Route path="/edit-profile" element={<EditUserProfilePage userData={userData} />} />
           <Route path="/dealers" element={<DealerListPage dealers={dealers} />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
-
           {/*Admin Pages */}
-          <Route path="/admin/blogs" element={<AdminBlogs blogs={blogs} onDelete={handleDeleteBlog} onSave={handleSaveBlog}  />} />
-          <Route path="/admin/blogs/add" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
-          <Route path="/admin/blogs/:id/edit" element={<AdminIndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
-          <Route path="/admin/blogs/:id" element={<AdminIndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
+          
           <Route path="/admin/ads" element={<AdminAdListPage />} />
           <Route path="/admin/ads/:id" element={<AdminAdDetailPage ads={ads} />} />
           <Route path="/admin/analytics" element={<AdminAnalyticsPage analytics={analytics}/>}/>
