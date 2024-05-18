@@ -8,12 +8,12 @@ const BlogSchema = new Schema({
         type: String,
         required: true
     },
-    body: {
+    content: {
         type: String,
         required: true
     },
-    writer: {
-        type: Schema.ObjectId,
+    author: {
+        type: String,
         required: true
     },
     datecreated: {

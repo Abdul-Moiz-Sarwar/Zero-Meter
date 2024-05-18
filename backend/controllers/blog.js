@@ -28,22 +28,22 @@ const getBlog = async (req, res) => {
 
 //add one blog
 const addBlog = (req, res) => {
-    const requiredFields = ['title', 'body'];
+    const requiredFields = ['title', 'content', 'author', 'datecreated'];
     const missingFields = requiredFields.filter(field => !(field in req.body));
     if(missingFields.length > 0){
         return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
     }
     var blg = new blog()
-    blg.writer = req.id
     blg.title = req.body.title
-    blg.body = req.body.body
+    blg.content = req.body.content
+    blg.author = req.body.author
     blg.datecreated = Date.now()
     try{
         blg.save()
         .then((data) => {res.send(data);})
         .catch((err) => {console.log(err);})
     } catch (error) {
-        console.error('Error fetching vehicle:', error);
+        console.error('Error fetching blog:', error);
         res.status(500).json({ error: 'Internal Server Error during Add Blog' });
     }
 }
@@ -55,7 +55,8 @@ const updateBlog = (req, res) => {
             {_id:req.params.id},{
             $set: {
                 title: req.body.title,
-                body: req.body.body,
+                content: req.body.content,
+                author: req.body.author
             }
         },{
             upsert: false

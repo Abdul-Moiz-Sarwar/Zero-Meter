@@ -18,9 +18,9 @@ import DealerProfilePage from './pages/DealerProfilePage';
 import ViewDealerAnalyticsPage from './extra/DealerAnalyticsPage'; 
 
 //Blogs 
-import Blogs from './pages/Blogs';
 import IndividualBlogPage from './pages/IndividualBlogPage'; 
-import IndividualBlogEditPage from './pages/IndividualBlogEditPage';
+import Blogs from './pages/Blogs';
+import BlogForm from './pages/BlogForm';
 import blog1 from './pages/images/blog1.png';
 import blog2 from './pages/images/blog2.jpg';
 import blog3 from './pages/images/blog3.jpg';
@@ -28,10 +28,10 @@ import blog3 from './pages/images/blog3.jpg';
 // Vehicles
 import ViewVehiclesPage from './pages/VehiclesPage';
 import VehicleDetails from './pages/VehicleDetails';
+import VehicleForm from './pages/VehicleForm';
 import image1 from './pages/images/civic.jpg';
 import image2 from './pages/images/Tuscon.jpg';
 import image3 from './pages/images/fordcar.jpg';
-import VehicleForm from './pages/VehicleForm';
 
 //Invoice
 import ViewInvoicesPage from './pages/ViewInvoicesPage'; 
@@ -138,47 +138,6 @@ function App() {
     }
   ];  
 
-  const [blogs, setBlogs] = useState([
-    { 
-      id: 1, 
-      title: 'Are New Cars Worth Buying?', 
-      author: 'John Doe', 
-      date: 'May 1, 2024', 
-      summary: 'In this post, we evaluate the pros and cons of buying new cars than second-hand ones. Find out more!',
-      image: blog1,
-      content: `
-        <p>Hello Readers!</p>
-        <p>There are some amazing new cars in Pakistan, and today we will be looking into the top 5 of them, so gear up to join us on this journey! Authored by John Doe, this thought-provoking piece navigates through the myriad of considerations that consumers face when contemplating a new automobile purchase. Through a balanced analysis of factors such as depreciation rates, warranty coverage, and technological advancements, the article aims to equip readers with the knowledge necessary to make informed decisions. By exploring both the advantages and drawbacks of opting for a new vehicle over a used alternative, the narrative provides readers with a comprehensive overview of the new car market. With its insightful commentary and pragmatic approach, "Are New Cars Worth Buying?" serves as an indispensable guide for individuals navigating the complex terrain of automotive purchasing.</p>
-        <p>Happy Buying!</p>
-      `,
-    },
-    { 
-        id: 2, 
-        title: 'Top 5 New Cars In Pakistan', 
-        author: 'Jane Smith', 
-        date: 'May 5, 2024', 
-        summary: 'Find out all about the top 5 new cars trending in Pakistan. Read more to know all details!',
-        image: blog2, 
-        content: `
-        <p>Hello Readers!</p>
-        <p>There are some amazing new cars in Pakistan, and today we will be looking into the top 5 of them, so gear up to join us on this journey! Authored by John Doe, this thought-provoking piece navigates through the myriad of considerations that consumers face when contemplating a new automobile purchase. Through a balanced analysis of factors such as depreciation rates, warranty coverage, and technological advancements, the article aims to equip readers with the knowledge necessary to make informed decisions. By exploring both the advantages and drawbacks of opting for a new vehicle over a used alternative, the narrative provides readers with a comprehensive overview of the new car market. With its insightful commentary and pragmatic approach, "Are New Cars Worth Buying?" serves as an indispensable guide for individuals navigating the complex terrain of automotive purchasing.</p>
-        <p>Happy Buying!</p>
-      `,
-      }, { 
-        id: 3, 
-        title: 'Upcoming Electric Cars of Tomorrow', 
-        author: 'Jane Smith', 
-        date: 'May 15, 2024', 
-        summary: 'Dive into a world of electric cars as we discuss all about it in this article!',
-        image: blog3, 
-        content: `
-        <p>Hello Readers!</p>
-        <p>There are some amazing new cars in Pakistan, and today we will be looking into the top 5 of them, so gear up to join us on this journey! Authored by John Doe, this thought-provoking piece navigates through the myriad of considerations that consumers face when contemplating a new automobile purchase. Through a balanced analysis of factors such as depreciation rates, warranty coverage, and technological advancements, the article aims to equip readers with the knowledge necessary to make informed decisions. By exploring both the advantages and drawbacks of opting for a new vehicle over a used alternative, the narrative provides readers with a comprehensive overview of the new car market. With its insightful commentary and pragmatic approach, "Are New Cars Worth Buying?" serves as an indispensable guide for individuals navigating the complex terrain of automotive purchasing.</p>
-        <p>Happy Buying!</p>
-      `,
-    },
-  ]);
-
   const userDat = {
     avatar: profile1, // Placeholder image URL
     name: 'John Doe',
@@ -260,22 +219,13 @@ function App() {
     }
   ];
 
-  const handleDeleteBlog = (id) => {
-    const updatedBlogs = blogs.filter(blog => blog.id !== id);
-    setBlogs(updatedBlogs);
-  };
-
-  const handleSaveBlog = (formData, id) => {
-    const updatedBlogs = blogs.map(blog => (blog.id === id ? { ...blog, ...formData } : blog));
-    setBlogs(updatedBlogs);
-  };
 
   const handleDeleteUser = (id) => {
     const updatedUsers = userData.filter(user => user.id !== id);
     setUserData(updatedUsers);
   };
 
-  const [role, setRole] = useState('none');
+  const [role, setRole] = useState('');
   useEffect(() =>{
     const fetchUser = async () => {
       try {
@@ -305,13 +255,13 @@ function App() {
           {/*Vehicles */}   
           <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} /> 
           <Route path="/vehicles/add" element={<VehicleForm role={role} />} />
-    <Route path="/vehicles/edit/:id" element={<VehicleForm role={role} />} />
-    <Route path="/vehicles/:id" element={<VehicleDetails role={role} />} />
+          <Route path="/vehicles/edit/:id" element={<VehicleForm role={role} />} />
+         <Route path="/vehicles/:id" element={<VehicleDetails role={role} />} />
 
           {/*Blogs */}
           <Route path="/blogs" element={<Blogs role={role} />} />
-          <Route path="/blogs/add" element={<IndividualBlogEditPage role={role} />} />
-          <Route path="/blogs/edit/:id" element={<IndividualBlogEditPage role={role} />} />
+          <Route path="/blogs/add" element={<BlogForm />} />
+          <Route path="/blogs/edit/:id" element={<BlogForm />} />     
           <Route path="/blogs/:id" element={<IndividualBlogPage role={role} />} />
 
           {/*Invoices */}
@@ -319,14 +269,14 @@ function App() {
           <Route path="/invoices/:id" element={<DetailInvoicePage invoices={invoices} />} />
 
           {/*View all Dealers*/}
-          <Route path="/dealers" element={<DealerListPage dealers={dealers} role='user' />} />
+          <Route path="/dealers" element={<DealerListPage dealers={dealers} role={role} />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
 
           {/*Ads*/}
-          <Route path="/ads" element={<AdListPage role='dealer'/>} />
+          <Route path="/ads" element={<AdListPage role={role}/>} />
           <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
           <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
-          <Route path="/ads/edit/new" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />    
+          <Route path="/ads/edit/add" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />    
 
           {/*Analytics */}          
           <Route path="/analytics" element={<AnalyticsPage analytics={analytics}/>}/>

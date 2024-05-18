@@ -9,7 +9,6 @@ const IndividualBlogEditPage = ({ blogs, onSave }) => {
   const [formData, setFormData] = useState({
     title: blog.title,
     author: blog.author,
-    summary: blog.summary,
     content: blog.content
   });
 
@@ -35,10 +34,6 @@ const IndividualBlogEditPage = ({ blogs, onSave }) => {
         <div>
           <label>Author:</label>
           <input type="text" name="author" value={formData.author} onChange={handleChange} />
-        </div>
-        <div>
-          <label>Summary:</label>
-          <textarea name="summary" value={formData.summary} onChange={handleChange} />
         </div>
         <div>
           <label>Content:</label>

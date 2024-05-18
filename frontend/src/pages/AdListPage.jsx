@@ -48,7 +48,7 @@ const AdListPage = ({role}) => {
     <div>
        {role === 'dealer' && (
         <>
-      <Link to="/ads/edit/new">Add New Ad</Link> {/* Link to the ad edit page for adding new ad */}
+      <Link to="/ads/edit/add">Add New Ad</Link> {/* Link to the ad edit page for adding new ad */}
       </>
       )}
       <AdListComponent ads={ads} onDelete={handleDelete} role={role} />
