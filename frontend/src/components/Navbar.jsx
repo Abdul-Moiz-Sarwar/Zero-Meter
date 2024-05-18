@@ -1,7 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 //  <img src="C:\Users\techzone\Documents\1.6th semester\Web Prog\vehiclerental\src\assests\ZeroMeterlogo.png" className="logo" alt="Logo" />
 const Navbar = () => {
+
+
+    const handleLogout = async () => {
+        try {
+            const res = await axios.post('http://localhost:3000/accounts/logout',{}, { withCredentials: true });
+            console.log("logged out")
+          } catch (error) {
+            console.error('Error logging out', error);
+          }
+    }
+
+
     return (
         <div className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container">
@@ -60,6 +73,9 @@ const Navbar = () => {
                         </li>
                         <li className="nav-item">
                             <Link className="nav-link" to="/checkout">Checkout</Link> 
+                        </li>
+                        <li>
+                            <button onClick={handleLogout} >Logout</button>
                         </li>
                     </ul>
                 </div>

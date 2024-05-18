@@ -1,106 +1,100 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const VehicleFormComponent = ({ onSubmit, vehicle }) => {
+const VehicleFormComponent = ({ vehicle }) => {
     const navigate = useNavigate();
+    
     const [formData, setFormData] = useState(vehicle || {
-        title: '',
-        image: '',
-        price: '',
-        specifications: {
-            type: '',
-            company: '',
-            model: '',
-            variant: '',
-            modelYear: '',
-            engineSize: '',
-            horsePower: '',
-            color: '',
-            mileage: '',
-            transmission: '',
-            topSpeed: '',
-            rating: ''
-        }
+        testdrive: false,
+        status: 'unsold',
+        datesold: null,
+        buyprice: '',
+        sellprice: null,
+        company: '',
+        model: '',
+        varient: '',
+        year: '',
+        power: '',
+        color: '',
+        mileage: '',
+        transmission: 'automatic',
+        type: 'car',
     });
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, type, checked } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: type === 'checkbox' ? checked : value
         });
     };
-
+    
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmit(formData);
-        navigate('/vehicles');
-        alert("Successfully updated!");
+        console.log(formData);
+        axios.post('http://localhost:3000/vehicles', formData, {withCredentials: true})
+        .then( (res,err) => {console.log(res.data); navigate('/vehicles')})
+        .catch( (res,err) => {console.log(res.response.data);});
+        console.log(formData);
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <div>
-                <label>Title:</label>
-                <input type="text" name="title" value={formData.title} onChange={handleChange} style={{ width: '300px' }}/>
+        <form className="form w-100 m-auto p-5 bg-light" onSubmit={handleSubmit}>
+            <h1 className="h3 mb-3 fw-normal">Add New Vehicle</h1>
+
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="text" className="form-control" id="company" placeholder="company" name="company" value={formData.company} onChange={handleChange} required/>
+                <label htmlFor="company">Company</label>
             </div>
-            <div>
-                <label>Image:</label>
-                <input type="text" name="image" value={formData.image} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="text" className="form-control" id="model" placeholder="model" name="model" value={formData.model} onChange={handleChange} required/>
+                <label htmlFor="model">Model</label>
             </div>
-            <div>
-                <label>Price:</label>
-                <input type="text" name="price" value={formData.price} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="text" className="form-control" id="varient" placeholder="varient" name="varient" value={formData.varient} onChange={handleChange} required/>
+                <label htmlFor="varient">Varient</label>
             </div>
-            <div>
-                <label>Type:</label>
-                <input type="text" name="type" value={formData.specifications.type} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="text" className="form-control" id="color" placeholder="color" name="color" value={formData.color} onChange={handleChange} required/>
+                <label htmlFor="color">Color</label>
             </div>
-            <div>
-                <label>Company:</label>
-                <input type="text" name="company" value={formData.specifications.company} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="text" className="form-control" id="power" placeholder="power" name="power" value={formData.power} onChange={handleChange} required/>
+                <label htmlFor="power">Power</label>
             </div>
-            <div>
-                <label>Model:</label>
-                <input type="text" name="model" value={formData.specifications.model} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="number" className="form-control" id="mileage" placeholder="mileage" name="mileage" value={formData.mileage} onChange={handleChange} required/>
+                <label htmlFor="mileage">Mileage</label>
             </div>
-            <div>
-                <label>Variant:</label>
-                <input type="text" name="variant" value={formData.specifications.variant} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="text" className="form-control" id="year" placeholder="year" name="year" value={formData.year} onChange={handleChange} required/>
+                <label htmlFor="year">Model Year</label>
             </div>
-            <div>
-                <label>Model Year:</label>
-                <input type="text" name="modelYear" value={formData.specifications.modelYear} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <input type="number" className="form-control" id="buyprice" placeholder="buyprice" name="buyprice" value={formData.buyprice} onChange={handleChange} required/>
+                <label htmlFor="buyprice">Bought Price</label>
             </div>
-            <div>
-                <label>Engine Size:</label>
-                <input type="text" name="engineSize" value={formData.specifications.engineSize} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <select className="form-select" id="transmission" name="transmission" placeholder="transmission" value={formData.transmission} onChange={handleChange} required>
+                    <option value="manual">Manual</option>
+                    <option value="automatic">Automatic</option>
+                </select>
+                <label htmlFor="transmission">Transmission</label>
             </div>
-            <div>
-                <label>Horse Power:</label>
-                <input type="text" name="horsePower" value={formData.specifications.horsePower} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-floating m-1" bis_skin_checked="1">
+                <select className="form-select" id="type" name="type" placeholder="type" value={formData.type} onChange={handleChange} required>
+                    <option value="car">Car</option>
+                    <option value="bike">Bike</option>
+                </select>
+                <label htmlFor="type">Type</label>
             </div>
-            <div>
-                <label>Color:</label>
-                <input type="text" name="color" value={formData.specifications.color} onChange={handleChange} style={{ width: '300px' }}/>
+            <div className="form-check text-start m-3" bis_skin_checked="1">
+                <input className="form-check-input" type="checkbox" id="testdrive" name="testdrive" checked={formData.testdrive} onChange={handleChange}/>
+                <label className="form-check-label" htmlFor="testdrive"> Test Drive </label>
             </div>
-            <div>
-                <label>Mileage:</label>
-                <input type="text" name="mileage" value={formData.specifications.mileage} onChange={handleChange} style={{ width: '300px' }}/>
-            </div>
-            <div>
-                <label>Transmission:</label>
-                <input type="text" name="transmission" value={formData.specifications.transmission} onChange={handleChange} style={{ width: '300px' }}/>
-            </div>
-            <div>
-                <label>Top Speed:</label>
-                <input type="text" name="topSpeed" value={formData.specifications.topSpeed} onChange={handleChange} style={{ width: '300px' }}/>
-            </div>
-            <div>
-                <label>Rating:</label>
-                <input type="text" name="rating" value={formData.specifications.rating} onChange={handleChange} style={{ width: '300px' }}/>
-            </div>
-            <button type="submit">Submit</button>
+            
+            <button className="btn btn-primary w-100 py-2" type="submit">Add Vehicle</button>
         </form>
     );
 }

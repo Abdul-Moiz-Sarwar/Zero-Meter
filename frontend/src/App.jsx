@@ -78,70 +78,6 @@ import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
 
-  const [vehicles, setVehicles] = useState([
-    {
-        id: 1,
-        title: 'Vehicle 1',
-        image: image1,
-        price: '$10,000',
-        specifications: {
-            type: 'Car',
-            company: 'Toyota',
-            model: 'Corolla',
-            variant: 'GLi',
-            modelYear: '2022',
-            engineSize: '1.6L',
-            horsePower: '120hp',
-            color: 'Black',
-            mileage: '25,000 km',
-            transmission: 'Automatic',
-            topSpeed: '180 km/h',
-            rating: '4.5/5'
-        }
-    },
-    {
-      id: 2,
-      title: 'Tuscan 2024',
-      image: image2,
-      price: '$30,000',
-      specifications: {
-          type: 'Car',
-          company: 'Toyota',
-          model: 'Corolla',
-          variant: 'GLi',
-          modelYear: '2022',
-          engineSize: '1.6L',
-          horsePower: '120hp',
-          color: 'Black',
-          mileage: '25,000 km',
-          transmission: 'Automatic',
-          topSpeed: '180 km/h',
-          rating: '4.5/5'
-      }
-  },
-  {
-      id: 3,
-      title: 'Ford Ranger',
-      image: image3,
-      price: '$30,000',
-      specifications: {
-          type: 'Car',
-          company: 'Toyota',
-          model: 'Corolla',
-          variant: 'GLi',
-          modelYear: '2022',
-          engineSize: '1.6L',
-          horsePower: '120hp',
-          color: 'Black',
-          mileage: '25,000 km',
-          transmission: 'Automatic',
-          topSpeed: '180 km/h',
-          rating: '4.5/5'
-      }
-  },
-    // Add more vehicles as needed
-  ]);
-
   const addd=[
     {
       id: 1,
@@ -303,7 +239,6 @@ function App() {
     }
   };
 
-
   const analytics = [
     {
       image: analytic1,
@@ -340,22 +275,7 @@ function App() {
     setUserData(updatedUsers);
   };
 
-  const handleSaveVehicle = (formData) => {
-    const updatedVehicles = [...vehicles];
-    // Check if the vehicle already exists
-    const index = updatedVehicles.findIndex(vehicle => vehicle.id === formData.id);
-    if (index !== -1) {
-        // If exists, update it
-        updatedVehicles[index] = formData;
-    } else {
-        // If doesn't exist, add it
-        formData.id = updatedVehicles.length + 1;
-        updatedVehicles.push(formData);
-    }
-    setVehicles(updatedVehicles);
-  };
-
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('none');
   useEffect(() =>{
     const fetchUser = async () => {
       try {
@@ -383,16 +303,16 @@ function App() {
           <Route path="/login" element={<LogIn />} />  
 
           {/*Vehicles */}   
-          <Route path="/vehicles" element={<ViewVehiclesPage role='dealer' />} /> 
-          <Route path="/vehicles/add" element={<VehicleFormComponent vehicles={vehicles} />} />
-          <Route path="/vehicles/edit/:id" element={<VehicleFormComponent vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
-          <Route path="/vehicles/:id" element={<VehicleDetails vehicles={vehicles} onSubmit={handleSaveVehicle}/>} />
+          <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} /> 
+          <Route path="/vehicles/add" element={<VehicleFormComponent role={role} />} />
+          <Route path="/vehicles/edit/:id" element={<VehicleFormComponent role={role} />} />
+          <Route path="/vehicles/:id" element={<VehicleDetails role={role}/>} />
 
           {/*Blogs */}
-          <Route path="/blogs" element={<Blogs role='user'  />} />
-          <Route path="/blogs/add" element={<IndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
-          <Route path="/blogs/edit/:id" element={<IndividualBlogEditPage blogs={blogs} onSave={handleSaveBlog} />} />
-          <Route path="/blogs/:id" element={<IndividualBlogPage blogs={blogs} onDelete={handleDeleteBlog} />} />
+          <Route path="/blogs" element={<Blogs role={role} />} />
+          <Route path="/blogs/add" element={<IndividualBlogEditPage role={role} />} />
+          <Route path="/blogs/edit/:id" element={<IndividualBlogEditPage role={role} />} />
+          <Route path="/blogs/:id" element={<IndividualBlogPage role={role} />} />
 
           {/*Invoices */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />

@@ -165,11 +165,9 @@ const signup = async (req,res) => {
             return res.status(400).json({message: "dealership with this registration already exists"})
         }
         
-            
-        console.log("hello")
         //check if user already exists
         try {
-            existingUser = await Accounts.User.findOne({username:(username + '@' + dealership)});
+            existingUser = await Accounts.User.findOne({username:(username + '@' + dealershipname)});
         }
         catch (err) {
             console.log(err);
@@ -212,14 +210,12 @@ const signup = async (req,res) => {
         if(req.body.facebook){
             facebook = req.body.facebook
         }
-        //get coordinates using maps
-        let lat = 0, lng = 0;
         //create dealership
         const dealer = new Accounts.Dealership({
-            name: req.body.dealership,
+            name: req.body.dealershipname,
             registration: req.body.registration,
-            lat: lat,
-            lng: lng,
+            lat: req.body.lat,
+            lng: req.body.lng,
             instagram: instagram,
             facebook: facebook,
             status: "unverified"
@@ -234,7 +230,7 @@ const signup = async (req,res) => {
         //create admin user in Users table
         const hashedPassword = bcrypt.hashSync(password);
         const user = new Accounts.User({
-            username: req.body.username + '@' + req.body.dealership,
+            username: req.body.username + '@' + req.body.dealershipname,
             email: req.body.email,
             phone: req.body.phone,
             cnic: req.body.cnic,
@@ -277,8 +273,7 @@ const verifyToken = (req, res, next) => {
     });
 }
 
-const verifyRefresh = (req,res) => {   
-        
+const verifyRefresh = (req,res) => {
     const cookies = req.headers.cookie;
     if (!cookies) {
         return res.status(404).json({ message: "Cookies not found" });

@@ -22,11 +22,11 @@ const VehicleSchema = new Schema({
     },
     sellprice: {
         type: Number,
-        required: true
+        default: null
     },
     datesold: {
         type: Date,
-        required: true
+        default: null
     },
     datecreated: {
         type: Date,
@@ -62,6 +62,10 @@ const VehicleSchema = new Schema({
     },
     mileage: {
         type: Number,
+        required: true
+    },
+    transmission: {
+        type: String,
         required: true
     },
 });

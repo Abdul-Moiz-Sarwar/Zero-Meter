@@ -1,6 +1,6 @@
 import React, { useState,useRef,useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
-
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const containerStyle = {
@@ -15,6 +15,25 @@ const defaultCenter = {
 
 
 const SignupForm = () => {
+    const [formData, setFormData] = useState({
+        username: '',
+        email: '',
+        password: '',
+        type: '',
+        phone: '',
+        address: '',
+        city: '',
+        country: '',
+        cnic: '',
+        dealershipname: '',
+        registration: '',
+        instagram:'',
+        facebook:'',
+        lat:'',
+        lng:'',
+    });
+
+    const navigate = useNavigate()
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -31,7 +50,8 @@ const SignupForm = () => {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
-                    setCenter({ lat: latitude, lng: longitude });      
+                    setCenter({ lat: latitude, lng: longitude });
+                    setFormData({ ...formData, ['lat']: latitude, ['lng']: longitude });
                 },
                 (error) => {
                     console.error('Error fetching location:', error);
@@ -51,18 +71,8 @@ const SignupForm = () => {
     const handleMapClick = (event) => {
         setMarkerPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
         setCenter({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+        setFormData({ ...formData, ['lat']: event.latLng.lat(), ['lng']: event.latLng.lng() });
     };
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        type: '',
-        phone: '',
-        address: '',
-        city: '',
-        country: '',
-        cnic: '',
-    });
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -70,12 +80,10 @@ const SignupForm = () => {
     };
 
     const handleSubmit = (e) => {
-        console.log(e);
-        console.log(formData);
         e.preventDefault();
         axios.post('http://localhost:3000/accounts/signup', formData)
-        .then( (res,err) => {console.log(res.data);})
-        .catch( (res,err) => {console.log(err);});
+        .then( (res,err) => {console.log(res.data); navigate('/login')})
+        .catch( (res,err) => {console.log(res.response.data);});
         console.log(formData);
     };
 
@@ -138,11 +146,11 @@ s            <form onSubmit={handleSubmit}>
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="instagram" className="form-label">Intagram Link</label>
-                                <input type="text" className="form-control" id="instagram" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="Enter your instagram link" required />
+                                <input type="text" className="form-control" id="instagram" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="Enter your instagram link" />
                             </div>
                             <div className="mb-3">
                                 <label htmlFor="facebook" className="form-label">Facebook Link</label>
-                                <input type="text" className="form-control" id="facebook" name="facebook" value={formData.facebook} onChange={handleChange} placeholder="Enter your facebook link" required />
+                                <input type="text" className="form-control" id="facebook" name="facebook" value={formData.facebook} onChange={handleChange} placeholder="Enter your facebook link" />
                             </div>
                             <div className="mb-3">
                                 <GoogleMap

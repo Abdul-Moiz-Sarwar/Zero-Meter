@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
+
+    const navigator = useNavigate();
+
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -15,8 +19,8 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         axios.post('http://localhost:3000/accounts/login', formData, {withCredentials: true})
-        .then( (res,err) => {console.log(res.data);})
-        .catch( (res,err) => {console.log(err);});
+        .then( (res,err) => {console.log(res.data); navigator('/');})
+        .catch( (res,err) => {console.log(res.response.data);});
         console.log(formData);
     };
 

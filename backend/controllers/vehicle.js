@@ -1,7 +1,7 @@
 const vehicle = require('../models/vehicle')
 
 //get all vehicles
-const getVehicles = (req, res) => { 
+const getVehicles = (req, res) => {
     try{
         vehicle.find({dealership:req.id})
         .then((data) => {res.send(data);})
@@ -29,7 +29,10 @@ const getVehicle = async (req, res) => {
 //add one vehicle
 const addVehicle = (req, res) => {
     const requiredFields = ['testdrive', 'status', 'datesold', 'buyprice', 'sellprice',
-    'type', 'company', 'model', 'varient', 'year','power','color','mileage'];
+    'type', 'company', 'model', 'varient', 'year','power','color','mileage', 'transmission'];
+
+    console.log(req.body)
+
     const missingFields = requiredFields.filter(field => !(field in req.body));
     if(missingFields.length > 0){
         return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
@@ -49,6 +52,7 @@ const addVehicle = (req, res) => {
     veh.power = req.body.power
     veh.color = req.body.color
     veh.mileage = req.body.mileage
+    veh.transmission = req.body.transmission
     veh.datecreated = Date.now()
     try{
         veh.save()
@@ -84,6 +88,7 @@ const updateVehicle = (req, res) => {
                 power: req.body.power,
                 color: req.body.color,
                 mileage: req.body.mileage,
+                transmission : req.body.transmission,
             }
         },{
             upsert: false
