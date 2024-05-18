@@ -1,7 +1,7 @@
 // AdEditPage.js
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import AdForm from './AdForm';
+import AdForm from '../extra/AdForm';
 
 const AdEditPage = ({ ads, onSave }) => {
   const { id } = useParams();

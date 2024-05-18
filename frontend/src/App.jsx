@@ -78,45 +78,6 @@ import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
 
-  const addd=[
-    {
-      id: 1,
-      title: 'Ad 1',
-      description: 'Description of Ad 1',
-      imageUrl: ad1,
-      startDate: '2024-05-01',
-      endDate: '2024-05-10'
-    },
-  ];
-
-  const [ads, setAds] = useState([
-    {
-      id: 1,
-      title: 'Ad 1',
-      description: 'Description of Ad 1',
-      imageUrl: ad1,
-      startDate: '2024-05-01',
-      endDate: '2024-05-10'
-    },
-    {
-      id: 2,
-      title: 'Ad 2',
-      description: 'Description of Ad 2',
-      imageUrl: ad2,
-      startDate: '2024-05-05',
-      endDate: '2024-05-15'
-    },
-    {
-      id: 3,
-      title: 'Ad 3',
-      description: 'Description of Ad 3',
-      imageUrl: ad3,
-      startDate: '2024-05-05',
-      endDate: '2024-05-15'
-    },
-    // Add more ads as needed
-  ]);
-
   const invoices = [
     {
       id: 1,
@@ -187,16 +148,6 @@ function App() {
       phone: '533-986-4522',
     },
   ]);
-
-  const handleSaveAd = (formData, id) => {
-    if (id) {
-      const updatedAds = ads.map(ad => (ad.id === id ? { ...ad, ...formData } : ad));
-      setAds(updatedAds);
-    } else {
-      const newAd = { id: ads.length + 1, ...formData };
-      setAds([...ads, newAd]);
-    }
-  };
 
   const analytics = [
     {
@@ -272,11 +223,13 @@ function App() {
           <Route path="/dealers" element={<DealerListPage dealers={dealers} role={role} />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
 
-          {/*Ads*/}
+          {/*Ads
+          <Route path="/ads/edit/:id" element={<AdEditPage  />} />
+          <Route path="/ads/edit/add" element={<AdEditPage  />} />    
+          */}
           <Route path="/ads" element={<AdListPage role={role}/>} />
-          <Route path="/ads/:id" element={<AdDetailPage ads={ads} />} />
-          <Route path="/ads/edit/:id" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />
-          <Route path="/ads/edit/add" element={<AdEditPage ads={ads} onSave={handleSaveAd} />} />    
+          <Route path="/ads/:id" element={<AdDetailPage role={role}/>} />
+
 
           {/*Analytics */}          
           <Route path="/analytics" element={<AnalyticsPage analytics={analytics}/>}/>
@@ -292,8 +245,9 @@ function App() {
           <Route path="/userlist" element={<UserList userData={userData} onDelete={handleDeleteUser} />} />
           <Route path="/userlist/:id" element={<UserDetail userData={userData} />} />
 
-          {/*Checkout */}
-          <Route path="/checkout" element={<CheckoutPage ad={addd}/>} />
+          {/*Checkout 
+                    <Route path="/checkout" element={<CheckoutPage ad={addd}/>} />
+          */}
 
         </Routes>
         <Footer />

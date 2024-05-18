@@ -4,28 +4,36 @@ import VehicleListComponent from './VehicleListComponent';
 import { Link } from 'react-router-dom';
 
 const VehiclesPage = ({ role }) => {
-
     const [vehicles, setVehicles] = useState([]);
 
-    useEffect(() =>{
+    useEffect(() => {
         const fetchVehicles = async () => {
-          try {
-            const res = await axios.get('http://localhost:3000/vehicles/', { withCredentials: true });
-            setVehicles(res.data);
-          } catch (error) {
-            console.error('Error fetching vehicles data:', error);
-          }
+            try {
+                const res = await axios.get('http://localhost:3000/vehicles/', { withCredentials: true });
+                setVehicles(res.data);
+            } catch (error) {
+                console.error('Error fetching vehicles data:', error);
+            }
         };
-        fetchVehicles()
-      },[]);
+        fetchVehicles();
+    }, []);
 
     const handleDeleteVehicle = async (id) => {
         try {
-            const res = await axios.delete(`http://localhost:3000/vehicles/${id}`, { withCredentials: true });
+            await axios.delete(`http://localhost:3000/vehicles/${id}`, { withCredentials: true });
             setVehicles(prevVehicles => prevVehicles.filter(vehicle => vehicle._id !== id));
-          } catch (error) {
-            console.error('Error deleting vehicles data:', error);
-          }
+        } catch (error) {
+            console.error('Error deleting vehicle data:', error);
+        }
+    };
+
+    const handleCreateAd = async (vehicleId) => {
+        try {
+            await axios.post('http://localhost:3000/ads/', { vehicleId }, { withCredentials: true });
+            // Optionally, you can fetch and update ads or notify the user
+        } catch (error) {
+            console.error('Error creating ad from vehicle:', error);
+        }
     };
 
     return (
@@ -36,7 +44,7 @@ const VehiclesPage = ({ role }) => {
                     <Link to="/vehicles/add" className="btn btn-primary mb-3">Add Vehicle</Link>
                 </div>
             )}
-            <VehicleListComponent vehicles={vehicles} role={role} onDelete={handleDeleteVehicle} />
+            <VehicleListComponent vehicles={vehicles} role={role} onDelete={handleDeleteVehicle} onCreateAd={handleCreateAd} />
         </div>
     );
 };

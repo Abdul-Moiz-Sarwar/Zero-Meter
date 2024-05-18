@@ -1,4 +1,5 @@
 const ad = require('../models/ad')
+const vehicle=require('../models/vehicle')
 
 //get all ad
 const getAds = (req, res) => { 
@@ -27,7 +28,7 @@ const getAd = async (req, res) => {
 }
 
 //add one ad
-const addAd = (req, res) => {
+/*const addAd = (req, res) => {
     const requiredFields = ['vehicle', 'price'];
     const missingFields = requiredFields.filter(field => !(field in req.body));
     if(missingFields.length > 0){
@@ -45,7 +46,34 @@ const addAd = (req, res) => {
         console.error('Error fetching ad:', error);
         res.status(500).json({ error: 'Internal Server Error during Add Ad' });
     }
-}
+}*/
+
+const addAd = async (req, res) => {
+    const requiredFields = ['vehicleId'];
+    const missingFields = requiredFields.filter(field => !(field in req.body));
+    if (missingFields.length > 0) {
+        return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
+    }
+
+    try {
+        const vehicleData = await vehicle.findById(req.body.vehicleId);
+        if (!vehicleData) {
+            return res.status(404).json({ message: "Vehicle not found" });
+        }
+
+        const newAd = new ad({
+            vehicle: vehicleData._id,
+            price: vehicleData.buyprice, // Take price from vehicle's sellprice attribute
+            datecreated: new Date(),
+        });
+
+        await newAd.save();
+        res.status(201).json(newAd);
+    } catch (error) {
+        console.error('Error creating ad:', error);
+        res.status(500).json({ error: 'Internal Server Error during Add Ad' });
+    }
+};
 
 //update one ad
 const updateAd = (req, res) => {
