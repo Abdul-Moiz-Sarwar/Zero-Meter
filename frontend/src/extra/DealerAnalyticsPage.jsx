@@ -1,6 +1,6 @@
 // ViewDealerAnalyticsPage.js
 import React from 'react';
-import DealerAnalyticsComponent from './DealerAnalyticsComponent';
+import DealerAnalyticsComponent from '../pages/AnalyticsComponent';
 
 const ViewDealerAnalyticsPage = () => {
   // Dummy data for dealer analytics

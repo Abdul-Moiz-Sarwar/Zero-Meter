@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-const AdminIndividualBlogEditPage = ({ blogs, onSave }) => {
+const IndividualBlogEditPage = ({ blogs, onSave }) => {
   const { id } = useParams();
   const blog = blogs.find(blog => blog.id === parseInt(id));
   const navigate = useNavigate(); // Initialize useNavigate
@@ -21,7 +21,7 @@ const AdminIndividualBlogEditPage = ({ blogs, onSave }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(formData, id);
-    navigate(`/admin/blogs/${id}`); // Redirect after saving
+    navigate(`/blogs/${id}`); // Redirect after saving
   };
 
   return (
@@ -50,4 +50,4 @@ const AdminIndividualBlogEditPage = ({ blogs, onSave }) => {
   );
 }
 
-export default AdminIndividualBlogEditPage;
+export default IndividualBlogEditPage;

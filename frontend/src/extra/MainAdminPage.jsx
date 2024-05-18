@@ -1,6 +1,6 @@
 // Main Admin Page
 import React from 'react';
-import AdminAnalyticsPage from './AdminAnalyticsPage';
+import AdminAnalyticsPage from '../pages/AdminAnalyticsPage';
 import analytic1 from './images/analytics1.png';
 import analytic2 from './images/analytics2.png';
 import analytic3 from './images/analytics3.png';

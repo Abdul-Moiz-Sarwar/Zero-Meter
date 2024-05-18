@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import BlogComponent from './BlogComponent';
 import blog1 from './images/blog1.png';
 import blog2 from './images/blog2.jpg';
@@ -15,7 +14,7 @@ const Blogs = ({ role }) => {
     content: '',
   });
 
-  const blogs = [
+  const [blogs, setBlogs] = useState([
     {
       id: 1,
       title: 'Are New Cars Worth Buying?',
@@ -55,7 +54,7 @@ const Blogs = ({ role }) => {
         <p>Happy Buying!</p>
       `,
     },
-  ];
+  ]);
 
   const handleDeleteBlog = (id) => {
     const updatedBlogs = blogs.filter(blog => blog.id !== id);
@@ -66,6 +65,8 @@ const Blogs = ({ role }) => {
     e.preventDefault();
     // Handle form submission
     console.log(formData);
+    // Add the new blog to the list
+    setBlogs([...blogs, { ...formData, id: blogs.length + 1 }]);
     // Reset form data and hide the form
     setFormData({
       title: '',
@@ -87,40 +88,44 @@ const Blogs = ({ role }) => {
   return (
     <div className="blogs-container">
       {blogs.map((blog) => (
-        <BlogComponent key={blog.id} blog={blog} role={role} onDelete={handleDeleteBlog}/>
+        <BlogComponent key={blog.id} blog={blog} role={role} onDelete={handleDeleteBlog} />
       ))}
-      <button className="btn btn-primary" onClick={() => setShowAddForm(true)}>
-        Add Blog
-      </button>
-      {showAddForm && (
-        <div className="card mt-3">
-          <div className="card-header">Add Blog</div>
-          <div className="card-body">
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Title</label>
-                <input type="text" className="form-control" name="title" value={formData.title} onChange={handleChange} />
+      {role === 'admin' && (
+        <>
+          <button className="btn btn-primary" onClick={() => setShowAddForm(true)}>
+            Add Blog
+          </button>
+          {showAddForm && (
+            <div className="card mt-3">
+              <div className="card-header">Add Blog</div>
+              <div className="card-body">
+                <form onSubmit={handleSubmit}>
+                  <div className="form-group">
+                    <label>Title</label>
+                    <input type="text" className="form-control" name="title" value={formData.title} onChange={handleChange} />
+                  </div>
+                  <div className="form-group">
+                    <label>Author</label>
+                    <input type="text" className="form-control" name="author" value={formData.author} onChange={handleChange} />
+                  </div>
+                  <div className="form-group">
+                    <label>Date</label>
+                    <input type="text" className="form-control" name="date" value={formData.date} onChange={handleChange} />
+                  </div>
+                  <div className="form-group">
+                    <label>Summary</label>
+                    <input type="text" className="form-control" name="summary" value={formData.summary} onChange={handleChange} />
+                  </div>
+                  <div className="form-group">
+                    <label>Content</label>
+                    <textarea className="form-control" name="content" value={formData.content} onChange={handleChange}></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-primary">Add</button>
+                </form>
               </div>
-              <div className="form-group">
-                <label>Author</label>
-                <input type="text" className="form-control" name="author" value={formData.author} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>Date</label>
-                <input type="text" className="form-control" name="date" value={formData.date} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>Summary</label>
-                <input type="text" className="form-control" name="summary" value={formData.summary} onChange={handleChange} />
-              </div>
-              <div className="form-group">
-                <label>Content</label>
-                <textarea className="form-control" name="content" value={formData.content} onChange={handleChange}></textarea>
-              </div>
-              <button type="submit" className="btn btn-primary">Add</button>
-            </form>
-          </div>
-        </div>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

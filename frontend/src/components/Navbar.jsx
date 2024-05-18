@@ -29,46 +29,37 @@ const Navbar = () => {
                             <Link className="nav-link" to="/contact">Contact Us</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/signup">Sign Up</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/signup">Sign Up</Link> 
                         </li>
                          <li className="nav-item">
-                            <Link className="nav-link" to="/login">Log In</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/login">Log In</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/dealerprofile">Dealer Profile</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/dealerprofile">Dealer Profile</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/invoices">Invoices</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/invoices">Invoices</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/dealer-analytics">Analytics</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/ads">Ads</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/ads">Ads</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/payment">Payment</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/userads">User Ads</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/userprofile">User Profile</Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/payment">Payment</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/dealers">View Dealers</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/userprofile">User Profile</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/analytics">Analytics</Link> 
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link" to="/dealers">View Dealers</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/userlist">View Users</Link> 
                         </li>
                         <li className="nav-item">
-                        <Link className="nav-link" to="/admin/blogs">Admin Blogs</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/admin/ads">Admin Ads</Link> {/* Update link to redirect to Contact Us page */}
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/admin/analytics">Admin Analytics</Link> {/* Update link to redirect to Contact Us page */}
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/admin/dealers">Admin Dealers</Link> {/* Update link to redirect to Contact Us page */}
+                            <Link className="nav-link" to="/checkout">Checkout</Link> 
                         </li>
                     </ul>
                 </div>

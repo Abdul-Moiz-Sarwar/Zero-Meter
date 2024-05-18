@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import DealerDetailsPage from './DealerDetailsPage'; // Assuming you want to reuse the existing DealerDetailsPage component
+import DealerDetailsPage from '../pages/DealerDetailsPage'; // Assuming you want to reuse the existing DealerDetailsPage component
 
 const AdminDealerDetailsPage = ({ dealers }) => {
   const { id } = useParams();

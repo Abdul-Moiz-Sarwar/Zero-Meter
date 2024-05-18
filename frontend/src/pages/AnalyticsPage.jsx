@@ -1,7 +1,6 @@
-// AdminAnalyticsPage.jsx
 import React from 'react';
 
-const AdminAnalyticsPage = ({ analytics }) => {
+const AnalyticsPage = ({ analytics }) => {
   return (
     <div className="container">
       <h1 className="text-center">Dealer Analytics</h1>
@@ -24,4 +23,4 @@ const AdminAnalyticsPage = ({ analytics }) => {
   );
 }
 
-export default AdminAnalyticsPage;
+export default AnalyticsPage;
