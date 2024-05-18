@@ -17,6 +17,7 @@ const VehicleListComponent = ({ vehicles, role, onDelete }) => {
                                 <>
                                     <button className="btn btn-danger me-2" onClick={() => onDelete(vehicle._id)}>Delete</button>
                                     <Link to={`/vehicles/edit/${vehicle._id}`} className="btn btn-secondary">Edit</Link>
+
                                 </>
                             )}
                     </div>

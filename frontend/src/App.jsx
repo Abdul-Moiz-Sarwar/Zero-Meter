@@ -27,11 +27,11 @@ import blog3 from './pages/images/blog3.jpg';
 
 // Vehicles
 import ViewVehiclesPage from './pages/VehiclesPage';
-import VehicleFormComponent from './pages/VehicleFormComponent';
 import VehicleDetails from './pages/VehicleDetails';
 import image1 from './pages/images/civic.jpg';
 import image2 from './pages/images/Tuscon.jpg';
 import image3 from './pages/images/fordcar.jpg';
+import VehicleForm from './pages/VehicleForm';
 
 //Invoice
 import ViewInvoicesPage from './pages/ViewInvoicesPage'; 
@@ -304,9 +304,9 @@ function App() {
 
           {/*Vehicles */}   
           <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} /> 
-          <Route path="/vehicles/add" element={<VehicleFormComponent role={role} />} />
-          <Route path="/vehicles/edit/:id" element={<VehicleFormComponent role={role} />} />
-          <Route path="/vehicles/:id" element={<VehicleDetails role={role}/>} />
+          <Route path="/vehicles/add" element={<VehicleForm role={role} />} />
+    <Route path="/vehicles/edit/:id" element={<VehicleForm role={role} />} />
+    <Route path="/vehicles/:id" element={<VehicleDetails role={role} />} />
 
           {/*Blogs */}
           <Route path="/blogs" element={<Blogs role={role} />} />

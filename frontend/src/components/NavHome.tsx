@@ -19,7 +19,6 @@ function NavHome() {
       <Nav />
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/blogs" element={<Blogs />} /> 
 
       </Routes>
     </>
