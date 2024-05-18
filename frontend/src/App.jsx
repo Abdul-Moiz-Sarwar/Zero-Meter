@@ -78,26 +78,6 @@ import CheckoutPage from './pages/CheckoutPage';
 
 function App() {
 
-  const invoices = [
-    {
-      id: 1,
-      date: '2024-05-01',
-      amount: '$1000',
-      description: 'Invoice for Car Model A'
-    },
-    {
-      id: 2,
-      date: '2024-05-05',
-      amount: '$1500',
-      description: 'Invoice for Car Model B'
-    },
-    {
-      id: 3,
-      date: '2024-05-10',
-      amount: '$2000',
-      description: 'Invoice for Car Model C'
-    }
-  ];  
 
   const userDat = {
     avatar: profile1, // Placeholder image URL
@@ -217,7 +197,7 @@ function App() {
 
           {/*Invoices */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
-          <Route path="/invoices/:id" element={<DetailInvoicePage invoices={invoices} />} />
+          <Route path="/invoices/:id" element={<DetailInvoicePage />} />
 
           {/*View all Dealers*/}
           <Route path="/dealers" element={<DealerListPage dealers={dealers} role={role} />} />
@@ -245,9 +225,9 @@ function App() {
           <Route path="/userlist" element={<UserList userData={userData} onDelete={handleDeleteUser} />} />
           <Route path="/userlist/:id" element={<UserDetail userData={userData} />} />
 
-          {/*Checkout 
-                    <Route path="/checkout" element={<CheckoutPage ad={addd}/>} />
-          */}
+          {/*Checkout           */}
+            <Route path="/checkout" element={<CheckoutPage />} />
+
 
         </Routes>
         <Footer />

@@ -1,22 +1,32 @@
-import React from 'react';
-import { useParams } from 'react-router-dom'; // Import useParams to access route parameters
-import InvoiceDetailComponent from './InvoiceDetailComponent'; // Import InvoiceDetailComponent
+// DetailInvoicePage.js
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import InvoiceDetailComponent from './InvoiceDetailComponent';
 
-const DetailInvoicePage = ({ invoices }) => {
-  // Get the id parameter from the URL
+const DetailInvoicePage = () => {
+  const [invoice, setInvoice] = useState(null);
   const { id } = useParams();
-  
-  // Find the invoice with the matching id
-  const invoice = invoices.find(invoice => invoice.id === parseInt(id));
 
-  // If the invoice is not found, display a message
+  useEffect(() => {
+    const fetchInvoice = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/invoices/${id}`, { withCredentials: true });
+        setInvoice(res.data);
+      } catch (error) {
+        console.error('Error fetching invoice data:', error);
+      }
+    };
+    fetchInvoice();
+  }, [id]);
+
   if (!invoice) {
-    return <div>Invoice not found</div>;
+    return <div>Loading...</div>;
   }
 
   return (
     <div>
-      <InvoiceDetailComponent invoice={invoice} /> {/* Render InvoiceDetailComponent */}
+      <InvoiceDetailComponent invoice={invoice} />
     </div>
   );
 }
