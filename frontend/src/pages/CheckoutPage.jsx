@@ -1,10 +1,10 @@
-// CheckoutPage.js
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const CheckoutPage = () => {
   const location = useLocation();
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
   const adId = queryParams.get('adId');
@@ -14,27 +14,34 @@ const CheckoutPage = () => {
   const variant = queryParams.get('variant');
   const color = queryParams.get('color');  
 
+  const handleConfirmOrder = async () => {
+    try {
+      // Fetch the entire ad object based on the provided ad ID
+      const response = await axios.get(`http://localhost:3000/ads/${adId}`, { withCredentials: true });
+      const ad = response.data;
 
-  const handleConfirmOrder = () => {
-    // Here you can generate and save the invoice
-   // const invoice = {
-     // adId: adId,
-      //amount: price,
-      //description: title,
-      // Add more details as needed
-    //};
+      // Create the invoice object to be stored in the database
+      const invoiceData = {
+        ad: ad, // Store the entire ad object
+        amount: price,
+        status: 'unpaid',
+        datedue: new Date(Date.now() + 1000 * 30 * 3600 * 24 * 7), // One week
+        datecreated: Date.now(),
+      };
 
-    // Redirect to invoices list after confirming the order
-    // In actual implementation, you might want to use an API call to save the invoice
-    Navigate("/invoices");
+      // Save the invoice to the database
+      await axios.post('http://localhost:3000/invoices', invoiceData, { withCredentials: true });
 
-    // You can save the invoice to the invoice list here
-    console.log("Invoice generated:", invoice);
+      // Redirect to invoices list after confirming the order
+      navigate("/invoices");
+    } catch (error) {
+      console.error('Error confirming order:', error);
+    }
   };
 
   const handleAddNewPaymentMethod = () => {
     // Redirect to the payment form to add a new payment method
-    Navigate("/payment");
+    navigate("/payment");
   };
 
   return (
