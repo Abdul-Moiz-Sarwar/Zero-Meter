@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AdDetailComponent = ({ ad, vehicle, role, onDelete }) => {
+const AdDetailComponent = ({ ad, vehicle, role, onBuyNow }) => {
     return (
         <div className='m-5'>
             <h2>Ad Details</h2>
@@ -28,8 +28,8 @@ const AdDetailComponent = ({ ad, vehicle, role, onDelete }) => {
                     )}
                     {role === 'dealer' && (
                         <>
-                            <button className="btn btn-danger me-2" onClick={onDelete}>Delete</button>
-                            <button className="btn btn-primary me-2" onClick={() => navigate(`/ads/edit/${ad._id}`)}>Edit</button>
+                            <button className="btn btn-success mt-2" onClick={onBuyNow}>Buy Now</button>
+
                         </>
                     )}
                 </div>

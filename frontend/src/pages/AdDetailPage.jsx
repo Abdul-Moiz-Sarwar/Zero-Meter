@@ -24,13 +24,8 @@ const AdDetailPage = ({ role }) => {
         fetchAd();
     }, [id]);
 
-    const handleDeleteAd = async () => {
-        try {
-            await axios.delete(`http://localhost:3000/ads/${id}`, { withCredentials: true });
-            navigate('/ads');
-        } catch (error) {
-            console.error('Error deleting ad data:', error);
-        }
+    const handleBuyNow = () => {
+        navigate(`/checkout?adId=${ad._id}&price=${ad.price}&company=${vehicle.company}&model=${vehicle.model}&variant=${vehicle.varient}&color=${vehicle.color}`);
     };
 
     if (!ad || !vehicle) {
@@ -39,7 +34,7 @@ const AdDetailPage = ({ role }) => {
 
     return (
         <div>
-            <AdDetailComponent ad={ad} vehicle={vehicle} role={role} onDelete={handleDeleteAd} />
+            <AdDetailComponent ad={ad} vehicle={vehicle} role={role} onBuyNow={handleBuyNow} />
         </div>
     );
 };

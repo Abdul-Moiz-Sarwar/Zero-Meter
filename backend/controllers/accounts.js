@@ -388,7 +388,7 @@ const isDealer = (req, res, next) => {
 const isAdmin = (req, res, next) => {
     // For testing purposes, always consider the user as an admin
     // You can remove or comment out the following lines in production
-    req.isAdmin = true; // Set a flag in the request object to indicate admin status
+    req.isAdmin = false; // Set a flag in the request object to indicate admin status
     next(); // Call next middleware
 };
 
