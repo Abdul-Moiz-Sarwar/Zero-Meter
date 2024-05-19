@@ -41,11 +41,6 @@ const AdListPage = ({ role }) => {
     }
   };
 
- /* const handleBuyNow = (ad) => {
-    // Redirect to the checkout page with ad details
-    window.location.href = `/checkout?adId=${ad._id}&price=${ad.price}&company=${ad.vehicle.company}&model=${ad.vehicle.model}&variant=${ad.vehicle.varient}&color=${ad.vehicle.color}`;
-};*/
-
   return (
     <div className="p-5 bg-light">
       <h1>Advertisments</h1>

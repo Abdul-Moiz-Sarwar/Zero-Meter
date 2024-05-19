@@ -36,6 +36,7 @@ import image3 from './pages/images/fordcar.jpg';
 //Invoice
 import ViewInvoicesPage from './pages/ViewInvoicesPage'; 
 import DetailInvoicePage from './pages/DetailInvoicePage'; 
+import PayInvoicePage from './pages/PayInvoicePage';
 
 //Ads
 import ad1 from './pages/images/ad1.jpg';
@@ -77,6 +78,8 @@ import CheckoutPage from './pages/CheckoutPage';
 
 
 function App() {
+
+  const stripekey = 'sk_test_51PID9PDEA9oSjm91LA1IW8K0vQWxi0NaFxp5bvs7Z4DLu60vmImZX5bIlBbdz9RQmbw6l8NHYl3iMhhjQZ6G9BHd00BDy2CWl7'
 
 
   const userDat = {
@@ -196,6 +199,7 @@ function App() {
           {/*Invoices */}
           <Route path="/invoices" element={<ViewInvoicesPage />} />
           <Route path="/invoices/:id" element={<DetailInvoicePage />} />
+          <Route path="/invoices/pay" element={<PayInvoicePage />} />
 
           {/*View all Dealers*/}
           <Route path="/dealers" element={<DealerListPage dealers={dealers} role={role} />} />

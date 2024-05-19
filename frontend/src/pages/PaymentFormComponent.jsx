@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const PaymentFormComponent = ({ onSubmit }) => {
+const PaymentFormComponent = () => {
+  
+  const navigator = useNavigate();
+
   const [formData, setFormData] = useState({
     cardNumber: '',
-    cardType: '',
-    cvv: '',
-    expiryDate: '',
-    // Add more fields as needed
+    cvc: '',
+    expire: '',
   });
 
   const handleChange = (e) => {
@@ -16,22 +19,26 @@ const PaymentFormComponent = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can perform validation before submitting the form
-    onSubmit(formData);
+    axios.post(`http://localhost:3000/payments/`,formData, { withCredentials: true })
+    .then( (res,err) => {console.log(res.data); navigator('/payments');})
   };
 
   return (
-    <div style={{ textAlign: 'center' }}>
-      <h2>Payment Form</h2>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <input type="text" name="cardNumber" value={formData.cardNumber} onChange={handleChange} placeholder="Card Number" required />
-        <input type="text" name="cardType" value={formData.cardType} onChange={handleChange} placeholder="Card Type" required />
-        <input type="text" name="cvv" value={formData.cvv} onChange={handleChange} placeholder="CVV" required />
-        <input type="text" name="expiryDate" value={formData.expiryDate} onChange={handleChange} placeholder="Expiry Date" required />
-        {/* Add more input fields for other details */}
-        <button type="submit">Submit Payment</button>
+      <form onSubmit={handleSubmit} className="form w-100 m-auto p-5 bg-light" >
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="cardNumber" placeholder="cardNumber" name="cardNumber" value={formData.cardNumber} onChange={handleChange} required />
+            <label htmlFor="cardNumber">Card Number</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="cvc" placeholder="cvc" name="cvc" value={formData.cvc} onChange={handleChange} required />
+            <label htmlFor="cvc">CVC</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="expire" placeholder="expire" name="expire" value={formData.expire} onChange={handleChange} required />
+            <label htmlFor="expire">Expiry Date</label>
+        </div>
+        <button type="submit" className="btn btn-primary w-100 py-2">Add Payment</button>
       </form>
-    </div>
   );
 };
 

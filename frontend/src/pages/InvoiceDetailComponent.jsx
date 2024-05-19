@@ -1,6 +1,7 @@
 // InvoiceDetailComponent.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const InvoiceDetailComponent = ({ invoiceId }) => {
   const [invoice, setInvoice] = useState(null);
@@ -21,7 +22,7 @@ const InvoiceDetailComponent = ({ invoiceId }) => {
   }
 
   return (
-    <div>
+    <div className='card p-5'>
       <h2>Invoice Details</h2>
       <p>Invoice ID: {invoice._id}</p>
       <p>Date Created: {invoice.datecreated}</p>
@@ -29,7 +30,7 @@ const InvoiceDetailComponent = ({ invoiceId }) => {
       <p>Status: {invoice.status}</p>
       <p>Due Date: {invoice.datedue}</p>
       <p>Date Paid: {invoice.datepaid}</p>
-      {/* Add more details as needed */}
+      <Link className="btn btn-primary w-100 py-2" to={`/invoices/pay/?id=${invoice._id}`}>Pay Invoice</Link>
     </div>
   );
 };

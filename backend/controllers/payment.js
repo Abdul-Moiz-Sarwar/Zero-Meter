@@ -26,28 +26,36 @@ const getPayment = async (req, res) => {
     }
 }
 
-//add one payment
-const addPayment = (req, res) => {
+const addPayment = async (req, res) => {
     const requiredFields = ['cardNumber', 'cvc', 'expire'];
     const missingFields = requiredFields.filter(field => !(field in req.body));
-    if(missingFields.length > 0){
+    if (missingFields.length > 0) {
         return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
     }
-    var pay = new payment()
-    pay.owner = req.id
-    pay.cardNumber = req.body.cardNumber
-    pay.cvc = req.body.cvc
-    pay.expire = req.body.expire
-    pay.datecreated = Date.now()
-    try{
-        pay.save()
-        .then((data) => {res.send(data);})
-        .catch((err) => {console.log(err);})
+
+    const { cardNumber, cvc, expire } = req.body;
+
+    try {
+        const existingPayment = await payment.findOne({ cardNumber: cardNumber });
+        if (existingPayment) {
+            return res.status(400).json({ message: "Card with this number already exists" });
+        }
+
+        const pay = new payment({
+            owner: req.id,
+            cardNumber,
+            cvc,
+            expire,
+            datecreated: Date.now()
+        });
+
+        const savedPayment = await pay.save();
+        res.send(savedPayment);
     } catch (error) {
-        console.error('Error fetching payment:', error);
+        console.error('Error adding payment:', error);
         res.status(500).json({ error: 'Internal Server Error during Add Payment' });
     }
-}
+};
 
 //update one payment
 const updatePayment = (req, res) => {

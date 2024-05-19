@@ -1,72 +1,58 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const CheckoutPage = () => {
+  
   const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);  
+  const adId = queryParams.get('adId');
+
   const navigate = useNavigate();
 
-  const queryParams = new URLSearchParams(location.search);
-  const adId = queryParams.get('adId');
-  const price = queryParams.get('price');
-  const company = queryParams.get('company');
-  const model = queryParams.get('model');
-  const variant = queryParams.get('variant');
-  const color = queryParams.get('color');  
+  const [adData, setAd] = useState([])
+  const [vehicleData, setVehicle] = useState([])
 
-  const handleConfirmOrder = async () => {
-    try {
-      // Fetch the entire ad object based on the provided ad ID
-      const response = await axios.get(`http://localhost:3000/ads/${adId}`, { withCredentials: true });
-      const ad = response.data;
+  useEffect(() => {
+    const fetchAd = async () => {
+        try {
+            const res = await axios.get(`http://localhost:3000/ads/${adId}`, { withCredentials: true });
+            setAd(res.data);
+            // Fetch the vehicle details
+            const vehicleRes = await axios.get(`http://localhost:3000/vehicles/${res.data.vehicle}`, { withCredentials: true });
+            setVehicle(vehicleRes.data);
+        } catch (error) {
+            console.error('Error fetching ad data:', error);
+        }
+    };
+    fetchAd();
+  }, []);
 
-      // Create the invoice object to be stored in the database
-      const invoiceData = {
-        ad: ad, // Store the entire ad object
-        amount: price,
-        status: 'unpaid',
-        datedue: new Date(Date.now() + 1000 * 30 * 3600 * 24 * 7), // One week
-        datecreated: Date.now(),
-      };
 
-      // Save the invoice to the database
-      await axios.post('http://localhost:3000/invoices', invoiceData, { withCredentials: true });
-
-      // Redirect to invoices list after confirming the order
-      navigate("/invoices");
-    } catch (error) {
-      console.error('Error confirming order:', error);
+  const handleConfirmOrder = async () => {    
+    const invoice = {
+      ad : adData._id,
+      amount : adData.price
     }
-  };
-
-  const handleAddNewPaymentMethod = () => {
-    // Redirect to the payment form to add a new payment method
-    navigate("/payment");
+    axios.post('http://localhost:3000/invoices/',invoice,{withCredentials:true})
+    .then( (res,err) => {console.log(res.data); navigate('/invoices');})
   };
 
   return (
-    <div style={{ margin: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '5px' }}>
-      <hr />
-      <h2>Order Details</h2>
-      <p>Price: ${price}</p>
-      <p>Company: {company}</p>
-      <p>Model: {model}</p>
-      <p>Variant: {variant}</p>
-      <p>Color: {color}</p>
+    <div className='bg-light p-5'>
+      <h1>Order Details</h1>
 
-      <hr />
-      <h3>Payment Information</h3>
-      <select value="" onChange={() => {}}>
-        <option value="">Select Payment Method</option>
-        <option value="Payment Method 1">Payment Method 1</option>
-        <option value="Payment Method 2">Payment Method 2</option>
-      </select>
-      <button onClick={handleAddNewPaymentMethod} style={{ marginLeft: '10px' }}>New Payment Method</button>
+      <div className='card p-5'>
 
-      <hr />
+        <div className='d-flex flex-row justify-content-between'>
+          <h1>{vehicleData.company} {vehicleData.model} {vehicleData.varient}</h1>
+          <h1>${adData.price}</h1>
+        </div>
+        <hr />
 
-      <h3>Total Amount: ${price}</h3>
-      <button onClick={handleConfirmOrder} style={{ backgroundColor: '#4CAF50', color: 'white', padding: '10px 24px', border: 'none', borderRadius: '5px', cursor: 'pointer' }}>Confirm</button>
+        <h3>Total Amount: ${adData.price}</h3>
+        <button onClick={handleConfirmOrder} className="btn btn-success w-100 m-1 py-2">Generate Invoice</button>
+      </div>
     </div>
   );
 };

@@ -25,7 +25,7 @@ const AdDetailPage = ({ role }) => {
     }, [id]);
 
     const handleBuyNow = () => {
-        navigate(`/checkout?adId=${ad._id}&price=${ad.price}&company=${vehicle.company}&model=${vehicle.model}&variant=${vehicle.varient}&color=${vehicle.color}`);
+        navigate(`/checkout?adId=${ad._id}`);
     };
 
     if (!ad || !vehicle) {

@@ -19,8 +19,8 @@ const ViewInvoicesPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className="text-center">All Invoices</h1>
+    <div className='bg-light p-5'>
+      <h1>All Invoices</h1>
       <InvoiceListComponent invoices={invoices} />
     </div>
   );

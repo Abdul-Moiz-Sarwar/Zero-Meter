@@ -67,10 +67,16 @@ const addInvoice = async (req, res) => {
             return res.status(404).json({ error: "Ad not found" });
         }
 
+        const i = await invoice.findOne({ad:adModel._id})
+
+        if (i) {
+            return res.status(404).json({ error: "invoice already created" });
+        }
+
         // Create a new invoice object
         const inv = new invoice({
             payee: req.id,
-            ad: adModel, // Store the entire ad object
+            ad: adModel._id, // Store the entire ad object
             amount: req.body.amount,
             status: 'unpaid',
             datecreated: Date.now(),
@@ -87,7 +93,46 @@ const addInvoice = async (req, res) => {
     }
 }
 
+const payInvoice = async (req, res) => {
+    try {
+        const user = await Accounts.User.findById(req.body.userId, "-password");
+        
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
 
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: req.body.amount,
+            currency: 'usd',
+            // need to be incooperated
+            // customer: user.customerId,
+            // payment_method: req.body.paymentMethodId,
+            description: 'Payment for invoice',
+            confirm: true,
+        });
+
+        if (paymentIntent.status === 'succeeded') {
+            const updatedInvoice = await invoice.findOneAndUpdate(
+                { _id: req.body.invoiceId },
+                {
+                    $set: {
+                        status: 'paid',
+                        datapaid: Date.now(),
+                    },
+                },
+                { new: true }
+            );
+
+            res.json({ success: true, invoice: updatedInvoice });
+        } else {
+            res.json({ success: false, error: 'Payment not successful' });
+        }
+    } catch (error) {
+        console.error('Error processing payment:', error);
+        res.status(500).json({ error: 'Internal Server Error during payment processing' });
+    }
+};
 module.exports.getInvoice = getInvoice
 module.exports.getInvoices = getInvoices
 module.exports.addInvoice = addInvoice
+module.exports.payInvoice = payInvoice

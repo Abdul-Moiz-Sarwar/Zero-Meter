@@ -6,8 +6,8 @@ const DetailInvoicePage = () => {
   const { id } = useParams();
 
   return (
-    <div>
-      <h1 className="text-center">Invoice Details</h1>
+    <div className='bg-light p-5'>
+      <h1>Invoice Details</h1>
       <InvoiceDetailComponent invoiceId={id} />
     </div>
   );
