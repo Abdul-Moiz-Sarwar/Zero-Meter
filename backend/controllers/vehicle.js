@@ -12,6 +12,19 @@ const getVehicles = (req, res) => {
     }
 }
 
+
+const getallVehicles = (req, res) => {
+    try{
+        vehicle.find({})
+        .then((data) => {res.send(data);})
+        .catch((err) => {console.log(err);})
+    } catch (error) {
+        console.error('Error fetching vehicles:', error);
+        res.status(500).json({ error: 'Internal Server Error during GET ALL VEHICLES' });
+    }
+}
+
+
 //get one vehicle
 const getVehicle = async (req, res) => {
     try {
@@ -131,6 +144,7 @@ const deleteVehicle = (req, res) => {
 
 module.exports.getVehicle = getVehicle
 module.exports.getVehicles = getVehicles
+module.exports.getallVehicles = getallVehicles
 module.exports.updateVehicle = updateVehicle
 module.exports.addVehicle = addVehicle
 module.exports.deleteVehicle = deleteVehicle

@@ -3,8 +3,12 @@ const router = express.Router()
 const vehicle = require('../controllers/vehicle')
 const account = require('../controllers/accounts')
 
-//get all vehicles
+//get all vehicles of single dealer
 router.get('/', account.verifyToken, account.isDealer, vehicle.getVehicles)
+
+
+//get all vehicles regardless of dealer
+router.get('/all', account.verifyToken, account.isDealer, vehicle.getallVehicles)
 
 //get one vehicle
 router.get('/:id', account.verifyToken, account.isDealer, vehicle.getVehicle)

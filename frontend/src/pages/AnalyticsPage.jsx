@@ -1,26 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
+import 'chart.js/auto';
 
-const AnalyticsPage = ({ analytics }) => {
+const AnalyticsPage = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const [chartData, setChartData] = useState({});
+
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        const res = await axios.get('http://localhost:3000/vehicles/all', { withCredentials: true });
+        setVehicles(res.data);
+      } catch (error) {
+        console.error('Error fetching vehicle data:', error);
+      }
+    };
+
+    fetchVehicles();
+  }, []);
+
+  useEffect(() => {
+    if (vehicles.length > 0) {
+      // Process data to count dealership key occurrences
+      const dealershipCounts = vehicles.reduce((acc, vehicle) => {
+        acc[vehicle.dealership] = (acc[vehicle.dealership] || 0) + 1;
+        return acc;
+      }, {});
+
+      // Prepare data for chart
+      const labels = Object.keys(dealershipCounts);
+      const data = Object.values(dealershipCounts);
+
+      setChartData({
+        labels,
+        datasets: [
+          {
+            label: "Vehicles sold by each dealership",
+            data,
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      });
+    }
+  }, [vehicles]);
+
   return (
-    <div className="container">
-      <h1 className="text-center">Dealer Analytics</h1>
-      <div className="row">
-        {analytics.map((analytic, index) => (
-          <div key={index} className="col-md-4">
-            <div className="card mb-4">
-              <img src={analytic.image} className="card-img-top" alt={`Analytic ${index + 1}`} style={{ height: '300px', objectFit: 'cover' }} />
-              <div className="card-body">
-                <h5 className="card-title">Analytic {index + 1}</h5>
-                <p className="card-text">Sales this Month: {analytic.sales}</p>
-                <p className="card-text">Profit this Month: {analytic.profit}</p>
-                <p className="card-text">Reach this Month: {analytic.reach}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div>
+      <h1>Vehicle Analytics {vehicles.length}</h1>
+      {vehicles.length > 0 ? (
+        <Bar data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
-}
+};
 
 export default AnalyticsPage;
