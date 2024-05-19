@@ -4,10 +4,10 @@ const blog = require('../controllers/blog')
 const account = require('../controllers/accounts')
 
 //get all blogs
-router.get('/', account.verifyToken, blog.getBlogs)
+router.get('/', blog.getBlogs)
 
 //get one blog
-router.get('/:id', account.verifyToken, blog.getBlog)
+router.get('/:id', blog.getBlog)
 
 //add one blog
 router.post('/', account.verifyToken, account.isAdmin, blog.addBlog)
