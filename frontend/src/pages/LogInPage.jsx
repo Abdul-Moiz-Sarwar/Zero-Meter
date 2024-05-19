@@ -3,7 +3,8 @@ import LoginForm from './LogInComponent';
 
 const LoginPage = () => {
     return (
-        <div>
+        <div className='p-5 bg-light'>
+            <h1>Login</h1>
             <LoginForm />
         </div>
     );

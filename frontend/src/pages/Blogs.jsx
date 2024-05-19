@@ -28,17 +28,21 @@ const Blogs = ({ role }) => {
   };
 
   return (
-    <div className="blogs-container">
-      {blogs.map((blog) => (
-        <BlogComponent key={blog._id} blog={blog} role={role} onDelete={handleDeleteBlog} />
-      ))}
-      {role === 'admin' && (
-        <>
-            <Link to="/blogs/add" className="btn btn-primary mb-3">
-              Add Blog
-            </Link>
-        </>
-      )}
+    <div className="bg-light p-5">
+      
+      <div className='d-flex flex-row justify-content-between'>
+        
+        <h1>Blogs</h1>
+        {role === 'admin' && (
+              <Link to="/blogs/add" className="btn btn-primary mb-3">Add Blog</Link>
+        )}
+      </div>
+      <div className='p-5'>
+        {blogs.map((blog) => (
+          <BlogComponent key={blog._id} blog={blog} role={role} onDelete={handleDeleteBlog} />
+        ))}
+        
+      </div>
     </div>
   );
 };

@@ -8,15 +8,28 @@ const AdListPage = ({ role }) => {
   const [ads, setAds] = useState([]);  
 
   useEffect(() => {
-    const fetchAds = async () => {
+    const fetchAdsAndVehicles = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/ads/', { withCredentials: true });
-        setAds(res.data);
+        const adsRes = await axios.get('http://localhost:3000/ads/', { withCredentials: true });
+        const adsData = adsRes.data;
+        const adsWithVehicles = await Promise.all(
+          adsData.map(async (ad) => {
+            try {
+              const vehicleRes = await axios.get(`http://localhost:3000/vehicles/${ad.vehicle}`, { withCredentials: true });
+              return { ...ad, vehicle: vehicleRes.data };
+            } catch (error) {
+              console.error(`Error fetching vehicle data for ad ${ad.id}:`, error);
+            }
+          })
+        );
+
+        setAds(adsWithVehicles);
       } catch (error) {
         console.error('Error fetching ads data:', error);
       }
     };
-    fetchAds();
+
+    fetchAdsAndVehicles();
   }, []);
 
   const handleDeleteAd = async (id) => {
@@ -34,8 +47,8 @@ const AdListPage = ({ role }) => {
 };*/
 
   return (
-    <div className="container mt-5">
-      <h1 className="mb-4">View Ads</h1>
+    <div className="p-5 bg-light">
+      <h1>Advertisments</h1>
       <AdListComponent ads={ads} role={role} onDelete={handleDeleteAd} />
     </div>
   );

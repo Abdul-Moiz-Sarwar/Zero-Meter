@@ -37,13 +37,13 @@ const VehiclesPage = ({ role }) => {
     };
 
     return (
-        <div className="container mt-5">
-            <h1 className="mb-4">View Vehicles</h1>
+        <div className="p-5 bg-light">
+            <div className='d-flex flex-row justify-content-between'>
+            <h1>View Vehicles</h1>
             {role === 'dealer' && (
-                <div className="mb-3">
-                    <Link to="/vehicles/add" className="btn btn-primary mb-3">Add Vehicle</Link>
-                </div>
+                <Link to="/vehicles/add" className="btn btn-primary mb-3">Add Vehicle</Link>
             )}
+            </div>
             <VehicleListComponent vehicles={vehicles} role={role} onDelete={handleDeleteVehicle} onCreateAd={handleCreateAd} />
         </div>
     );

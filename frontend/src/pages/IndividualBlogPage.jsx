@@ -25,12 +25,14 @@ const IndividualBlogPage = () => {
   }
 
   return (
-    <div className="individual-blog">
+    <div className="bg-light p-5">
       <h2 className="blog-title">{blog.title}</h2>
-      <div className="author-date">
-        <p className="author">Author: {blog.author}</p>
-        <p className="date">Date: {blog.datecreated}</p>
+      <hr/>
+      <div className="d-flex flex-row justify-content-between">
+        <p className="author m-0">Author: {blog.author}</p>
+        <p className="date m-0">Date: {blog.datecreated}</p>
       </div>
+      <hr/>
       <div className="blog-content">{blog.content}</div>
     </div>
   );

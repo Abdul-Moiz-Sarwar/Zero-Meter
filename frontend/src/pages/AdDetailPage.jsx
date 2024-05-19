@@ -33,7 +33,7 @@ const AdDetailPage = ({ role }) => {
     }
 
     return (
-        <div>
+        <div className='bg-light p-5'>
             <AdDetailComponent ad={ad} vehicle={vehicle} role={role} onBuyNow={handleBuyNow} />
         </div>
     );

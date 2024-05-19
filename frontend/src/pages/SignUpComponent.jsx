@@ -91,99 +91,89 @@ const SignupForm = () => {
     };
 
     return (
-        <>
-        <div className="container mt-5">
-s            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="username" className="form-label">Username</label>
-                    <input type="text" className="form-control" id="username" name="username" value={formData.username} onChange={handleChange} placeholder="Enter your username" required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input type="email" className="form-control" id="email" name="email" value={formData.email} onChange={handleChange} aria-describedby="emailHelp" placeholder="Enter your email" required />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" id="password" name="password" value={formData.password} onChange={handleChange} placeholder="Enter your password" required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="phone" className="form-label">Phone</label>
-                    <input type="tel" className="form-control" id="phone" name="phone" value={formData.phone} onChange={handleChange} placeholder="Enter your phone number" required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="address" className="form-label">Address</label>
-                    <input type="text" className="form-control" id="address" name="address" value={formData.address} onChange={handleChange} placeholder="Enter your address" required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="city" className="form-label">City</label>
-                    <input type="text" className="form-control" id="city" name="city" value={formData.city} onChange={handleChange} placeholder="Enter your city" required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="country" className="form-label">Country</label>
-                    <input type="text" className="form-control" id="country" name="country" value={formData.country} onChange={handleChange} placeholder="Enter your country" required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="cnic" className="form-label">Cnic</label>
-                    <input type="text" className="form-control" id="cnic" name="cnic" value={formData.cnic} onChange={handleChange} placeholder="Enter your cnic" required />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="type" className="form-label">Type</label>
-                    <select className="form-select" id="type" name="type" value={formData.type} onChange={handleChange} required>
-                        <option value="user">User</option>
-                        <option value="dealership">Dealership</option>
-                    </select>
-                </div>
-
-
-                
-                    {isLoaded &&formData.type=='dealership' ? (
-                        <>
-                            <div className="mb-3">
-                                <label htmlFor="dealershipname" className="form-label">Dealership Name</label>
-                                <input type="text" className="form-control" id="dealershipname" name="dealershipname" value={formData.dealershipname} onChange={handleChange} placeholder="Enter your dealership name" required />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="registration" className="form-label">Dealership Registration Number</label>
-                                <input type="text" className="form-control" id="registration" name="registration" value={formData.registration} onChange={handleChange} placeholder="Enter your registration number" required />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="instagram" className="form-label">Intagram Link</label>
-                                <input type="text" className="form-control" id="instagram" name="instagram" value={formData.instagram} onChange={handleChange} placeholder="Enter your instagram link" />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="facebook" className="form-label">Facebook Link</label>
-                                <input type="text" className="form-control" id="facebook" name="facebook" value={formData.facebook} onChange={handleChange} placeholder="Enter your facebook link" />
-                            </div>
-                            <div className="mb-3">
-                                <GoogleMap
-                                    mapContainerStyle={containerStyle}
-                                    center={center}
-                                    zoom={9.85}
-                                    onLoad={onLoad}
-                                    options={{ mapTypeControl: false }}
-                                    onClick={handleMapClick}
-                                >
-                                    
-                                    {markerPosition && <Marker position={markerPosition} />}
-                                    {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
-                                </GoogleMap>
-                            </div>
-                        </>
-                    ) : (
-                        <></> // Empty fragment if map is not loaded
-                    )}
-                <div className="d-flex justify-content-center">
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </div>
-            </form>
+    <form className="form w-100 m-auto p-5 bg-light" onSubmit={handleSubmit}>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="username" placeholder="username" name="username" value={formData.username} onChange={handleChange} required />
+            <label htmlFor="username">Username</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="email" className="form-control" id="email" placeholder="email" name="email" value={formData.email} onChange={handleChange} aria-describedby="emailHelp" required />
+            <label htmlFor="email">Email</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="password" className="form-control" id="password" placeholder="password" name="password" value={formData.password} onChange={handleChange} required />
+            <label htmlFor="password">Password</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="phone" placeholder="phone" name="phone" value={formData.phone} onChange={handleChange} required />
+            <label htmlFor="phone">Phone</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="address" placeholder="address" name="address" value={formData.address} onChange={handleChange} required />
+            <label htmlFor="address">Address</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="city" placeholder="city" name="city" value={formData.city} onChange={handleChange} required />
+            <label htmlFor="city">City</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="country" placeholder="country" name="country" value={formData.country} onChange={handleChange} required />
+            <label htmlFor="country">Country</label>
+        </div>
+        <div className="form-floating m-1">
+            <input type="text" className="form-control" id="cnic" placeholder="cnic" name="cnic" value={formData.cnic} onChange={handleChange} required />
+            <label htmlFor="cnic">CNIC</label>
+        </div>
+        <div className="form-floating m-1">
+            <select className="form-select" id="type" name="type" placeholder="type" value={formData.type} onChange={handleChange} required>
+                <option value="user">User</option>
+                <option value="dealership">Dealership</option>
+            </select>
+            <label htmlFor="type">Type</label>
         </div>
 
 
-
-
-
-</>
+        
+            {isLoaded &&formData.type=='dealership' ? (
+                <>
+                    <div className="form-floating m-1">
+                        <input type="text" className="form-control" id="dealershipname" placeholder="dealershipname" name="dealershipname" value={formData.dealershipname} onChange={handleChange} required />
+                        <label htmlFor="dealershipname">Dealership Name</label>
+                    </div>
+                    <div className="form-floating m-1">
+                        <input type="text" className="form-control" id="registration" placeholder="registration" name="registration" value={formData.registration} onChange={handleChange} required />
+                        <label htmlFor="registration">Registration</label>
+                    </div>
+                    <div className="form-floating m-1">
+                        <input type="text" className="form-control" id="instagram" placeholder="instagram" name="instagram" value={formData.instagram} onChange={handleChange} />
+                        <label htmlFor="instagram">Instagram</label>
+                    </div>
+                    <div className="form-floating m-1">
+                        <input type="text" className="form-control" id="facebook" placeholder="facebook" name="facebook" value={formData.facebook} onChange={handleChange} />
+                        <label htmlFor="facebook">Facebook</label>
+                    </div>
+                    <div className="form-floating m-1 d-flex justify-content-center">
+                        <GoogleMap id='location'
+                            mapContainerStyle={containerStyle}
+                            center={center}
+                            zoom={9.85}
+                            onLoad={onLoad}
+                            options={{ mapTypeControl: false }}
+                            onClick={handleMapClick}
+                        >
+                            
+                            {markerPosition && <Marker position={markerPosition} />}
+                            {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+                        </GoogleMap>
+                    </div>
+                </>
+            ) : (
+                <></> // Empty fragment if map is not loaded
+            )}
+        <div className="d-flex justify-content-center">
+            <button type="submit" className="btn btn-primary w-100 py-2" >Sign Up</button>
+        </div>
+    </form>
     );
 }
 
