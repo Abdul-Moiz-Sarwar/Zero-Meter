@@ -1,4 +1,5 @@
 const blog = require('../models/blog')
+const user = require('../models/accounts')
 
 //get all blogs
 const getBlogs = (req, res) => { 
@@ -27,26 +28,32 @@ const getBlog = async (req, res) => {
 }
 
 //add one blog
-const addBlog = (req, res) => {
-    const requiredFields = ['title', 'content', 'author', 'datecreated'];
+const addBlog = async (req, res) => {
+    const requiredFields = ['title', 'content'];
     const missingFields = requiredFields.filter(field => !(field in req.body));
-    if(missingFields.length > 0){
+    if (missingFields.length > 0) {
         return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
     }
-    var blg = new blog()
-    blg.title = req.body.title
-    blg.content = req.body.content
-    blg.author = req.body.author
-    blg.datecreated = Date.now()
-    try{
-        blg.save()
-        .then((data) => {res.send(data);})
-        .catch((err) => {console.log(err);})
+
+    try {
+        const auth = await user.User.findOne({_id: req.id});
+        if (!auth) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const blg = new blog();
+        blg.title = req.body.title;
+        blg.content = req.body.content;
+        blg.author = auth.username;
+        blg.datecreated = Date.now();
+
+        const savedBlog = await blg.save();
+        res.send(savedBlog);
     } catch (error) {
-        console.error('Error fetching blog:', error);
+        console.error('Error during Add Blog:', error);
         res.status(500).json({ error: 'Internal Server Error during Add Blog' });
     }
-}
+};
 
 //update one blog
 const updateBlog = (req, res) => {
@@ -56,7 +63,6 @@ const updateBlog = (req, res) => {
             $set: {
                 title: req.body.title,
                 content: req.body.content,
-                author: req.body.author
             }
         },{
             upsert: false

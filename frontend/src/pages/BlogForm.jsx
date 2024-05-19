@@ -69,14 +69,6 @@ const BlogFormComponent = () => {
                 <textarea className="form-control" id="content" placeholder="Content" name="content" value={formData.content} onChange={handleChange} required />
                 <label htmlFor="content">Content</label>
             </div>
-            <div className="form-floating m-1">
-                <input type="text" className="form-control" id="author" placeholder="Author" name="author" value={formData.author} onChange={handleChange} required />
-                <label htmlFor="author">Author</label>
-            </div>
-            <div className="form-floating m-1">
-                <input type="date" className="form-control" id="datecreated" placeholder="Date Created" name="datecreated" value={formData.datecreated.split('T')[0]} onChange={handleChange} required />
-                <label htmlFor="datecreated">Date Created</label>
-            </div>
             <button className="btn btn-primary w-100 py-2" type="submit">{isEditMode ? 'Update Blog' : 'Add Blog'}</button>
         </form>
     );

@@ -75,8 +75,11 @@ const SignupForm = () => {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, type, checked } = e.target;
+        setFormData({
+            ...formData,
+            [name]: type === 'checkbox' ? checked : value
+        });
     };
 
     const handleSubmit = (e) => {
