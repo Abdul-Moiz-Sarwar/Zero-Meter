@@ -24,7 +24,7 @@ const AdDetailComponent = ({ ad, vehicle, role, onBuyNow }) => {
                             <p className="card-text">Test Drive : {vehicle.testdrive ? 'Available' : 'Not Available'}</p>
                         </>
                     )}
-                    {role === 'dealer' && (
+                    {role === 'dealer' || role === 'user' && (
                         <div className='d-flex flex-row justify-content-center'>
                             <button className="btn btn-success w-50" onClick={onBuyNow}>Buy Now</button>
 

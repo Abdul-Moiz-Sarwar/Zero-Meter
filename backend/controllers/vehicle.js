@@ -28,7 +28,7 @@ const getallVehicles = (req, res) => {
 //get one vehicle
 const getVehicle = async (req, res) => {
     try {
-        const vehicleData = await vehicle.findOne({ _id: req.params.id, dealership: req.id });
+        const vehicleData = await vehicle.findOne({ _id: req.params.id});
         if (!vehicleData) {
             return res.status(404).json({ message: "Vehicle not found" });
         }

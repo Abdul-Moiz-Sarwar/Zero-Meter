@@ -19,7 +19,7 @@ const SignupForm = () => {
         username: '',
         email: '',
         password: '',
-        type: '',
+        type: 'user',
         phone: '',
         address: '',
         city: '',

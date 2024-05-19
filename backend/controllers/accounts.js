@@ -124,6 +124,8 @@ const signup = async (req,res) => {
             password: hashedPassword,
             status: "active"
         });
+
+        console.log(user)
         try {
             await user.save();
         }

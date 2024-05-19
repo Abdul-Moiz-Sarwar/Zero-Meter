@@ -4,14 +4,14 @@ const vehicle = require('../controllers/vehicle')
 const account = require('../controllers/accounts')
 
 //get all vehicles of single dealer
-router.get('/', account.verifyToken, account.isDealer, vehicle.getVehicles)
+router.get('/', account.verifyToken, vehicle.getVehicles)
 
 
 //get all vehicles regardless of dealer
-router.get('/all', account.verifyToken, account.isDealer, vehicle.getallVehicles)
+router.get('/all', account.verifyToken, vehicle.getallVehicles)
 
 //get one vehicle
-router.get('/:id', account.verifyToken, account.isDealer, vehicle.getVehicle)
+router.get('/:id', account.verifyToken,  vehicle.getVehicle)
 
 //add one vehicle
 router.post('/', account.verifyToken, account.isDealer, vehicle.addVehicle)

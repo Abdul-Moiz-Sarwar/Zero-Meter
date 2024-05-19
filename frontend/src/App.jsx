@@ -155,7 +155,7 @@ function App() {
     setUserData(updatedUsers);
   };
 
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('none');
   useEffect(() =>{
     const fetchUser = async () => {
       try {
@@ -166,13 +166,12 @@ function App() {
       }
     };
     fetchUser()
-  },[]);
+  },[role]);
 
-  
   return (
     <Router>
       <div className="App">
-        <Navbar />
+        <Navbar role={role}/>
         <Routes>
 
           {/*Basic Pages */}
@@ -186,7 +185,7 @@ function App() {
           <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} /> 
           <Route path="/vehicles/add" element={<VehicleForm role={role} />} />
           <Route path="/vehicles/edit/:id" element={<VehicleForm role={role} />} />
-         <Route path="/vehicles/:id" element={<VehicleDetails role={role} />} />
+          <Route path="/vehicles/:id" element={<VehicleDetails role={role} />} />
 
           {/*Blogs */}
           <Route path="/blogs" element={<Blogs role={role} />} />
@@ -225,7 +224,7 @@ function App() {
           <Route path="/userlist/:id" element={<UserDetail userData={userData} />} />
 
           {/*Checkout           */}
-            <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
 
 
         </Routes>
