@@ -1,5 +1,5 @@
 const vehicle = require('../models/vehicle')
-
+const ad = require('../models/ad')
 //get all vehicles
 const getVehicles = (req, res) => {
     try{
@@ -103,15 +103,31 @@ const updateVehicle = (req, res) => {
 
 //delete one vehicle
 const deleteVehicle = (req, res) => {
-    try{
-        vehicle.findOneAndDelete({_id:req.params.id,dealership:req.id})
-        .then((data) => {res.send(data);})
-        .catch((err) => {console.log(err);})
+    try {
+        vehicle.findOne({_id: req.params.id, dealership: req.id})
+            .then((data) => {
+                if (!data) {
+                    return res.status(404).json({ error: 'Vehicle not found' });
+                }
+                console.log(data);
+                return ad.findOneAndDelete({vehicle: data._id});
+            })
+            .then((adData) => {
+                console.log(adData);
+                return vehicle.findOneAndDelete({_id: req.params.id, dealership: req.id});
+            })
+            .then((vehicleData) => {
+                res.send(vehicleData);
+            })
+            .catch((err) => {
+                console.log(err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            });
     } catch (error) {
         console.error('Error fetching vehicle:', error);
         res.status(500).json({ error: 'Internal Server Error during Delete Vehicle' });
     }
-}
+};
 
 module.exports.getVehicle = getVehicle
 module.exports.getVehicles = getVehicles

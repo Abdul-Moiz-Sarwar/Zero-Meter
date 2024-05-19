@@ -150,7 +150,6 @@ function App() {
     }
   ];
 
-
   const handleDeleteUser = (id) => {
     const updatedUsers = userData.filter(user => user.id !== id);
     setUserData(updatedUsers);

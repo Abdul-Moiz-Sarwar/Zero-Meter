@@ -61,6 +61,11 @@ const addAd = async (req, res) => {
             return res.status(404).json({ message: "Vehicle not found" });
         }
 
+        const adData = await ad.findOne({vehicle:req.body.vehicleId});
+        if (adData) {
+            return res.status(404).json({ message: "Ad for this vehicle already created" });
+        }
+
         const newAd = new ad({
             vehicle: vehicleData._id,
             price: vehicleData.buyprice, // Take price from vehicle's sellprice attribute
