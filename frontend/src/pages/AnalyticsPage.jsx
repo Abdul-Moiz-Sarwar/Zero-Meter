@@ -5,12 +5,21 @@ import 'chart.js/auto';
 
 const AnalyticsPage = () => {
   const [vehicles, setVehicles] = useState([]);
-  const [chartData, setChartData] = useState({});
+  const [chartDataSold, setChartDataSold] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  const [chartDataUnsold, setChartDataUnsold] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
         const res = await axios.get('http://localhost:3000/vehicles/all', { withCredentials: true });
+        
         setVehicles(res.data);
       } catch (error) {
         console.error('Error fetching vehicle data:', error);
@@ -20,26 +29,48 @@ const AnalyticsPage = () => {
     fetchVehicles();
   }, []);
 
+  const processVehicleData = (status) => {
+    return vehicles.reduce((acc, vehicle) => {
+      if (vehicle.status === status) {
+        acc[vehicle.dealership] = (acc[vehicle.dealership] || 0) + 1;
+      }
+      return acc;
+    }, {});
+  };
+
   useEffect(() => {
     if (vehicles.length > 0) {
-      // Process data to count dealership key occurrences
-      const dealershipCounts = vehicles.reduce((acc, vehicle) => {
-        acc[vehicle.dealership] = (acc[vehicle.dealership] || 0) + 1;
-        return acc;
-      }, {});
+      // Process data for sold vehicles
+      const soldCounts = processVehicleData('sold');
+      const soldLabels = Object.keys(soldCounts);
+      const soldData = Object.values(soldCounts);
 
-      // Prepare data for chart
-      const labels = Object.keys(dealershipCounts);
-      const data = Object.values(dealershipCounts);
-
-      setChartData({
-        labels,
+      setChartDataSold({
+        labels: soldLabels,
         datasets: [
           {
             label: "Vehicles sold by each dealership",
-            data,
+            data: soldData,
             backgroundColor: 'rgba(75, 192, 192, 0.6)',
             borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1,
+          },
+        ],
+      });
+
+      // Process data for unsold vehicles
+      const unsoldCounts = processVehicleData('unsold');
+      const unsoldLabels = Object.keys(unsoldCounts);
+      const unsoldData = Object.values(unsoldCounts);
+
+      setChartDataUnsold({
+        labels: unsoldLabels,
+        datasets: [
+          {
+            label: "Unsold vehicles by each dealership",
+            data: unsoldData,
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            borderColor: 'rgba(255, 99, 132, 1)',
             borderWidth: 1,
           },
         ],
@@ -49,9 +80,30 @@ const AnalyticsPage = () => {
 
   return (
     <div>
-      <h1>Vehicle Analytics {vehicles.length}</h1>
+      <h1>Vehicle Analytics</h1>
       {vehicles.length > 0 ? (
-        <Bar data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
+        <div>
+          <div style={{ width: '100%', height: '400px' }}>
+            <Bar 
+              data={chartDataSold} 
+              options={{ 
+                responsive: true, 
+                maintainAspectRatio: false 
+              }} 
+            />
+          </div>
+          <div style={{ width: '100%', height: '400px' }}>
+            <br></br>
+            <br></br>
+            <Bar 
+              data={chartDataUnsold} 
+              options={{ 
+                responsive: true, 
+                maintainAspectRatio: false 
+              }} 
+            />
+          </div>
+        </div>
       ) : (
         <p>Loading...</p>
       )}
