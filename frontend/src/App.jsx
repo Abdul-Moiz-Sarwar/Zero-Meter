@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 //Components
 import Navbar from './components/Navbar';
@@ -12,10 +13,6 @@ import LogIn from './pages/LogInPage';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import LandingPage from './pages/landingpage';
-
-//Dealer Profile Page
-import DealerProfilePage from './pages/DealerProfilePage';
-import ViewDealerAnalyticsPage from './extra/DealerAnalyticsPage'; 
 
 //Blogs 
 import IndividualBlogPage from './pages/IndividualBlogPage'; 
@@ -49,14 +46,11 @@ import AdEditPage from './pages/AdEditPage';
 //Payment
 import PaymentPage from './pages/PaymentPage';
 
-//User Profile
-import UserProfilePage from './pages/UserProfilePage';
-import EditUserProfilePage from './pages/EditUserProfilePage';
 import profile1 from './pages/images/profile.png'
 
 //Dealer List/Details
 import DealerListPage from './pages/DealerListPage';
-import DealerDetailsPage from './pages/DealerDetailsPage';
+import DealerDetailsPage from './extra/DealerDetailsPage';
 import dealer1 from './pages/images/crowley.jpg';
 import dealer2 from './pages/images/toyota.png';
 
@@ -68,7 +62,7 @@ import AnalyticsPage from './pages/AnalyticsPage';
 
 //User List
 import UserList from './pages/UserList';
-import UserDetail from './pages/UserDetails';
+import UserDetail from './extra/UserDetails';
 import profil1 from './pages/images/profile.png';
 import profile2 from './pages/images/woman.png';
 import profile3 from './pages/images/profile3.png';
@@ -76,87 +70,12 @@ import profile3 from './pages/images/profile3.png';
 //Checkout Page
 import CheckoutPage from './pages/CheckoutPage';
 
+//User Profile
+import ProfilePage from './pages/ProfilePage'; 
 
 function App() {
 
   const stripekey = 'sk_test_51PID9PDEA9oSjm91LA1IW8K0vQWxi0NaFxp5bvs7Z4DLu60vmImZX5bIlBbdz9RQmbw6l8NHYl3iMhhjQZ6G9BHd00BDy2CWl7'
-
-
-  const userDat = {
-    avatar: profile1, // Placeholder image URL
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '123-456-7890',
-    address: '123 Street, City, Country',
-  };
-
-  const dealers = [
-    {
-      id: 1,
-      name: 'Crowley Motorss',
-      email: 'dealer1@example.com',
-      address: '123 Street, City, Country',
-      image: dealer1,
-    },
-    {
-      id: 2,
-      name: 'Toyota',
-      email: 'dealer2@example.com',
-      address: '456 Street, City, Country',
-      image: dealer2,
-    },
-    // Add more dummy dealers as needed
-  ];
-
-  const [userData, setUserData] = useState([
-    {
-      id: 1,
-      avatar: profile1,
-      name: 'John Doe',
-      email: 'john.doe@example.com',
-      phone: '123-456-7890',
-    },
-    {
-      id: 2,
-      avatar: profile2,
-      name: 'Casie Ford',
-      email: 'casieford@example.com',
-      phone: '524-456-7890',
-    },
-    {
-      id: 3,
-      avatar: profile3,
-      name: 'Alexa Mercedes',
-      email: 'alexa@example.com',
-      phone: '533-986-4522',
-    },
-  ]);
-
-  const analytics = [
-    {
-      image: analytic1,
-      sales: 1000,
-      profit: 500,
-      reach: '10,000'
-    },
-    {
-      image: analytic2,
-      sales: 1500,
-      profit: 700,
-      reach: '15,000'
-    },
-    {
-      image: analytic3,
-      sales: 2000,
-      profit: 1000,
-      reach: '20,000'
-    }
-  ];
-
-  const handleDeleteUser = (id) => {
-    const updatedUsers = userData.filter(user => user.id !== id);
-    setUserData(updatedUsers);
-  };
 
   const [role, setRole] = useState('none');
   useEffect(() =>{
@@ -201,9 +120,10 @@ function App() {
           <Route path="/invoices/:id" element={<DetailInvoicePage />} />
           <Route path="/invoices/pay" element={<PayInvoicePage />} />
 
-          {/*View all Dealers*/}
+          {/*View all Dealers
           <Route path="/dealers" element={<DealerListPage dealers={dealers} role={role} />} />
           <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
+          */}
 
           {/*Ads
           <Route path="/ads/edit/:id" element={<AdEditPage  />} />
@@ -214,22 +134,21 @@ function App() {
 
 
           {/*Analytics */}          
-          <Route path="/analytics" element={<AnalyticsPage analytics={analytics}/>}/>
-
-          <Route path="/dealerprofile" element={<DealerProfilePage />} />
+          <Route path="/analytics" element={<AnalyticsPage />}/>
          
-          {/*User Pages */}
+          {/*Payment */}
           <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/userprofile" element={<UserProfilePage />} />
-          <Route path="/edit-profile" element={<EditUserProfilePage userDat={userDat} />} />
 
-          {/*User Lists */}
+          {/*User Lists 
           <Route path="/userlist" element={<UserList userData={userData} onDelete={handleDeleteUser} />} />
           <Route path="/userlist/:id" element={<UserDetail userData={userData} />} />
+          */}
 
           {/*Checkout           */}
           <Route path="/checkout" element={<CheckoutPage />} />
 
+          {/*User/Dealer Profile */}
+          <Route path="/profile" element={<ProfilePage role={role}/>}></Route>
 
         </Routes>
         <Footer />
