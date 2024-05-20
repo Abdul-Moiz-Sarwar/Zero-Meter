@@ -1,87 +1,66 @@
+// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-//Components
+// Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Sidebar from './components/Sidebar';
 import SignUp from './pages/SignUpPage';
 import LogIn from './pages/LogInPage';
 
-//Basic Pages
+// Basic Pages
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import LandingPage from './pages/landingpage';
 
-//Blogs 
-import IndividualBlogPage from './pages/IndividualBlogPage'; 
+// Blogs
+import IndividualBlogPage from './pages/IndividualBlogPage';
 import Blogs from './pages/Blogs';
 import BlogForm from './pages/BlogForm';
-import blog1 from './pages/images/blog1.png';
-import blog2 from './pages/images/blog2.jpg';
-import blog3 from './pages/images/blog3.jpg';
 
 // Vehicles
 import ViewVehiclesPage from './pages/VehiclesPage';
 import VehicleDetails from './pages/VehicleDetails';
 import VehicleForm from './pages/VehicleForm';
-import image1 from './pages/images/civic.jpg';
-import image2 from './pages/images/Tuscon.jpg';
-import image3 from './pages/images/fordcar.jpg';
 
-//Invoice
-import ViewInvoicesPage from './pages/ViewInvoicesPage'; 
-import DetailInvoicePage from './pages/DetailInvoicePage'; 
+// Invoice
+import ViewInvoicesPage from './pages/ViewInvoicesPage';
+import DetailInvoicePage from './pages/DetailInvoicePage';
 import PayInvoicePage from './pages/PayInvoicePage';
 
-//Ads
-import ad1 from './pages/images/ad1.jpg';
-import ad2 from './pages/images/ad2.jpg';
-import ad3 from './pages/images/ad3.jpg';
+// Ads
 import AdListPage from './pages/AdListPage';
 import AdDetailPage from './pages/AdDetailPage';
 import AdEditPage from './pages/AdEditPage';
 
-//Payment
+// Payment
 import PaymentPage from './pages/PaymentPage';
 
-import profile1 from './pages/images/profile.png'
-
-//Dealer List/Details
+// Dealer List/Details
 import DealerListPage from './pages/DealerListPage';
 import DealerDetailsPage from './pages/DealerDetailsPage';
-import dealer1 from './pages/images/crowley.jpg';
-import dealer2 from './pages/images/toyota.png';
 
-//Admin Analytics
-import analytic1 from './pages/images/analytics1.png'
-import analytic2 from './pages/images/analytics2.png';
-import analytic3 from './pages/images/analytics3.png';
+// Admin Analytics
 import AnalyticsPage from './pages/AnalyticsPage';
 
-//User List
+// User List
 import UserList from './pages/UserList';
 import UserDetail from './extra/UserDetails';
-import profil1 from './pages/images/profile.png';
-import profile2 from './pages/images/woman.png';
-import profile3 from './pages/images/profile3.png';
 
-//Checkout Page
+// Checkout Page
 import CheckoutPage from './pages/CheckoutPage';
 
-//User Profile
-import ProfilePage from './pages/ProfilePage'; 
-import oldSidebar from './components/oldSidebar';
-//SideBar
-import Sidebar from './components/Sidebar';
+// User Profile
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
-
-  const stripekey = 'sk_test_51PID9PDEA9oSjm91LA1IW8K0vQWxi0NaFxp5bvs7Z4DLu60vmImZX5bIlBbdz9RQmbw6l8NHYl3iMhhjQZ6G9BHd00BDy2CWl7'
-
   const [role, setRole] = useState('none');
-  useEffect(() =>{
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+
+  useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await axios.get('http://localhost:3000/accounts/getUser', { withCredentials: true });
@@ -90,75 +69,75 @@ function App() {
         console.error('Error fetching user data:', error);
       }
     };
-    fetchUser()
-  },[role]);
+    fetchUser();
+  }, []);
+
+  const toggleSidebar = () => {
+    setIsSidebarVisible(!isSidebarVisible);
+  };
 
   return (
     <Router>
-    <div className="App" style={{ display: 'flex' }}>
-      {/* Sidebar */}
-      <Sidebar /> 
-      {/* Content Wrapper */}
-      <div className="content-wrapper" style={{ flex: 1 }}>
-        <Navbar role={role}/>
-        <Routes>
+      <div className="d-flex flex-column vh-100">
+        <Navbar role={role} />
+        <div className="d-flex flex-grow-1">
+          <Sidebar role={role} isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
+          <div className="flex-grow-1 p-3">
+            <button onClick={toggleSidebar} className="btn btn-dark mb-2">
+              {isSidebarVisible ? 'X' : 'X'}
+            </button>
+            <Routes>
+              {/* Basic Pages */}
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<LogIn />} />
 
-          {/*Basic Pages */}
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/about" element={<AboutUs />} /> 
-          <Route path="/contact" element={<ContactUs />} /> 
-          <Route path="/signup" element={<SignUp />} /> 
-          <Route path="/login" element={<LogIn />} />  
+              {/* Vehicles */}
+              <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} />
+              <Route path="/vehicles/add" element={<VehicleForm role={role} />} />
+              <Route path="/vehicles/edit/:id" element={<VehicleForm role={role} />} />
+              <Route path="/vehicles/:id" element={<VehicleDetails role={role} />} />
 
-          {/*Vehicles */}   
-          <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} /> 
-          <Route path="/vehicles/add" element={<VehicleForm role={role} />} />
-          <Route path="/vehicles/edit/:id" element={<VehicleForm role={role} />} />
-          <Route path="/vehicles/:id" element={<VehicleDetails role={role} />} />
+              {/* Blogs */}
+              <Route path="/blogs" element={<Blogs role={role} />} />
+              <Route path="/blogs/add" element={<BlogForm />} />
+              <Route path="/blogs/edit/:id" element={<BlogForm />} />
+              <Route path="/blogs/:id" element={<IndividualBlogPage role={role} />} />
 
-          {/*Blogs */}
-          <Route path="/blogs" element={<Blogs role={role} />} />
-          <Route path="/blogs/add" element={<BlogForm />} />
-          <Route path="/blogs/edit/:id" element={<BlogForm />} />     
-          <Route path="/blogs/:id" element={<IndividualBlogPage role={role} />} />
+              {/* Invoices */}
+              <Route path="/invoices" element={<ViewInvoicesPage />} />
+              <Route path="/invoices/:id" element={<DetailInvoicePage />} />
+              <Route path="/invoices/pay" element={<PayInvoicePage />} />
 
-          {/*Invoices */}
-          <Route path="/invoices" element={<ViewInvoicesPage />} />
-          <Route path="/invoices/:id" element={<DetailInvoicePage />} />
-          <Route path="/invoices/pay" element={<PayInvoicePage />} />
+              {/* Dealers */}
+              <Route path="/dealers" element={<DealerListPage role={role} />} />
+              <Route path="/dealer/:id" element={<DealerDetailsPage />} />
 
-          {/*View all Dealers*/}
+              {/* Ads */}
+              <Route path="/ads" element={<AdListPage role={role} />} />
+              <Route path="/ads/:id" element={<AdDetailPage role={role} />} />
 
-          <Route path="/dealers" element={<DealerListPage role={role} />} />
-          <Route path="/dealer/:id" element={<DealerDetailsPage />} />
+              {/* Analytics */}
+              <Route path="/analytics" element={<AnalyticsPage />} />
 
-          {/*Ads
-          <Route path="/ads/edit/:id" element={<AdEditPage  />} />
-          <Route path="/ads/edit/add" element={<AdEditPage  />} />    
-          */}
-          <Route path="/ads" element={<AdListPage role={role}/>} />
-          <Route path="/ads/:id" element={<AdDetailPage role={role}/>} />
+              {/* Payment */}
+              <Route path="/payment" element={<PaymentPage />} />
 
+              {/* Checkout */}
+              <Route path="/checkout" element={<CheckoutPage />} />
 
-          {/*Analytics */}          
-          <Route path="/analytics" element={<AnalyticsPage />}/>
-         
-          {/*Payment */}
-          <Route path="/payment" element={<PaymentPage />} />
+              {/* User Profile */}
+              <Route path="/profile" element={<ProfilePage />} />
 
-          {/*User Lists 
-          <Route path="/userlist" element={<UserList userData={userData} onDelete={handleDeleteUser} />} />
-          <Route path="/userlist/:id" element={<UserDetail userData={userData} />} />
-          */}
-
-          {/*Checkout           */}
-          <Route path="/checkout" element={<CheckoutPage />} />
-
-          {/*User/Dealer Profile */}
-          <Route path="/profile" element={<ProfilePage role={role}/>}></Route>
-        </Routes>
-          <Footer />
+              {/* User List */}
+              <Route path="/userlist" element={<UserList />} />
+              <Route path="/userlist/:id" element={<UserDetail />} />
+            </Routes>
+          </div>
         </div>
+        <Footer />
       </div>
     </Router>
   );

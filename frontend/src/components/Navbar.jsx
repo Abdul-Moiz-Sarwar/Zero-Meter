@@ -22,62 +22,12 @@ const Navbar = ({role}) => {
                     
                     <Link className="navbar-brand" to="/">Zero Meter</Link>
 
-                    
-                        
-                    {role ==='admin' && (
-                        <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">  
-                            <li><Link className="nav-link px-2" to="/">Home</Link></li>
-                            <li><Link className="nav-link" to="/blogs">Blogs</Link></li>
-                            <li><Link className="nav-link" to="/about">About</Link></li>
-                            <li><Link className="nav-link" to="/contact">Contact</Link></li>                      
-                            <li><Link className="nav-link" to="/userlist">View Users</Link> </li>
-                            <li><Link className="nav-link" to="/vehicles">Vehicles</Link></li>
-                            <li><Link className="nav-link" to="/userprofile">User Profile</Link></li>
-                            <li><Link className="nav-link" to="/ads">Ads</Link></li>
-                            <li><Link className="nav-link" to="/invoices">Invoices</Link></li>
-                            <li><Link className="nav-link" to="/payment">Payment</Link></li>
-                            <li><Link className="nav-link" to="/analytics">Analytics</Link></li>
-                            <li><Link className="nav-link" to="/dealers">View Dealers</Link></li>
-                        </ul>
-                    ) }
-
-                    {role ==='dealer' && (
-                        <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                            <li><Link className="nav-link px-2" to="/">Home</Link></li>
-                            <li><Link className="nav-link" to="/blogs">Blogs</Link></li>
-                            <li><Link className="nav-link" to="/about">About</Link></li>
-                            <li><Link className="nav-link" to="/contact">Contact</Link></li>
-                            <li><Link className="nav-link" to="/profile">Profile</Link></li>
-                            <li><Link className="nav-link" to="/vehicles">Vehicles</Link></li> 
-                            <li><Link className="nav-link" to="/ads">Ads</Link></li>
-                            <li><Link className="nav-link" to="/invoices">Invoices</Link></li>
-                            <li><Link className="nav-link" to="/dealers">View Dealers</Link></li>
-                        </ul>
-                    ) }
-
-                    {role ==='user' && (
-                        <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                            <li><Link className="nav-link px-2" to="/">Home</Link></li>
-                            <li><Link className="nav-link" to="/blogs">Blogs</Link></li>
-                            <li><Link className="nav-link" to="/about">About</Link></li>
-                            <li><Link className="nav-link" to="/contact">Contact</Link></li>
-                            <li><Link className="nav-link" to="/profile">Profile</Link></li>
-                            <li><Link className="nav-link" to="/ads">Ads</Link></li>
-                            <li><Link className="nav-link" to="/invoices">Invoices</Link></li>
-                            <li><Link className="nav-link" to="/payment">Payment</Link></li>
-                            <li><Link className="nav-link" to="/dealers">View Dealers</Link></li>
-                            <li><Link className="nav-link" to="/checkout">Checkout</Link></li>
-                        </ul>
-                    ) }
-
-                    {role ==='none' && (
                         <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                             <li><Link className="nav-link px-2" to="/">Home</Link></li>
                             <li><Link className="nav-link" to="/blogs">Blogs</Link></li>
                             <li><Link className="nav-link" to="/about">About</Link></li>
                             <li><Link className="nav-link" to="/contact">Contact</Link></li>
                         </ul>
-                    ) }
 
                     <div className="col-md-3 text-end" bis_skin_checked="1">
                         {role ==='none' && (

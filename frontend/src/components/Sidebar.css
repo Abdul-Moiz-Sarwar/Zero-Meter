@@ -1,0 +1,11 @@
+.sidebar {
+    position: fixed;
+    top: 56px; /* Adjust according to navbar height */
+    left: 0;
+    bottom: 0;
+    width: 280px; /* Adjust sidebar width as needed */
+    background-color: #282c34;
+    z-index: 1000;
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds sidebar height */
+  }
+  

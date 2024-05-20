@@ -39,47 +39,45 @@ const LandingPage = () => {
                 <div className="container px-4 py-5" id="icon-grid" bis_skin_checked="1">
                     <h2 className="pb-2 border-bottom">Why Zero Meter</h2>
 
-                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 py-5" bis_skin_checked="1">
-                    
-                    <div className="col d-flex align-items-start" bis_skin_checked="1">
-                        <div bis_skin_checked="1">
-                        <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Featured title</h3>
-                        <p>Paragraph of text beneath the heading to explain the heading.</p>
-                        </div>
-                    </div>
-                    <div className="col d-flex align-items-start" bis_skin_checked="1">
-                        <div bis_skin_checked="1">
-                        <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Featured title</h3>
-                        <p>Paragraph of text beneath the heading to explain the heading.</p>
-                        </div>
-                    </div>
-                    <div className="col d-flex align-items-start" bis_skin_checked="1">
-                        <div bis_skin_checked="1">
-                        <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Featured title</h3>
-                        <p>Paragraph of text beneath the heading to explain the heading.</p>
-                        </div>
-                    </div>
-                    <div className="col d-flex align-items-start" bis_skin_checked="1">
-                        <div bis_skin_checked="1">
-                        <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Featured title</h3>
-                        <p>Paragraph of text beneath the heading to explain the heading.</p>
-                        </div>
-                    </div>
-                    <div className="col d-flex align-items-start" bis_skin_checked="1">
-                        <div bis_skin_checked="1">
-                        <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Featured title</h3>
-                        <p>Paragraph of text beneath the heading to explain the heading.</p>
-                        </div>
-                    </div>
-                    <div className="col d-flex align-items-start" bis_skin_checked="1">
-                        <div bis_skin_checked="1">
-                        <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Featured title</h3>
-                        <p>Paragraph of text beneath the heading to explain the heading.</p>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-                
+                    <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4 py-5">
+          <div className="col d-flex align-items-start">
+            <div>
+              <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">High Quality Services</h3>
+              <p>Experience top-notch services that ensure a seamless vehicle trading process.</p>
+            </div>
+          </div>
+          <div className="col d-flex align-items-start">
+            <div>
+              <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">24/7 Support</h3>
+              <p>Get assistance round the clock with our dedicated customer support team.</p>
+            </div>
+          </div>
+          <div className="col d-flex align-items-start">
+            <div>
+              <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Expert Guidance</h3>
+              <p>Receive expert advice and guidance from our seasoned professionals.</p>
+            </div>
+          </div>
+          <div className="col d-flex align-items-start">
+            <div>
+              <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Wide Selection</h3>
+              <p>Choose from a wide selection of vehicles from renowned dealerships.</p>
+            </div>
+          </div>
+          <div className="col d-flex align-items-start">
+            <div>
+              <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">User-Friendly Interface</h3>
+              <p>Enjoy a seamless browsing experience with our intuitive interface.</p>
+            </div>
+          </div>
+          <div className="col d-flex align-items-start">
+            <div>
+              <h3 className="fw-bold mb-0 fs-4 text-body-emphasis">Secure Transactions</h3>
+              <p>Rest assured with secure and reliable transaction processes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
                 <p>Ready to get started? Explore our range of vehicles and book your ride online today!</p>
             </div>
     );
