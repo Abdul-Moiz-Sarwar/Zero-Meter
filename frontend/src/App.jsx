@@ -50,7 +50,7 @@ import profile1 from './pages/images/profile.png'
 
 //Dealer List/Details
 import DealerListPage from './pages/DealerListPage';
-import DealerDetailsPage from './extra/DealerDetailsPage';
+import DealerDetailsPage from './pages/DealerDetailsPage';
 import dealer1 from './pages/images/crowley.jpg';
 import dealer2 from './pages/images/toyota.png';
 
@@ -72,6 +72,9 @@ import CheckoutPage from './pages/CheckoutPage';
 
 //User Profile
 import ProfilePage from './pages/ProfilePage'; 
+import oldSidebar from './components/oldSidebar';
+//SideBar
+import Sidebar from './components/Sidebar';
 
 function App() {
 
@@ -92,7 +95,11 @@ function App() {
 
   return (
     <Router>
-      <div className="App">
+    <div className="App" style={{ display: 'flex' }}>
+      {/* Sidebar */}
+      <Sidebar /> 
+      {/* Content Wrapper */}
+      <div className="content-wrapper" style={{ flex: 1 }}>
         <Navbar role={role}/>
         <Routes>
 
@@ -120,10 +127,10 @@ function App() {
           <Route path="/invoices/:id" element={<DetailInvoicePage />} />
           <Route path="/invoices/pay" element={<PayInvoicePage />} />
 
-          {/*View all Dealers
-          <Route path="/dealers" element={<DealerListPage dealers={dealers} role={role} />} />
-          <Route path="/dealer/:id" element={<DealerDetailsPage dealers={dealers}/>} />
-          */}
+          {/*View all Dealers*/}
+
+          <Route path="/dealers" element={<DealerListPage role={role} />} />
+          <Route path="/dealer/:id" element={<DealerDetailsPage />} />
 
           {/*Ads
           <Route path="/ads/edit/:id" element={<AdEditPage  />} />
@@ -149,9 +156,9 @@ function App() {
 
           {/*User/Dealer Profile */}
           <Route path="/profile" element={<ProfilePage role={role}/>}></Route>
-
         </Routes>
-        <Footer />
+          <Footer />
+        </div>
       </div>
     </Router>
   );
