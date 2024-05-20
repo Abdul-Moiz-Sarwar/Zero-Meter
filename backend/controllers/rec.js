@@ -1,7 +1,5 @@
-const { PythonShell } = require('python-shell');
 const vehicle = require('../models/vehicle');
-
-
+const { PythonShell } = require('python-shell');
 
 const fetchDataFromMongoDB = async () => {
     try {
@@ -28,5 +26,6 @@ pyshell.on('message', function (message) {
     console.log(message);
   });
 }
-module.exports.getrecs=getrecs
+
+module.exports.getrecs = getrecs
   
