@@ -47,9 +47,9 @@ const Navbar = ({role}) => {
                             <li><Link className="nav-link" to="/blogs">Blogs</Link></li>
                             <li><Link className="nav-link" to="/about">About</Link></li>
                             <li><Link className="nav-link" to="/contact">Contact</Link></li>
+                            <li><Link className="nav-link" to="/profile">Profile</Link></li>
                             <li><Link className="nav-link" to="/vehicles">Vehicles</Link></li> 
                             <li><Link className="nav-link" to="/ads">Ads</Link></li>
-                            <li><Link className="nav-link" to="/dealerprofile">Dealer Profile</Link></li>
                             <li><Link className="nav-link" to="/invoices">Invoices</Link></li>
                             <li><Link className="nav-link" to="/dealers">View Dealers</Link></li>
                         </ul>
@@ -61,8 +61,8 @@ const Navbar = ({role}) => {
                             <li><Link className="nav-link" to="/blogs">Blogs</Link></li>
                             <li><Link className="nav-link" to="/about">About</Link></li>
                             <li><Link className="nav-link" to="/contact">Contact</Link></li>
+                            <li><Link className="nav-link" to="/profile">Profile</Link></li>
                             <li><Link className="nav-link" to="/ads">Ads</Link></li>
-                            <li><Link className="nav-link" to="/userprofile">User Profile</Link></li>
                             <li><Link className="nav-link" to="/invoices">Invoices</Link></li>
                             <li><Link className="nav-link" to="/payment">Payment</Link></li>
                             <li><Link className="nav-link" to="/dealers">View Dealers</Link></li>

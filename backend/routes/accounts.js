@@ -18,4 +18,8 @@ router.post("/logout", account.verifyToken, account.logout);
 router.get("/getUser",account.verifyToken, account.getUser)
 
 router.get("/getAllDealers",account.verifyToken, account.getAllDealers)
+
+//routes:
+router.put("/updateUser", account.verifyToken, account.updateUser);
+
 module.exports = router;

@@ -424,7 +424,28 @@ const isUser = (req, res, next) => {
             return res.status(500).json("Internal Server Error");
         });
 };
+// Update user function
+const updateUser = async (req, res) => {
+    const userId = req.id; // Ensure this is being correctly set by your authentication middleware
+    const updatedData = req.body;
 
+    if (!userId || !updatedData) {
+        return res.status(400).json({ message: "Invalid data" });
+    }
+
+    try {
+        const user = await Accounts.User.findByIdAndUpdate(userId, updatedData, { new: true });
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({ user });
+    } catch (error) {
+        console.error('Error updating user:', error.stack || error); // Log the full error stack
+        return res.status(500).json({ message: "Error updating user", error: error.message });
+    }
+};
+
+module.exports.updateUser=updateUser;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.login = login;
