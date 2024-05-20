@@ -11,7 +11,7 @@ const PaymentRouter = require('./routes/payment')
 const InvoiceRouter = require('./routes/invoice')
 const BlogRouter = require('./routes/blog')
 const AdRouter = require('./routes/ad')
-
+const recRouter = require('./routes/rec')
 const app = express()
 
 app.use(bodyParser.json());
@@ -34,5 +34,6 @@ app.use('/payments',PaymentRouter)
 app.use('/invoices',InvoiceRouter)
 app.use('/blogs',BlogRouter)
 app.use('/ads',AdRouter)
+app.use('/recs',recRouter);
 
 app.listen(3000, () => console.log("listening on port 3000"))

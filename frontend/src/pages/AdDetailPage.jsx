@@ -8,7 +8,8 @@ const AdDetailPage = ({ role }) => {
     const { id } = useParams();
     const [ad, setAd] = useState(null);
     const [vehicle, setVehicle] = useState(null);
-
+    const [vehicles,setVehicles]=useState([])
+    const [recs,setrecs]=[]
     useEffect(() => {
         const fetchAd = async () => {
             try {
@@ -24,6 +25,36 @@ const AdDetailPage = ({ role }) => {
         fetchAd();
     }, [id]);
 
+    useEffect(() => {
+        const fetchVehicles = async () => {
+          try {
+            const res = await axios.get('http://localhost:3000/vehicles/all', { withCredentials: true });
+            
+            setVehicles(res.data);
+          } catch (error) {
+            console.error('Error fetching vehicle data:', error);
+          }
+        };
+    
+        fetchVehicles();
+      }, []);
+
+      useEffect(() => {
+        const getrecs = async () => {
+          try {
+            const res = await axios.get('http://localhost:3000/recs/', { withCredentials: true });
+            
+            setrecs(res.data);
+          } catch (error) {
+            console.error('Error fetching rec data:', error);
+          }
+        };
+    
+        getrecs();
+      }, []);
+    
+    
+
     const handleBuyNow = () => {
         navigate(`/checkout?adId=${ad._id}`);
     };
@@ -32,10 +63,13 @@ const AdDetailPage = ({ role }) => {
         return <div>Loading...</div>;
     }
 
-    return (
+    console.log(recs)
+
+    return (<>
         <div className='bg-light p-5'>
             <AdDetailComponent ad={ad} vehicle={vehicle} role={role} onBuyNow={handleBuyNow} />
         </div>
+        </>
     );
 };
 
