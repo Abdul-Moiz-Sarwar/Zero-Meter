@@ -108,7 +108,7 @@ function App() {
 
               {/* Invoices */}
               <Route path="/invoices" element={<ViewInvoicesPage />} />
-              <Route path="/invoices/:id" element={<DetailInvoicePage />} />
+              <Route path="/invoices/:id" element={<DetailInvoicePage role={role}/>} />
               <Route path="/invoices/pay" element={<PayInvoicePage />} />
 
               {/* Dealers */}
