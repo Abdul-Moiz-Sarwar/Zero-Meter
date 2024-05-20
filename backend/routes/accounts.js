@@ -16,4 +16,6 @@ router.post("/logout", account.verifyToken, account.logout);
 
 //get user details
 router.get("/getUser",account.verifyToken, account.getUser)
+
+router.get("/getAllDealers",account.verifyToken, account.getAllDealers)
 module.exports = router;

@@ -357,6 +357,21 @@ const getUser = async(req, res) => {
     return res.status(200).json({user});
 }
 
+const getAllDealers = async (req, res) => {
+    let dealers;
+    try {
+        dealers = await Accounts.Dealership.find({});
+    } catch (err) {
+        console.error("Error fetching dealers:", err);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+    if (!dealers || dealers.length === 0) {
+        return res.status(404).json({ message: "No dealers found" });
+    }
+    return res.status(200).json({ dealers });
+}
+
+
 const isDealer = (req, res, next) => {
     Accounts.User.findOne({_id: req.id, type: "dealer"}, "-password")
         .then((data) => {
@@ -420,3 +435,4 @@ module.exports.getUser = getUser;
 module.exports.isAdmin = isAdmin;
 module.exports.isUser = isUser;
 module.exports.isDealer = isDealer;
+module.exports.getAllDealers = getAllDealers;
