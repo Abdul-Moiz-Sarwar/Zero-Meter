@@ -8,13 +8,16 @@ const AdDetailPage = ({ role }) => {
     const { id } = useParams();
     const [ad, setAd] = useState(null);
     const [vehicle, setVehicle] = useState(null);
-    const [vehicles,setVehicles]=useState([])
-    const [recs,setrecs]=[]
+    const [vehicles, setVehicles] = useState([]);
+    const [recs, setRecs] = useState([]);
+    const [adrecs, setAdRecs] = useState([]);
+
     useEffect(() => {
         const fetchAd = async () => {
             try {
                 const res = await axios.get(`http://localhost:3000/ads/${id}`, { withCredentials: true });
                 setAd(res.data);
+
                 // Fetch the vehicle details
                 const vehicleRes = await axios.get(`http://localhost:3000/vehicles/${res.data.vehicle}`, { withCredentials: true });
                 setVehicle(vehicleRes.data);
@@ -27,33 +30,40 @@ const AdDetailPage = ({ role }) => {
 
     useEffect(() => {
         const fetchVehicles = async () => {
-          try {
-            const res = await axios.get('http://localhost:3000/vehicles/all', { withCredentials: true });
-            
-            setVehicles(res.data);
-          } catch (error) {
-            console.error('Error fetching vehicle data:', error);
-          }
+            try {
+                const res = await axios.get('http://localhost:3000/vehicles/all', { withCredentials: true });
+                setVehicles(res.data);
+            } catch (error) {
+                console.error('Error fetching vehicle data:', error);
+            }
         };
-    
         fetchVehicles();
-      }, []);
+    }, []);
 
-      useEffect(() => {
-        const getrecs = async () => {
-          try {
-            const res = await axios.get('http://localhost:3000/recs/', { withCredentials: true });
-            
-            setrecs(res.data);
-          } catch (error) {
-            console.error('Error fetching rec data:', error);
-          }
+    useEffect(() => {
+        const getRecs = async () => {
+            try {
+                const res = await axios.get('http://localhost:3000/recs/', { withCredentials: true });
+                setRecs(res.data);
+                console.log("Recommendations fetched");
+            } catch (error) {
+                console.error('Error fetching recommendations:', error);
+            }
         };
-    
-        getrecs();
-      }, []);
-    
-    
+        getRecs();
+    }, []);
+
+    useEffect(() => {
+        if (ad && recs.length > 0 && vehicles.length > 0) {
+            const findVehicleIndex = (vehicleId) => vehicles.findIndex(vehicle => vehicle._id === vehicleId);
+            const vehicleIndex = findVehicleIndex(ad.vehicle);
+
+            if (vehicleIndex !== -1) {
+                setAdRecs(recs[vehicleIndex]);
+                console.log("Recs are ", recs[vehicleIndex]);
+            }
+        }
+    }, [ad, recs, vehicles]);
 
     const handleBuyNow = () => {
         navigate(`/checkout?adId=${ad._id}`);
@@ -63,13 +73,23 @@ const AdDetailPage = ({ role }) => {
         return <div>Loading...</div>;
     }
 
-    console.log(recs)
+    console.log("Recommendations are:", adrecs);
 
-    return (<>
+    return (
         <div className='bg-light p-5'>
             <AdDetailComponent ad={ad} vehicle={vehicle} role={role} onBuyNow={handleBuyNow} />
+            {/* Render recommendations if available */}
+            {adrecs.length > 0 && (
+                <div>
+                    <h3>Recommended Vehicles</h3>
+                    <ul>
+                        {adrecs.map((recIndex) => (
+                            <li key={recIndex}>{vehicles[recIndex].company} {vehicles[recIndex].model} {vehicles[recIndex].variant}</li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
-        </>
     );
 };
 
