@@ -455,6 +455,36 @@ const getAllUsers = async (req, res) => {
     }
 };
 
+const deleteDealer = async (req, res) => {
+    const dealerId = req.params.id;
+
+    try {
+        const deletedDealer = await Accounts.Dealership.findByIdAndDelete(dealerId);
+        if (!deletedDealer) {
+            return res.status(404).json({ message: "Dealer not found" });
+        }
+        return res.status(200).json({ message: "Dealer deleted successfully" });
+    } catch (error) {
+        console.error('Error deleting dealer:', error.stack || error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+const deleteUser = async (req, res) => {
+    const userId = req.params.id; 
+
+    try {
+        const deletedUser = await Accounts.User.findByIdAndDelete(userId);
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        console.error('Error deleting user:', error.stack || error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 module.exports.getAllUsers=getAllUsers;
 module.exports.updateUser=updateUser;
 module.exports.logout = logout;
@@ -468,3 +498,5 @@ module.exports.isAdmin = isAdmin;
 module.exports.isUser = isUser;
 module.exports.isDealer = isDealer;
 module.exports.getAllDealers = getAllDealers;
+module.exports.deleteUser = deleteUser;
+module.exports.deleteDealer = deleteDealer;

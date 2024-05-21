@@ -1,98 +1,104 @@
-import React, { useState,useRef,useEffect } from 'react';
+// src/pages/SignUpComponent.js
+import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const containerStyle = {
-    width: '80vw',
-    height: '100vh'
+  width: '80vw',
+  height: '100vh'
 };
 
 const defaultCenter = {
-    lat: -3.745,
-    lng: -38.523
+  lat: -3.745,
+  lng: -38.523
 };
 
+const SignUpForm = ({ setRole }) => {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    type: 'user',
+    phone: '',
+    address: '',
+    city: '',
+    country: '',
+    cnic: '',
+    dealershipname: '',
+    registration: '',
+    instagram: '',
+    facebook: '',
+    lat: '',
+    lng: '',
+  });
 
-const SignupForm = () => {
-    const [formData, setFormData] = useState({
-        username: '',
-        email: '',
-        password: '',
-        type: 'user',
-        phone: '',
-        address: '',
-        city: '',
-        country: '',
-        cnic: '',
-        dealershipname: '',
-        registration: '',
-        instagram:'',
-        facebook:'',
-        lat:'',
-        lng:'',
-    });
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: "AIzaSyCiet4SByi8rNwFqyBa5_HJv13hqMzNz9c",
+    libraries: ['places']
+  });
 
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyCiet4SByi8rNwFqyBa5_HJv13hqMzNz9c",
-        libraries: ['places']
-    });
+  const [center, setCenter] = useState(defaultCenter);
+  const [markerPosition, setMarkerPosition] = useState(null);
+  const [directionsResponse, setDirectionsResponse] = useState(null); // Define directionsResponse state
 
-    const [center, setCenter] = useState(defaultCenter);
-    const [markerPosition, setMarkerPosition] = useState(null);
-    const [directionsResponse, setDirectionsResponse] = useState(null); // Define directionsResponse state
-
-    useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setCenter({ lat: latitude, lng: longitude });
-                    setFormData({ ...formData, ['lat']: latitude, ['lng']: longitude });
-                },
-                (error) => {
-                    console.error('Error fetching location:', error);
-                    alert('Error fetching location');
-                }
-            );
-        } else {
-            alert('Geolocation not supported by this browser');
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setCenter({ lat: latitude, lng: longitude });
+          setFormData({ ...formData, ['lat']: latitude, ['lng']: longitude });
+        },
+        (error) => {
+          console.error('Error fetching location:', error);
+          alert('Error fetching location');
         }
-    }, []);
+      );
+    } else {
+      alert('Geolocation not supported by this browser');
+    }
+  }, []);
 
-    const onLoad = React.useCallback(function callback(map) {
-        const bounds = new window.google.maps.LatLngBounds(center);
-        map.fitBounds(bounds);
-    }, [center]);
+  const onLoad = React.useCallback(function callback(map) {
+    const bounds = new window.google.maps.LatLngBounds(center);
+    map.fitBounds(bounds);
+  }, [center]);
 
-    const handleMapClick = (event) => {
-        setMarkerPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-        setCenter({ lat: event.latLng.lat(), lng: event.latLng.lng() });
-        setFormData({ ...formData, ['lat']: event.latLng.lat(), ['lng']: event.latLng.lng() });
-    };
+  const handleMapClick = (event) => {
+    setMarkerPosition({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+    setCenter({ lat: event.latLng.lat(), lng: event.latLng.lng() });
+    setFormData({ ...formData, ['lat']: event.latLng.lat(), ['lng']: event.latLng.lng() });
+  };
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setFormData({
-            ...formData,
-            [name]: type === 'checkbox' ? checked : value
-        });
-    };
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? checked : value
+    });
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        axios.post('http://localhost:3000/accounts/signup', formData)
-        .then( (res,err) => {console.log(res.data); navigate('/login')})
-        .catch( (res,err) => {console.log(res.response.data);});
-        console.log(formData);
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    axios.post('http://localhost:3000/accounts/signup', formData)
+      .then((res, err) => {
+        console.log(res.data);
+        setRole(res.data.user.type); // Update role on signup
+        navigate('/login');
+      })
+      .catch((res, err) => {
+        console.log(res.response.data);
+      });
+    console.log(formData);
+  };
 
-    return (
+  return (
     <form className="form w-100 m-auto p-5 bg-light" onSubmit={handleSubmit}>
-        <div className="form-floating m-1">
+  <div className="form-floating m-1">
             <input type="text" className="form-control" id="username" placeholder="username" name="username" value={formData.username} onChange={handleChange} required />
             <label htmlFor="username">Username</label>
         </div>
@@ -172,9 +178,9 @@ const SignupForm = () => {
             )}
         <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-primary w-100 py-2" >Sign Up</button>
-        </div>
+            </div>
     </form>
-    );
+  );
 }
 
-export default SignupForm;
+export default SignUpForm;

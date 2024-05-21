@@ -19,10 +19,16 @@ router.get("/getUser",account.verifyToken, account.getUser)
 
 router.get("/getAllDealers",account.verifyToken, account.getAllDealers)
 
-//routes:
+//for edit profile
 router.put("/updateUser", account.verifyToken, account.updateUser);
 
 //get all users
 router.get('/getAllUsers', account.verifyToken, account.getAllUsers);
+
+//Delete user
+router.delete("/user/:id", account.verifyToken, account.deleteUser);
+
+//Delete dealer
+router.delete('/deleteDealer/:id', account.deleteDealer);
 
 module.exports = router;

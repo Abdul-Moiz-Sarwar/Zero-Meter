@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import { FaTimes, FaArrowRight } from 'react-icons/fa';
 
 // Components
@@ -81,7 +80,7 @@ function App() {
   return (
     <Router>
       <div className="d-flex flex-column vh-100">
-        <Navbar role={role} />
+        <Navbar role={role} setRole={setRole} />
         <div className="d-flex bg-light flex-grow-1">
           <Sidebar role={role} isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
           <div className="flex-grow-1 p-3">
@@ -93,8 +92,8 @@ function App() {
               <Route path="/" element={<LandingPage />} />
               <Route path="/about" element={<AboutUs />} />
               <Route path="/contact" element={<ContactUs />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/login" element={<LogIn />} />
+              <Route path="/signup" element={<SignUp setRole={setRole} />} />
+              <Route path="/login" element={<LogIn setRole={setRole} />} />
 
               {/* Vehicles */}
               <Route path="/vehicles" element={<ViewVehiclesPage role={role} />} />
@@ -135,7 +134,6 @@ function App() {
 
               {/* User List */}
               <Route path="/userlist" element={<UserList />} />
-
               <Route path="/user-details" element={<UserDetails />}/>
             </Routes>
           </div>

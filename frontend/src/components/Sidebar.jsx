@@ -1,4 +1,3 @@
-// src/components/Sidebar.js
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +12,7 @@ const Sidebar = ({ role, isVisible, toggleSidebar }) => {
             <li><Link to="/analytics" className="nav-link text-white">Analytics</Link></li>
             <li><Link to="/profile" className="nav-link text-white">Profile</Link></li>
             <li><Link to="/dealers" className="nav-link text-white">View Dealers</Link></li>
+            <li><Link to="/userlist" className="nav-link text-white">View Users</Link></li>
           </>
         )}
         {role === 'dealer' && (
@@ -22,8 +22,7 @@ const Sidebar = ({ role, isVisible, toggleSidebar }) => {
             <li><Link to="/ads" className="nav-link text-white">Ads</Link></li>
             <li><Link to="/invoices" className="nav-link text-white">Invoices</Link></li>
             <li><Link to="/dealers" className="nav-link text-white">View Dealers</Link></li>
-            <li><Link to="/userlist" className="nav-link text-white">View Users</Link></li>
-          </>
+                      </>
         )}
         {role === 'user' && (
           <>

@@ -1,18 +1,13 @@
-import SignUpForm from './SignUpComponent'; // Import your SignUpForm component
-import React, { useRef, useState, useEffect } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
+import React from 'react';
+import SignUpForm from './SignUpComponent';
 
-
-const SignUpPage = () => {
-    
-
-    return (
-        <div className='p-5 bg-light'>
-            <h1>Signup</h1>
-            <SignUpForm />
-        </div>
-    );
-    
+const SignUpPage = ({ setRole }) => {
+  return (
+    <div className='p-5 bg-light'>
+      <h1>Signup</h1>
+      <SignUpForm setRole={setRole} />
+    </div>
+  );
 }
 
 export default SignUpPage;
