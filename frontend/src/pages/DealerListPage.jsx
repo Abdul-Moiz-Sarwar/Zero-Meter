@@ -24,15 +24,20 @@ const DealerListPage = ({ role }) => {
   }, []);
 
   // Function to handle search
+  
   const handleSearch = () => {
+    console.log("search",typeof(searchQuery))
+    setSearchQuery(String(searchQuery))
     const query = searchQuery.trim().toLowerCase();
     if (!query) {
       setFilteredDealers(allDealers);
+      console.log("all");
     } else {
       const filtered = allDealers.filter(dealer =>
-        dealer.name.toLowerCase().includes(query) ||
-        dealer.email.toLowerCase().includes(query)
+        dealer.name.toLowerCase().includes(query) 
+        
       );
+      console.log("Filtered", filtered);
       setFilteredDealers(filtered);
     }
   };
