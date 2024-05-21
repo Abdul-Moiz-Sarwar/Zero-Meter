@@ -4,7 +4,6 @@ import axios from 'axios';
 
 const ProfileDetailsComponent = ({ user, role, isEditing, setIsEditing, setUser }) => {
     const [formData, setFormData] = useState({ ...user });
-    const userNameParts = user.username.split(' ');
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -12,6 +11,7 @@ const ProfileDetailsComponent = ({ user, role, isEditing, setIsEditing, setUser 
 
     const handleSave = async () => {
         try {
+            console.log(formData)
             const res = await axios.put('http://localhost:3000/accounts/updateUser', formData, { withCredentials: true });
             setUser(res.data.user);
             setIsEditing(false); // Exit edit mode on successful save
@@ -26,7 +26,7 @@ const ProfileDetailsComponent = ({ user, role, isEditing, setIsEditing, setUser 
     };
 
     return (
-        <Card>
+        <Card className='p-5'>
             <Card.Body>
                 <Container>
                     <Row>
@@ -46,31 +46,31 @@ const ProfileDetailsComponent = ({ user, role, isEditing, setIsEditing, setUser 
                             <Row>
                                 <Col md={6}>
                                     <Form.Group>
-                                        <Form.Label>First Name</Form.Label>
+                                        <Form.Label>Username</Form.Label>
                                         {isEditing ? (
                                             <Form.Control
                                                 type="text"
-                                                name="firstName"
-                                                value={formData.firstName || userNameParts[0]}
+                                                name="username"
+                                                value={formData.username || user.username}
                                                 onChange={handleChange}
                                             />
                                         ) : (
-                                            <p>{userNameParts[0]}</p>
+                                            <p>{user.username}</p>
                                         )}
                                     </Form.Group>
                                 </Col>
                                 <Col md={6}>
                                     <Form.Group>
-                                        <Form.Label>Last Name</Form.Label>
+                                        <Form.Label>CNIC</Form.Label>
                                         {isEditing ? (
                                             <Form.Control
                                                 type="text"
-                                                name="lastName"
-                                                value={formData.lastName || userNameParts[1]}
+                                                name="cnic"
+                                                value={formData.cnic || user.cnic}
                                                 onChange={handleChange}
                                             />
                                         ) : (
-                                            <p>{userNameParts[1]}</p>
+                                            <p>{user.cnic}</p>
                                         )}
                                     </Form.Group>
                                 </Col>

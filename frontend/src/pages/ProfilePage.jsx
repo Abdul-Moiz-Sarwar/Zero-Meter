@@ -11,6 +11,7 @@ const ProfilePage = ({ role }) => {
         const fetchUserData = async () => {
             try {
                 const res = await axios.get('http://localhost:3000/accounts/getUser', { withCredentials: true });
+                console.log(res.data.user)
                 setUser(res.data.user);
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -24,10 +25,10 @@ const ProfilePage = ({ role }) => {
     };
 
     return (
-        <div className="container p-5 bg-light">
+        <div className="p-5 bg-light">
             <div className="d-flex justify-content-between">
                 <h1>Profile</h1>
-                <Button variant="primary" onClick={handleEdit}>{isEditing ? 'Cancel' : 'Edit Profile'}</Button>
+                <Button className="btn btn-primary mb-3" onClick={handleEdit}>{isEditing ? 'Cancel' : 'Edit Profile'}</Button>
             </div>
             {user ? (
                 <ProfileDetailsComponent user={user} role={role} isEditing={isEditing} setIsEditing={setIsEditing} setUser={setUser} />

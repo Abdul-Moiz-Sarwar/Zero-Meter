@@ -24,7 +24,6 @@ const InvoiceDetailComponent = ({ invoiceId, role }) => {
 
   return (
     <div className='card p-5'>
-      <h2>Invoice Details</h2>
       <p>Invoice ID: {invoice._id}</p>
       <p>Date Created: {invoice.datecreated}</p>
       <p>Amount: {invoice.amount}</p>
@@ -36,9 +35,8 @@ const InvoiceDetailComponent = ({ invoiceId, role }) => {
           <Link className="btn btn-primary w-100 py-2" to={`/invoices/pay/?id=${invoice._id}`}>Pay Invoice</Link>
         </>
       ) }
-      
-      {/* Add Download button for PDF */}
-      <PDFDownloadLink document={<InvoicePDF invoice={invoice} />} fileName="invoice.pdf">
+
+      <PDFDownloadLink className="btn btn-secondary w-100 py-2 my-2" document={<InvoicePDF invoice={invoice} />} fileName="invoice.pdf">
         {({ blob, url, loading, error }) => (loading ? 'Loading document...' : 'Download PDF')}
       </PDFDownloadLink>
     </div>

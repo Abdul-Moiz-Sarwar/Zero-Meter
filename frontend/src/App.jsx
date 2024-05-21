@@ -82,7 +82,7 @@ function App() {
     <Router>
       <div className="d-flex flex-column vh-100">
         <Navbar role={role} />
-        <div className="d-flex flex-grow-1">
+        <div className="d-flex bg-light flex-grow-1">
           <Sidebar role={role} isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
           <div className="flex-grow-1 p-3">
             <button onClick={toggleSidebar} className="d-flex btn btn-dark justify-content-center align-items-center" style={{ width: "40px", height: "40px" }}>

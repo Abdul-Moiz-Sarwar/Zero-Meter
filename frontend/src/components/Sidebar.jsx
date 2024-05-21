@@ -9,7 +9,6 @@ const Sidebar = ({ role, isVisible, toggleSidebar }) => {
         {role === 'admin' && (
           <>
             <li><Link to="/vehicles" className="nav-link text-white">Vehicles</Link></li>
-            <li><Link to="/userprofile" className="nav-link text-white">User Profile</Link></li>
             <li><Link to="/ads" className="nav-link text-white">Ads</Link></li>
             <li><Link to="/invoices" className="nav-link text-white">Invoices</Link></li>
             <li><Link to="/analytics" className="nav-link text-white">Analytics</Link></li>

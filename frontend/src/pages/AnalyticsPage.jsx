@@ -18,8 +18,7 @@ const AnalyticsPage = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/vehicles/all', { withCredentials: true });
-        
+        const res = await axios.get('http://localhost:3000/vehicles/all', { withCredentials: true }); 
         setVehicles(res.data);
       } catch (error) {
         console.error('Error fetching vehicle data:', error);
@@ -79,34 +78,36 @@ const AnalyticsPage = () => {
   }, [vehicles]);
 
   return (
-    <div>
+    <div className='p-5 bg-light'>
       <h1>Vehicle Analytics</h1>
-      {vehicles.length > 0 ? (
-        <div>
-          <div style={{ width: '100%', height: '400px' }}>
-            <Bar 
-              data={chartDataSold} 
-              options={{ 
-                responsive: true, 
-                maintainAspectRatio: false 
-              }} 
-            />
+      <div className='p-5'>
+        {vehicles.length > 0 ? (
+          <div>
+            <div style={{ width: '100%', height: '400px' }}>
+              <Bar 
+                data={chartDataSold} 
+                options={{ 
+                  responsive: true, 
+                  maintainAspectRatio: false 
+                }} 
+              />
+            </div>
+            <div style={{ width: '100%', height: '400px' }}>
+              <br></br>
+              <br></br>
+              <Bar 
+                data={chartDataUnsold} 
+                options={{ 
+                  responsive: true, 
+                  maintainAspectRatio: false 
+                }} 
+              />
+            </div>
           </div>
-          <div style={{ width: '100%', height: '400px' }}>
-            <br></br>
-            <br></br>
-            <Bar 
-              data={chartDataUnsold} 
-              options={{ 
-                responsive: true, 
-                maintainAspectRatio: false 
-              }} 
-            />
-          </div>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </div>
   );
 };
