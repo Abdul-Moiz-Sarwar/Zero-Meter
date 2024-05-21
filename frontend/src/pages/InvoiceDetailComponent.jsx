@@ -9,8 +9,14 @@ const InvoiceDetailComponent = ({ invoiceId, role }) => {
   useEffect(() => {
     const fetchInvoice = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/invoices/${invoiceId}`, { withCredentials: true });
-        setInvoice(res.data);
+        if(role=='admin'){
+          const res = await axios.get(`http://localhost:3000/invoices/admin/${invoiceId}`, { withCredentials: true });
+          setInvoice(res.data);
+        }
+        else{
+          const res = await axios.get(`http://localhost:3000/invoices/${invoiceId}`, { withCredentials: true });
+          setInvoice(res.data);
+        }
       } catch (error) {
         console.error('Error fetching invoice details:', error);
       }

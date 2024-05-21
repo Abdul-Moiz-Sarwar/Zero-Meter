@@ -31,7 +31,6 @@ const Sidebar = ({ role, isVisible, toggleSidebar }) => {
             <li><Link to="/invoices" className="nav-link text-white">Invoices</Link></li>
             <li><Link to="/payment" className="nav-link text-white">Payment</Link></li>
             <li><Link to="/dealers" className="nav-link text-white">View Dealers</Link></li>
-            <li><Link to="/checkout" className="nav-link text-white">Checkout</Link></li>
           </>
         )}
         {role === 'none' && (

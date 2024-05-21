@@ -23,11 +23,32 @@ const login = async (req, res) => {
     if (!existingUser) {
         return res.status(400).json({message: "User not found, Please sign up."})
     }
-    else{
+
+    if (existingUser.type == 'user'){
         if (existingUser.status == "blocked") {
             return res.status(400).json({message: "Your account is blocked please contact our support."})
         }
     }
+
+    if (existingUser.type == 'dealer'){
+        try{
+            dl = await Accounts.Dealership.findOne({_id:existingUser.dealership, status:"verified"});
+        }
+        catch (err) {
+            console.log(err)
+        }
+        if (!dl) {
+            return res.status(400).json({message: "Your dealership is not yet verified."})
+        }
+    }
+
+
+
+    // else{
+    //     if (existingUser.status == "blocked") {
+    //         return res.status(400).json({message: "Your account is blocked please contact our support."})
+    //     }
+    // }
 
     const isPasswordCorrect = bcrypt.compareSync(password, existingUser.password);
     if(!isPasswordCorrect){
@@ -438,7 +459,13 @@ const deleteDealer = async (req, res) => {
     const dealerId = req.params.id;
 
     try {
-        const deletedDealer = await Accounts.Dealership.findByIdAndDelete(dealerId);
+        const deletedDealer = await Accounts.Dealership.findByIdAndUpdate(dealerId,{
+            $set: {
+                status: "unverified",
+            }
+        },{
+            upsert: false
+        });
         if (!deletedDealer) {
             return res.status(404).json({ message: "Dealer not found" });
         }
@@ -453,7 +480,13 @@ const deleteUser = async (req, res) => {
     const userId = req.params.id; 
 
     try {
-        const deletedUser = await Accounts.User.findByIdAndDelete(userId);
+        const deletedUser = await Accounts.User.findByIdAndUpdate(userId,{
+            $set: {
+                status: "blocked",
+            }
+        },{
+            upsert: false
+        });
         if (!deletedUser) {
             return res.status(404).json({ message: "User not found" });
         }
@@ -464,8 +497,51 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports.getAllUsers=getAllUsers;
-module.exports.updateUser=updateUser;
+const enableDealer = async (req, res) => {
+    const dealerId = req.params.id;
+
+    try {
+        const deletedDealer = await Accounts.Dealership.findByIdAndUpdate(dealerId,{
+            $set: {
+                status: "verified",
+            }
+        },{
+            upsert: false
+        });
+        if (!deletedDealer) {
+            return res.status(404).json({ message: "Dealer not found" });
+        }
+        return res.status(200).json({ message: "Dealer deleted successfully" });
+    } catch (error) {
+        console.error('Error deleting dealer:', error.stack || error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+const enableUser = async (req, res) => {
+    const userId = req.params.id; 
+
+    try {
+        const deletedUser = await Accounts.User.findByIdAndUpdate(userId,{
+            $set: {
+                status: "active",
+            }
+        },{
+            upsert: false
+        });
+        if (!deletedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        return res.status(200).json({ message: "User deleted successfully" });
+    } catch (error) {
+        console.error('Error deleting user:', error.stack || error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+
+module.exports.getAllUsers = getAllUsers;
+module.exports.updateUser = updateUser;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.login = login;
@@ -479,3 +555,5 @@ module.exports.isDealer = isDealer;
 module.exports.getAllDealers = getAllDealers;
 module.exports.deleteUser = deleteUser;
 module.exports.deleteDealer = deleteDealer;
+module.exports.enableUser = enableUser;
+module.exports.enableDealer = enableDealer;

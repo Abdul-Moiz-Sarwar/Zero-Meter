@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const DealerListPage = ({ role }) => {
+  const [load, setLoad] = useState(true)
   const [allDealers, setAllDealers] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredDealers, setFilteredDealers] = useState([]);
@@ -21,7 +22,7 @@ const DealerListPage = ({ role }) => {
     };
 
     fetchDealers();
-  }, []);
+  }, [load]);
 
   const handleSearch = () => {
     console.log("search",typeof(searchQuery))
@@ -40,15 +41,25 @@ const DealerListPage = ({ role }) => {
   };
 
   const handleDelete = async (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this dealer?");
+    const confirmDelete = window.confirm("Are you sure you want to block this dealer?");
     if (confirmDelete) {
       try {
-        await axios.delete(`http://localhost:3000/accounts/deleteDealer/${id}`, { withCredentials: true });
-        const updatedDealers = allDealers.filter(dealer => dealer._id !== id);
-        setAllDealers(updatedDealers);
-        setFilteredDealers(updatedDealers);
+        await axios.put(`http://localhost:3000/accounts/deleteDealer/${id}`,[], { withCredentials: true });
+        setLoad(!load)
       } catch (error) {
-        console.error('Error deleting dealer:', error);
+        console.error('Error blocking dealer:', error);
+      }
+    }
+  };
+
+  const handleEnable = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to unblock this dealer?");
+    if (confirmDelete) {
+      try {
+        await axios.put(`http://localhost:3000/accounts/enableDealer/${id}`,[], { withCredentials: true });
+        setLoad(!load)
+      } catch (error) {
+        console.error('Error unblocking dealer:', error);
       }
     }
   };
@@ -80,10 +91,13 @@ const DealerListPage = ({ role }) => {
               <h3>{dealer.name}</h3>
               <p className='m-0'>{dealer.registration}</p>
             </div>
-            <div className="d-flex justify-content-center" style={{ gap: '10px' }}>
-                <Link to={`/dealer/${index}`} className="btn btn-primary">Details</Link>
-                {role === 'admin' && (
-                  <button onClick={() => handleDelete(dealer._id)} className="btn btn-danger">Delete</button>
+            <div className="d-flex flex-row w-25 justify-content-center" style={{ gap: '10px' }}>
+                <Link to={`/dealer/${index}`} className="btn btn-primary w-50">Details</Link>
+                {role==='admin' && dealer.status === 'unverified' && (
+                  <button className="btn btn-success ml-auto w-50" onClick={() => handleEnable(dealer._id)}>Verify</button> 
+                )}
+                {role==='admin' && dealer.status === 'verified' && (
+                  <button className="btn btn-danger ml-auto w-50" onClick={() => handleDelete(dealer._id)}>Unverify</button> 
                 )}
             </div>
           </div>

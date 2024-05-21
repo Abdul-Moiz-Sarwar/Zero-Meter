@@ -7,9 +7,10 @@ const USER_ICON_URL = 'https://static-00.iconduck.com/assets.00/user-icon-2048x2
 
 const UserList = () => {
   const navigate = useNavigate();
+
+  const [load, setLoad] = useState(true);
   const [allUsers, setAllUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
-  const [isGridView, setIsGridView] = useState(true);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -25,11 +26,7 @@ const UserList = () => {
     };
 
     fetchUsers();
-  }, []);
-
-  const toggleView = () => {
-    setIsGridView(prevState => !prevState);
-  };
+  }, [load]);
 
   const handleViewUserDetails = (user) => {
     navigate('/user-details', { state: { user } });
@@ -37,28 +34,35 @@ const UserList = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:3000/accounts/user/${userId}`, { withCredentials: true });
-      const updatedUsers = allUsers.filter(user => user._id !== userId);
-      setAllUsers(updatedUsers);
-      setFilteredUsers(updatedUsers);
+      await axios.put(`http://localhost:3000/accounts/deleteUser/${userId}`,[], { withCredentials: true });
+      setLoad(!load)
     } catch (error) {
-      console.error('Error deleting user:', error);
+      console.error('Error blocked user:', error);
+    }
+  };
+
+  const handleEnableUser = async (userId) => {
+    try {
+      await axios.put(`http://localhost:3000/accounts/enableUser/${userId}`,[], { withCredentials: true });
+      setLoad(!load)
+    } catch (error) {
+      console.error('Error unblocking user:', error);
     }
   };
 
   return (
-    <div className="container mt-5">
-      <div className="d-flex justify-content-end mb-3">
-        <button className="btn btn-primary" onClick={toggleView}>
-          {isGridView ? 'List View' : 'Grid View'}
-        </button>
-      </div>
-      {isGridView ? (
-        <div className="row row-cols-2">
+    <div className="bg-light p-5">
+
+        <h1>Users List</h1>
+
+      <div className='p-5'>
+      
+        
+        <div className="list-group">
           {filteredUsers.map((user) => (
-            <div key={user._id} className="col-md-6 mb-4">
-              <div className="list-group-item d-flex align-items-center p-4 h-100">
-                <img src={USER_ICON_URL} alt="User Icon" className="rounded-circle mr-3" style={{ width: '80px', height: '80px' }} />
+            <div key={user._id} className="list-group-item d-flex align-items-center justify-content-between mb-4 p-4 shadow rounded">
+              <div className='d-flex flex-row'>
+                <img src={USER_ICON_URL} alt="User Icon" className="rounded-circle me-4" style={{ width: '80px', height: '80px' }} />
                 <div className="d-flex flex-column justify-content-between flex-grow-1">
                   <div>
                     <h5 className="mb-1">{user.username}</h5>
@@ -66,30 +70,23 @@ const UserList = () => {
                   </div>
                   <p className="mb-0">{user.phone}</p>
                 </div>
-                <button className="btn btn-link" onClick={() => handleViewUserDetails(user)}>View Details</button>
-                <button className="btn btn-danger ml-auto" onClick={() => handleDeleteUser(user._id)}>Delete</button> {/* Add delete button */}
+              </div>
+
+              <div className='d-flex flex-row w-25 gap-3' >
+                {user.status === 'blocked' && (
+                  <button className="btn btn-success ml-auto w-50" onClick={() => handleEnableUser(user._id)}>Unblock</button> 
+                )}
+                {user.status === 'active' && (
+                  <button className="btn btn-danger ml-auto w-50" onClick={() => handleDeleteUser(user._id)}>Block</button> 
+                )}
+                <button className="btn btn-primary ml-auto w-50" onClick={() => handleViewUserDetails(user)}>View Details</button> {/* Add delete button */}
               </div>
             </div>
           ))}
         </div>
-      ) : (
-        <div className="list-group">
-          {filteredUsers.map((user) => (
-            <div key={user._id} className="list-group-item d-flex align-items-center mb-4 p-4">
-              <img src={USER_ICON_URL} alt="User Icon" className="rounded-circle mr-3" style={{ width: '80px', height: '80px' }} />
-              <div className="d-flex flex-column justify-content-between flex-grow-1">
-                <div>
-                  <h5 className="mb-1">{user.username}</h5>
-                  <p className="mb-1">{user.email}</p>
-                </div>
-                <p className="mb-0">{user.phone}</p>
-              </div>
-              <button className="btn btn-link" onClick={() => handleViewUserDetails(user)}>View Details</button>
-              <button className="btn btn-danger ml-auto" onClick={() => handleDeleteUser(user._id)}>Delete</button> {/* Add delete button */}
-            </div>
-          ))}
-        </div>
-      )}
+      
+      </div>
+      
     </div>
   );
 };

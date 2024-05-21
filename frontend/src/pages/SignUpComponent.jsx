@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const containerStyle = {
-  width: '80vw',
-  height: '100vh'
+  width: '100%',
+  height: '80vh'
 };
 
 const defaultCenter = {

@@ -26,9 +26,11 @@ router.put("/updateUser", account.verifyToken, account.updateUser);
 router.get('/getAllUsers', account.verifyToken, account.getAllUsers);
 
 //Delete user
-router.delete("/user/:id", account.verifyToken, account.deleteUser);
+router.put("/deleteUser/:id", account.verifyToken, account.deleteUser);
+router.put("/enableUser/:id", account.verifyToken, account.enableUser);
 
 //Delete dealer
-router.delete('/deleteDealer/:id', account.deleteDealer);
+router.put('/deleteDealer/:id', account.verifyToken, account.deleteDealer);
+router.put('/enableDealer/:id', account.verifyToken, account.enableDealer);
 
 module.exports = router;

@@ -108,7 +108,7 @@ function App() {
               <Route path="/blogs/:id" element={<IndividualBlogPage role={role} />} />
 
               {/* Invoices */}
-              <Route path="/invoices" element={<ViewInvoicesPage />} />
+              <Route path="/invoices" element={<ViewInvoicesPage role={role}/>} />
               <Route path="/invoices/:id" element={<DetailInvoicePage role={role}/>} />
               <Route path="/invoices/pay" element={<PayInvoicePage />} />
 

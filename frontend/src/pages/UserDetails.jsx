@@ -10,14 +10,23 @@ const UserDetails = () => {
     const navigate = useNavigate();
     const user = location.state?.user;
 
-    const handleDelete = async () => {
+    const handleDeleteUser = async (userId) => {
         try {
-            await axios.delete(`http://localhost:3000/accounts/user/${user._id}`, { withCredentials: true });
-            navigate('/user-list'); 
+          await axios.put(`http://localhost:3000/accounts/deleteUser/${userId}`,[], { withCredentials: true });
+          navigate('/userlist'); 
         } catch (error) {
-            console.error('Error deleting user:', error);
+          console.error('Error blocked user:', error);
         }
-    };
+      };
+    
+      const handleEnableUser = async (userId) => {
+        try {
+          await axios.put(`http://localhost:3000/accounts/enableUser/${userId}`,[], { withCredentials: true });
+          navigate('/userlist'); 
+        } catch (error) {
+          console.error('Error unblocking user:', error);
+        }
+      };
 
     if (!user) {
         return <div>No user data available.</div>;
@@ -66,7 +75,12 @@ const UserDetails = () => {
                         </Col>
                     </Row>
                     <div className="text-center mt-4">
-                        <Button variant="danger" onClick={handleDelete}>Delete User</Button>
+                    {user.status === 'blocked' && (
+                        <button className="btn btn-success ml-auto w-50" onClick={() => handleEnableUser(user._id)}>Unblock</button> 
+                    )}
+                    {user.status === 'active' && (
+                        <button className="btn btn-danger ml-auto w-50" onClick={() => handleDeleteUser(user._id)}>Block</button> 
+                    )}
                     </div>
                 </Card.Body>
             </Card>

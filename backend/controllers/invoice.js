@@ -27,6 +27,19 @@ const getInvoice = async (req, res) => {
     }
 }
 
+const getAdminInvoice = async (req, res) => {
+    try {
+        const InvoiceData = await invoice.findOne({ _id: req.params.id});
+        if (!InvoiceData) {
+            return res.status(404).json({ message: "invoice not found" });
+        }
+        return res.status(200).json(InvoiceData);
+    } catch (error) {
+        console.error('Error fetching invoice:', error);
+        return res.status(500).json({ error: 'Internal Server Error during GET INVOICE' });
+    }
+}
+
 //add one invoice
 /*const addInvoice = (req, res) => {
     const requiredFields = ['ad', 'amount'];
@@ -129,6 +142,21 @@ const payInvoice = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error during payment processing' });
     }
 };
+
+//get all invoice
+const getAllInvoices = (req, res) => { 
+    try{
+        invoice.find()
+        .then((data) => {res.send(data);})
+        .catch((err) => {console.log(err);})
+    } catch (error) {
+        console.error('Error fetching invoices:', error);
+        res.status(500).json({ error: 'Internal Server Error during GET ALL INVOICES' });
+    }
+}
+
+module.exports.getAllInvoices = getAllInvoices
+module.exports.getAdminInvoice = getAdminInvoice
 module.exports.getInvoice = getInvoice
 module.exports.getInvoices = getInvoices
 module.exports.addInvoice = addInvoice
