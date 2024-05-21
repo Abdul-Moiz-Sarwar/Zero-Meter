@@ -53,13 +53,14 @@ const DealerListPage = ({ role }) => {
   };
 
   return (
-    <div>
-      <div className="row justify-content-end mt-3">
-        <div className="col-auto">
-          <div className="input-group">
+    <div className='bg-light p-5'>
+      <div className="d-flex flex-row justify-content-between">
+        <h1>Dealerships List</h1>
+        <div className="w-50">
+          <div className="input-group justify-content-center align-items-center">
             <input
               type="text"
-              className="form-control"
+              className="form-control mx-2"
               placeholder="Search by name or email"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -70,20 +71,20 @@ const DealerListPage = ({ role }) => {
           </div>
         </div>
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <h1>Dealer List</h1>
+
+
+      <div className='d-flex flex-column gap-2 p-5'>
         {filteredDealers.map((dealer,index) => (
-          <div key={dealer.id} className="dealer-item" style={{ marginBottom: '20px' }}>
-            <img src={dealer.image} alt={dealer.name} style={{ maxWidth: '100%', marginBottom: '10px' }} />
-            <div>
-              <h3 style={{ textAlign: 'center' }}>{dealer.name}</h3>
-              <p style={{ textAlign: 'center' }}> Email: {dealer.email}</p>
-              <div className="d-flex justify-content-center" style={{ gap: '10px' }}>
+          <div key={dealer.id} className="card flex-row justify-content-between shadow p-3">
+            <div className='d-flex flex-row gap-3 align-items-center'>
+              <h3>{dealer.name}</h3>
+              <p className='m-0'>{dealer.registration}</p>
+            </div>
+            <div className="d-flex justify-content-center" style={{ gap: '10px' }}>
                 <Link to={`/dealer/${index}`} className="btn btn-primary">Details</Link>
                 {role === 'admin' && (
                   <button onClick={() => handleDelete(dealer.id)} className="btn btn-danger">Delete</button>
                 )}
-              </div>
             </div>
           </div>
         ))}

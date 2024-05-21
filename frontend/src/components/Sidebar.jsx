@@ -8,7 +8,6 @@ const Sidebar = ({ role, isVisible, toggleSidebar }) => {
       <ul className="nav nav-pills flex-column mb-auto">
         {role === 'admin' && (
           <>
-            <li><Link to="/vehicles" className="nav-link text-white">Vehicles</Link></li>
             <li><Link to="/ads" className="nav-link text-white">Ads</Link></li>
             <li><Link to="/invoices" className="nav-link text-white">Invoices</Link></li>
             <li><Link to="/analytics" className="nav-link text-white">Analytics</Link></li>

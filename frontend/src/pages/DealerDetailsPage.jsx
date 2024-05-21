@@ -3,11 +3,6 @@ import { useParams } from 'react-router-dom';
 import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
 import axios from 'axios';
 
-const containerStyle = {
-  width: '100vw',
-  height: '100vh'
-};
-
 const defaultCenter = {
   lat: -3.745,
   lng: -38.523
@@ -106,29 +101,34 @@ const DealerDetailsPage = () => {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <h1>{dealer.name}</h1>
-      <div className="dealer-details">
-        <img src={dealer.image} alt={dealer.name} />
-        <div>
-          <h3 style={{ textAlign: 'center' }}>Contact Information</h3>
-          <p style={{ textAlign: 'center' }}>Email: {dealer.email}</p>
-          <h3 style={{ textAlign: 'center' }}>Address</h3>
-          <p style={{ textAlign: 'center' }}>{dealer.address}</p>
-          {/* Add more dealer details here */}
+    <div className='bg-light p-5 '>
+
+    <div className='d-flex flex-row'>
+
+      <div className='w-50'>
+        <h1 className='pb-5'>Dealership Details</h1>
+        <div className="dealer-details p-4">
+            <h3>Name: {dealer.name}</h3>
+            <h3>Registration: {dealer.registration}</h3>
         </div>
       </div>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={10}
-        onLoad={onLoad}
-        options={{ mapTypeControl: false }}
-      >
-        {currentPosition && <Marker position={currentPosition} />}
-        {dealer.lat && dealer.lng && <Marker position={{ lat: dealer.lat, lng: dealer.lng }} />}
-        {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
-      </GoogleMap>
+      
+
+
+      <div className='w-50'>
+        <GoogleMap
+          mapContainerStyle={{width: "100%",height: "100%"}}
+          center={center}
+          zoom={10}
+          onLoad={onLoad}
+          options={{ mapTypeControl: false }}
+        >
+          {currentPosition && <Marker position={currentPosition} />}
+          {dealer.lat && dealer.lng && <Marker position={{ lat: dealer.lat, lng: dealer.lng }} />}
+          {directionsResponse && <DirectionsRenderer directions={directionsResponse} />}
+        </GoogleMap>
+      </div>
+      </div>
     </div>
   );
 };
