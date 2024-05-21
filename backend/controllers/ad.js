@@ -68,7 +68,7 @@ const addAd = async (req, res) => {
 
         const newAd = new ad({
             vehicle: vehicleData._id,
-            price: vehicleData.buyprice, // Take price from vehicle's sellprice attribute
+            price: vehicleData.buyprice, 
             datecreated: new Date(),
         });
 

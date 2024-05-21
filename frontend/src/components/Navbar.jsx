@@ -1,4 +1,3 @@
-// src/components/Navbar.js
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -10,7 +9,7 @@ const Navbar = ({ role, setRole }) => {
     try {
       await axios.post('http://localhost:3000/accounts/logout', {}, { withCredentials: true });
       console.log("Logged out");
-      setRole('none'); // Reset role on logout
+      setRole('none');
       navigate('/');
     } catch (error) {
       console.error('Error logging out', error);

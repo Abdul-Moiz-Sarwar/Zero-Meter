@@ -87,26 +87,7 @@ const dealershipSchema = new Schema({
     }
 });
 
-// const employeeSchema = new Schema({
-//     name: {
-//         type: String,
-//         required: true
-//     },
-//     email: {
-//         type: String,
-//         required: true,
-//         unique: true
-//     },
-//     password: {
-//         type: String,
-//         required: true,
-//         minlength: 6
-//     }
-// });
-
 const user = new Model('user', userSchema);
-// const employee = new Model('User', employeeSchema);
 const dealership = new Model('dealership', dealershipSchema);
 module.exports.User = user;
 module.exports.Dealership = dealership
-//module.exports.Employee = employee

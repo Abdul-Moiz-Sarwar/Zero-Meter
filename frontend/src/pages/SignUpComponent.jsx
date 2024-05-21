@@ -1,4 +1,3 @@
-// src/pages/SignUpComponent.js
 import React, { useState, useEffect } from 'react';
 import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
 import { useNavigate } from 'react-router-dom';
@@ -43,7 +42,7 @@ const SignUpForm = ({ setRole }) => {
 
   const [center, setCenter] = useState(defaultCenter);
   const [markerPosition, setMarkerPosition] = useState(null);
-  const [directionsResponse, setDirectionsResponse] = useState(null); // Define directionsResponse state
+  const [directionsResponse, setDirectionsResponse] = useState(null); 
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -87,7 +86,7 @@ const SignUpForm = ({ setRole }) => {
     axios.post('http://localhost:3000/accounts/signup', formData)
       .then((res, err) => {
         console.log(res.data);
-        setRole(res.data.user.type); // Update role on signup
+        setRole(res.data.user.type); 
         navigate('/login');
       })
       .catch((res, err) => {
@@ -174,7 +173,7 @@ const SignUpForm = ({ setRole }) => {
                     </div>
                 </>
             ) : (
-                <></> // Empty fragment if map is not loaded
+                <></> 
             )}
         <div className="d-flex justify-content-center">
             <button type="submit" className="btn btn-primary w-100 py-2" >Sign Up</button>

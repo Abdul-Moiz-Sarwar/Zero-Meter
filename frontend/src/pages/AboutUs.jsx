@@ -7,7 +7,7 @@ import image1 from './images/ford.jpg';
 import image2 from './images/toyota.png';
 import image3 from './images/crowley.jpg';
 import image4 from './images/autonation.jpg';
-import dealershipImage from './images/dealership.jpg'; // Import your dealership image
+import dealershipImage from './images/dealership.jpg'; 
 
 const AboutUs = () => {
   const settings = {

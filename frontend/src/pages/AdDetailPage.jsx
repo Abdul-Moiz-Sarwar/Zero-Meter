@@ -18,7 +18,6 @@ const AdDetailPage = ({ role }) => {
                 const res = await axios.get(`http://localhost:3000/ads/${id}`, { withCredentials: true });
                 setAd(res.data);
 
-                // Fetch the vehicle details
                 const vehicleRes = await axios.get(`http://localhost:3000/vehicles/${res.data.vehicle}`, { withCredentials: true });
                 setVehicle(vehicleRes.data);
             } catch (error) {
@@ -78,7 +77,6 @@ const AdDetailPage = ({ role }) => {
     return (
         <div className='bg-light p-5'>
             <AdDetailComponent ad={ad} vehicle={vehicle} role={role} onBuyNow={handleBuyNow} />
-            {/* Render recommendations if available */}
             {adrecs.length > 0 && (
                 <div>
                     <h3>Recommended Vehicles</h3>

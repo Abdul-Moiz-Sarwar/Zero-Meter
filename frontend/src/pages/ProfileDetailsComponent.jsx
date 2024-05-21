@@ -14,7 +14,7 @@ const ProfileDetailsComponent = ({ user, role, isEditing, setIsEditing, setUser 
             console.log(formData)
             const res = await axios.put('http://localhost:3000/accounts/updateUser', formData, { withCredentials: true });
             setUser(res.data.user);
-            setIsEditing(false); // Exit edit mode on successful save
+            setIsEditing(false);
         } catch (error) {
             console.error('Error updating user data:', error);
             if (error.response && error.response.data) {

@@ -18,7 +18,6 @@ const CheckoutPage = () => {
         try {
             const res = await axios.get(`http://localhost:3000/ads/${adId}`, { withCredentials: true });
             setAd(res.data);
-            // Fetch the vehicle details
             const vehicleRes = await axios.get(`http://localhost:3000/vehicles/${res.data.vehicle}`, { withCredentials: true });
             setVehicle(vehicleRes.data);
         } catch (error) {

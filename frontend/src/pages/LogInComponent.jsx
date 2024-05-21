@@ -1,10 +1,9 @@
-// src/pages/LogInComponent.js
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({ setRole }) => {
-  const navigator = useNavigate();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     email: '',
@@ -20,16 +19,16 @@ const LoginForm = ({ setRole }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setError(null); // Reset error state before making request
+    setError(null); 
     axios.post('http://localhost:3000/accounts/login', formData, { withCredentials: true })
       .then((res) => {
         console.log(res.data);
-        setRole(res.data.user.type); // Update role on login
+        setRole(res.data.user.type); 
         navigate('/');
       })
       .catch((error) => {
         if (error.response && error.response.data) {
-          setError(error.response.data.message); // Set error message from response
+          setError(error.response.data.message); 
         } else {
           setError('An unexpected error occurred. Please try again later.');
         }

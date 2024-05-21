@@ -7,7 +7,7 @@ const JWT_SECRET_KEY = "3nLp$JKl@1oP#9jKq!5&7bFg$S@%h2D"
 const login = async (req, res) => {
     const { email, password } = req.body;
 
-    //check if data is complete
+    //we are checking if data is complete
     const requiredFields = ['email','password']
     const missingFields = requiredFields.filter(field => !(field in req.body));
     if(missingFields.length > 0){
@@ -33,17 +33,6 @@ const login = async (req, res) => {
     if(!isPasswordCorrect){
         return res.status(400).json({message: "Invaild Email/Password"})
     }
-    if (existingUser.dealership) {
-        try {
-            const dealer = await Accounts.Dealership.findOne({ _id: existingUser.dealership._id, status: "verified" });
-            if (!dealer) {
-                return res.status(400).json({ message: "Dealership not verified." });
-            }
-        } catch (err) {
-            console.log(err);
-            return res.status(500).json({ message: "Internal server error" });
-        }
-    }
 
     const token = jwt.sign({id: existingUser._id}, JWT_SECRET_KEY,{
         expiresIn: "1hr"
@@ -64,13 +53,12 @@ const signup = async (req,res) => {
     const { username, email, password, type, phone, dealershipname, registration, cnic } = req.body;
 
     if(type == 'user'){
-        //check if data is complete
         const requiredFields = ['username', 'email','password','type','phone','address','city','country']
         const missingFields = requiredFields.filter(field => !(field in req.body));
         if(missingFields.length > 0){
             return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
         }
-        //check unique email, username, phone and cnic number
+        //checking if unique email, username, phone and cnic number
         let existingUser;
         try {
             existingUser = await Accounts.User.findOne({username:username});
@@ -110,7 +98,7 @@ const signup = async (req,res) => {
             return res.status(400).json({message: "user with this cnic already exists"})
         }
 
-        //create user
+        //we then create our user
         const hashedPassword = bcrypt.hashSync(password);
         const user = new Accounts.User({
             username: req.body.username,
@@ -138,14 +126,11 @@ const signup = async (req,res) => {
     }
     else if(type == "dealership"){
         
-        //check if data in request is complete
         const requiredFields = ['username', 'email','password','type','phone','address','city','country','dealershipname','registration']
         const missingFields = requiredFields.filter(field => !(field in req.body));
         if(missingFields.length > 0){
             return res.status(400).json({ error: `Missing required fields: ${missingFields.join(', ')}` });
         }
-
-        //check if dealership already exists
         
         let existingUser;
         try {
@@ -167,7 +152,6 @@ const signup = async (req,res) => {
             return res.status(400).json({message: "dealership with this registration already exists"})
         }
         
-        //check if user already exists
         try {
             existingUser = await Accounts.User.findOne({username:(username + '@' + dealershipname)});
         }
@@ -204,7 +188,6 @@ const signup = async (req,res) => {
         if (existingUser) {
             return res.status(400).json({message: "user with this cnic already exists"})
         }
-        //if not found then create a dealership set status to unverified
         let instagram = "none", facebook = "none"
         if(req.body.instagram){
             instagram = req.body.instagram
@@ -212,7 +195,6 @@ const signup = async (req,res) => {
         if(req.body.facebook){
             facebook = req.body.facebook
         }
-        //create dealership
         const dealer = new Accounts.Dealership({
             name: req.body.dealershipname,
             registration: req.body.registration,
@@ -229,7 +211,7 @@ const signup = async (req,res) => {
             console.log(err);
         }
 
-        //create admin user in Users table
+        //creating admin user in Users table
         const hashedPassword = bcrypt.hashSync(password);
         const user = new Accounts.User({
             username: req.body.username + '@' + req.body.dealershipname,
@@ -387,7 +369,7 @@ const isDealer = (req, res, next) => {
         });
 }
 
-/*const isAdmin = (req, res, next) => {
+const isAdmin = (req, res, next) => {
     Accounts.User.findOne({_id: req.id, type: "admin"}, "-password")
         .then((data) => {
             if (data) {
@@ -400,14 +382,11 @@ const isDealer = (req, res, next) => {
             console.error(err);
             return res.status(500).json("Internal Server Error");
         });
-}*/
-
-const isAdmin = (req, res, next) => {
-    // For testing purposes, always consider the user as an admin
-    // You can remove or comment out the following lines in production
-    req.isAdmin = false; // Set a flag in the request object to indicate admin status
+}
+/*const isAdmin = (req, res, next) => {
+    req.isAdmin = true; 
     next(); // Call next middleware
-};
+};*/
 
 const isUser = (req, res, next) => {
     Accounts.User.findOne({_id: req.id, type: "user"}, "-password")
@@ -425,7 +404,7 @@ const isUser = (req, res, next) => {
 };
 // Update user function
 const updateUser = async (req, res) => {
-    const userId = req.id; // Ensure this is being correctly set by your authentication middleware
+    const userId = req.id; 
     const updatedData = req.body;
 
     if (!userId || !updatedData) {
@@ -439,7 +418,7 @@ const updateUser = async (req, res) => {
         }
         return res.status(200).json({ user });
     } catch (error) {
-        console.error('Error updating user:', error.stack || error); // Log the full error stack
+        console.error('Error updating user:', error.stack || error); 
         return res.status(500).json({ message: "Error updating user", error: error.message });
     }
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 const EditUserProfilePage = ({ userData, onUpdate }) => {
-  // State to manage form fields
+  const Navigate=useNavigate();
   const [formData, setFormData] = useState({
     name: userData.name,
     email: userData.email,
@@ -9,23 +9,18 @@ const EditUserProfilePage = ({ userData, onUpdate }) => {
     address: userData.address,
   });
 
-  // Handle form field changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     alert('Payment saved');
 
     e.preventDefault();
-    // Update user details
     onUpdate(formData);
 
-    // Redirect user back to profile page
-    // You can use React Router's useHistory hook here to navigate programmatically
-    // Example: history.push('/profile');
+    Navigate('/profile');
   };
 
   return (

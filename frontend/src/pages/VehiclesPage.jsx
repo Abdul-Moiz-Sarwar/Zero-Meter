@@ -30,7 +30,6 @@ const VehiclesPage = ({ role }) => {
     const handleCreateAd = async (vehicleId) => {
         try {
             await axios.post('http://localhost:3000/ads/', { vehicleId }, { withCredentials: true });
-            // Optionally, you can fetch and update ads or notify the user
         } catch (error) {
             console.error('Error creating ad from vehicle:', error);
         }

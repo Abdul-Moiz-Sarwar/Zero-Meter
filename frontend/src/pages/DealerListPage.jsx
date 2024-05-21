@@ -23,7 +23,6 @@ const DealerListPage = ({ role }) => {
     fetchDealers();
   }, []);
 
-  // Function to handle search
   const handleSearch = () => {
     console.log("search",typeof(searchQuery))
     setSearchQuery(String(searchQuery))
@@ -40,7 +39,6 @@ const DealerListPage = ({ role }) => {
     }
   };
 
-  // Function to handle delete
   const handleDelete = async (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this dealer?");
     if (confirmDelete) {

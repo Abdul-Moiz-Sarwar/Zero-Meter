@@ -10,7 +10,6 @@ const Footer = () => {
         <span className="mb-3 mb-md-0 text-light">© 2024 Zero Meter, All Rights Reserved</span>
       </div>
 
-      {/* Social media icons */}
       <ul className="nav col-md-4 justify-content-end list-unstyled d-flex mx-5">
         <li className="ms-3">
           <a className="text-body-secondary" href="https://www.instagram.com/moiznaama?igsh=bW9sOHF3d2Vyc3Yw" target="_blank" rel="noopener noreferrer">

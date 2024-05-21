@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const VehicleAFormComponent = ({ role }) => {
     const navigate = useNavigate();
-    const { id } = useParams(); // Get the vehicle ID from the URL
+    const { id } = useParams(); 
     const [formData, setFormData] = useState({
         testdrive: false,
         status: 'unsold',

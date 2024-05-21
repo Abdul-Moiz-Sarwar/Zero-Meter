@@ -10,7 +10,6 @@ const AnalyticsComponent = ({ dealerAnalyticsData }) => {
       <p>Top Revenue Model: {dealerAnalyticsData.topRevenueModel}</p>
       <p>Top Selling Region: {dealerAnalyticsData.topSellingRegion}</p>
       <p>Top Revenue Region: {dealerAnalyticsData.topRevenueRegion}</p>
-      {/* Add more analytics data as needed */}
     </div>
   );
 }

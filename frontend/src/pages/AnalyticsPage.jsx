@@ -39,7 +39,6 @@ const AnalyticsPage = () => {
 
   useEffect(() => {
     if (vehicles.length > 0) {
-      // Process data for sold vehicles
       const soldCounts = processVehicleData('sold');
       const soldLabels = Object.keys(soldCounts);
       const soldData = Object.values(soldCounts);
@@ -57,7 +56,6 @@ const AnalyticsPage = () => {
         ],
       });
 
-      // Process data for unsold vehicles
       const unsoldCounts = processVehicleData('unsold');
       const unsoldLabels = Object.keys(unsoldCounts);
       const unsoldData = Object.values(unsoldCounts);

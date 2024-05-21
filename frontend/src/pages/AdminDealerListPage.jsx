@@ -6,7 +6,6 @@ const AdminDealerListPage = ({ dealers }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filteredDealers, setFilteredDealers] = useState(dealers);
 
-  // Function to handle search
   const handleSearch = () => {
     const query = searchQuery.trim().toLowerCase();
     if (!query) {
@@ -20,7 +19,6 @@ const AdminDealerListPage = ({ dealers }) => {
     }
   };
 
-  // Function to handle delete
   const handleDelete = (id) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this dealer?");
     if (confirmDelete) {

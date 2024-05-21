@@ -1,5 +1,5 @@
 const invoice = require('../models/invoice')
-const ad = require('../models/ad'); // Import the ad model
+const ad = require('../models/ad'); 
 
 //get all invoice
 const getInvoices = (req, res) => { 
@@ -60,7 +60,6 @@ const addInvoice = async (req, res) => {
     }
 
     try {
-        // Fetch the ad details based on the provided ad ID
         const adModel = await ad.findById(req.body.ad);
         
         if (!adModel) {
@@ -73,10 +72,9 @@ const addInvoice = async (req, res) => {
             return res.status(404).json({ error: "invoice already created" });
         }
 
-        // Create a new invoice object
         const inv = new invoice({
             payee: req.id,
-            ad: adModel._id, // Store the entire ad object
+            ad: adModel._id, 
             amount: req.body.amount,
             status: 'unpaid',
             datecreated: Date.now(),
@@ -84,7 +82,6 @@ const addInvoice = async (req, res) => {
             datedue: new Date(Date.now() + 1000 * 30 * 3600 * 24 * 7) // One week
         });
 
-        // Save the invoice to the database
         const savedInvoice = await inv.save();
         res.status(201).json(savedInvoice);
     } catch (error) {
