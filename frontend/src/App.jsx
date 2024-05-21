@@ -48,7 +48,7 @@ import AnalyticsPage from './pages/AnalyticsPage';
 
 // User List
 import UserList from './pages/UserList';
-import UserDetail from './extra/UserDetails';
+import UserDetails from './pages/UserDetails';
 
 // Checkout Page
 import CheckoutPage from './pages/CheckoutPage';
@@ -84,7 +84,7 @@ function App() {
           <Sidebar role={role} isVisible={isSidebarVisible} toggleSidebar={toggleSidebar} />
           <div className="flex-grow-1 p-3">
             <button onClick={toggleSidebar} className="btn btn-dark mb-2">
-              {isSidebarVisible ? 'X' : 'X'}
+              {isSidebarVisible ? 'X' : '>'}
             </button>
             <Routes>
               {/* Basic Pages */}
@@ -133,7 +133,8 @@ function App() {
 
               {/* User List */}
               <Route path="/userlist" element={<UserList />} />
-              <Route path="/userlist/:id" element={<UserDetail />} />
+
+              <Route path="/user-details" element={<UserDetails />}/>
             </Routes>
           </div>
         </div>

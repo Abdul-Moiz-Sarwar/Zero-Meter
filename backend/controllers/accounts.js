@@ -409,7 +409,6 @@ const isAdmin = (req, res, next) => {
     next(); // Call next middleware
 };
 
-
 const isUser = (req, res, next) => {
     Accounts.User.findOne({_id: req.id, type: "user"}, "-password")
         .then((data) => {
@@ -445,6 +444,18 @@ const updateUser = async (req, res) => {
     }
 };
 
+//Get all users
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await Accounts.User.find({}, '-password');
+        return res.status(200).json({ users });
+    } catch (error) {
+        console.error('Error fetching users:', error.stack || error);
+        return res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+module.exports.getAllUsers=getAllUsers;
 module.exports.updateUser=updateUser;
 module.exports.logout = logout;
 module.exports.signup = signup;

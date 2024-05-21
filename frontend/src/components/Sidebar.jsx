@@ -26,7 +26,6 @@ const Sidebar = ({ role, isVisible, toggleSidebar }) => {
             <li><Link to="/blogs" className="nav-link text-white">Blogs</Link></li>
             <li><Link to="/about" className="nav-link text-white">About</Link></li>
             <li><Link to="/contact" className="nav-link text-white">Contact</Link></li>
-            <li><Link to="/userlist" className="nav-link text-white">View Users</Link></li>
             <li><Link to="/vehicles" className="nav-link text-white">Vehicles</Link></li>
             <li><Link to="/userprofile" className="nav-link text-white">User Profile</Link></li>
             <li><Link to="/ads" className="nav-link text-white">Ads</Link></li>
@@ -43,6 +42,7 @@ const Sidebar = ({ role, isVisible, toggleSidebar }) => {
             <li><Link to="/ads" className="nav-link text-white">Ads</Link></li>
             <li><Link to="/invoices" className="nav-link text-white">Invoices</Link></li>
             <li><Link to="/dealers" className="nav-link text-white">View Dealers</Link></li>
+            <li><Link to="/userlist" className="nav-link text-white">View Users</Link></li>
           </>
         )}
         {role === 'user' && (

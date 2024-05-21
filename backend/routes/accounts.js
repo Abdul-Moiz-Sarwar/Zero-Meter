@@ -22,4 +22,7 @@ router.get("/getAllDealers",account.verifyToken, account.getAllDealers)
 //routes:
 router.put("/updateUser", account.verifyToken, account.updateUser);
 
+//get all users
+router.get('/getAllUsers', account.verifyToken, account.getAllUsers);
+
 module.exports = router;
