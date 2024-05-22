@@ -63,7 +63,7 @@ const addAd = async (req, res) => {
 
         const adData = await ad.findOne({vehicle:req.body.vehicleId});
         if (adData) {
-            return res.status(404).json({ message: "Ad for this vehicle already created" });
+            return res.status(403).json({ message: "Ad for this vehicle already created" });
         }
 
         const newAd = new ad({

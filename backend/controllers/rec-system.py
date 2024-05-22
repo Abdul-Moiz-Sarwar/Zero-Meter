@@ -9,7 +9,10 @@ from sklearn.metrics.pairwise import linear_kernel
 
 
 data=[{"type":"car","company":"toyota","model":"ford2","year":1990,"varient":"XYZ","power":5000,"color":"blue","mileage":6,"transmission":"automatic"},{"type":"car","company":"Mercedes","model":"2010","year":2010,"varient":"variant1","power":230,"color":"black","mileage":21,"transmission":"automatic"},{"type":"car","company":"bfsakjbf","model":"jdlsbj","year":2022,"varient":"dbjglsbkj","power":123,"color":"lgbdslb","mileage":13,"transmission":"automatic"},{"type":"car","company":"1dgajbb","model":"ebjgab","year":2022,"varient":"edbgj","power":13,"color":"bdjgsk","mileage":213,"transmission":"automatic"}]
+input_data = input()
 
+
+data = json.loads(input_data)
 
 df = pd.DataFrame(data)
 
