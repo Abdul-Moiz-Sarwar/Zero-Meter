@@ -34,7 +34,8 @@ const CheckoutPage = () => {
       amount : adData.price
     }
     axios.post('http://localhost:3000/invoices/',invoice,{withCredentials:true})
-    .then( (res,err) => {console.log(res.data); navigate('/invoices');})
+    .then( (res) => {console.log(res.data); navigate('/invoices');})
+    .catch( (err)=>{console.log(err)})
   };
 
   return (

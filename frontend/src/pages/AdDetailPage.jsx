@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import AdDetailComponent from './AdDetailComponent';
 
@@ -77,14 +77,18 @@ const AdDetailPage = ({ role }) => {
     return (
         <div className='bg-light p-5'>
             <AdDetailComponent ad={ad} vehicle={vehicle} role={role} onBuyNow={handleBuyNow} />
+            <hr/>
             {adrecs.length > 0 && (
                 <div>
                     <h3>Recommended Vehicles</h3>
-                    <ul>
+                    <div className='d-flex flex-column gap-3 p-5'>
                         {adrecs.map((recIndex) => (
-                            <li key={recIndex}>{vehicles[recIndex].company} {vehicles[recIndex].model} {vehicles[recIndex].variant}</li>
+                            <div className='card shadow p-3 d-flex flex-row justify-content-between align-items-center'>
+                                <h3 key={recIndex}>{vehicles[recIndex].company} {vehicles[recIndex].model} {vehicles[recIndex].varient}</h3>
+                                <h3 className='m-0'>{vehicles[recIndex].buyprice}</h3>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                 </div>
             )}
         </div>

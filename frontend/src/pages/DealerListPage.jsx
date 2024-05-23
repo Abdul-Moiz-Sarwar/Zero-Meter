@@ -73,7 +73,7 @@ const DealerListPage = ({ role }) => {
             <input
               type="text"
               className="form-control mx-2"
-              placeholder="Search by name or email"
+              placeholder="Search Dealership"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
