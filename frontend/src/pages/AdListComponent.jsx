@@ -15,7 +15,11 @@ const AdListComponent = ({ ads, role, onDelete }) => {
             {(role === 'admin' || role === 'dealer') && (
               <div className='d-flex flex-row gap-1'>
                 <button className="btn btn-danger w-100" onClick={() => onDelete(ad._id)}>Delete</button>
-                <Link to={`/vehicles/edit/${ad.vehicle._id}`} className="btn btn-secondary w-100">Edit</Link>
+              </div>
+            )}
+              {(role === 'dealer') && (
+              <div className='d-flex flex-row gap-1'>
+              <Link to={`/vehicles/edit/${ad.vehicle._id}`} className="btn btn-secondary w-100">Edit</Link>
               </div>
             )}
           </div>
