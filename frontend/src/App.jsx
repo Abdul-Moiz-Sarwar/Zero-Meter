@@ -1,9 +1,13 @@
 // src/App.js
 import React, { useState, useEffect } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { FaTimes, FaArrowRight } from 'react-icons/fa';
+
+const stripePromise = loadStripe('pk_test_51PID9PDEA9oSjm91oQXX3VMn2amZW3iJW0gGgmhNkXy6Y3ei3mw2EWhGRk1Pkq1KopGZb9Kl6OUZhTw519HA3W6g00rhripHNv');
 
 // Components
 import Navbar from './components/Navbar';
@@ -110,7 +114,7 @@ function App() {
               {/* Invoices */}
               <Route path="/invoices" element={<ViewInvoicesPage role={role}/>} />
               <Route path="/invoices/:id" element={<DetailInvoicePage role={role}/>} />
-              <Route path="/invoices/pay" element={<PayInvoicePage />} />
+              <Route path="/invoices/pay" element={<Elements stripe={stripePromise}><PayInvoicePage/></Elements>} />
 
               {/* Dealers */}
               <Route path="/dealers" element={<DealerListPage role={role} />} />

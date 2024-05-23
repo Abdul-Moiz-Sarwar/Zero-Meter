@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '/src/assets/project logo.png'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -20,7 +21,10 @@ const Navbar = ({ role, setRole }) => {
     <div className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="w-100 px-5">
         <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-          <Link className="navbar-brand" to="/">Zero Meter</Link>
+          <Link className="navbar-brand d-flex flex-row" to="/">
+            <img className='img img-fluid me-2' style={{"width":"35px", "height":"40px"}} src={logo}/>
+            <h3>Zero Meter</h3>
+          </Link>
           <ul className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><Link className="nav-link px-2" to="/">Home</Link></li>
             <li><Link className="nav-link" to="/blogs">Blogs</Link></li>

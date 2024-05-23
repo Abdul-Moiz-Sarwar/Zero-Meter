@@ -19,4 +19,7 @@ router.post('/', account.verifyToken, invoice.addInvoice)
 router.put('/', account.verifyToken, invoice.payInvoice)
 
 
+router.post('/createIntent', account.verifyToken, invoice.createIntent)
+
+
 module.exports = router

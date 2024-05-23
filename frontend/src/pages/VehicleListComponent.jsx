@@ -19,7 +19,9 @@ const VehicleListComponent = ({ vehicles, role, onDelete, onCreateAd }) => {
                                 </div>
                                 <div className='d-flex flex-row'>
                                     <Link to={`/vehicles/edit/${vehicle._id}`} className="btn btn-secondary w-100 m-1">Edit</Link>
-                                    <button className="btn btn-success w-100 m-1" onClick={() => onCreateAd(vehicle._id)}>Advertise</button>
+                                    {vehicle.status === 'unsold' && (
+                                        <button className="btn btn-success w-100 m-1" onClick={() => onCreateAd(vehicle._id)}>Advertise</button>
+                                    )}
                                 </div>
                             </>
                         )}

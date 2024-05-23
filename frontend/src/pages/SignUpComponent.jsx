@@ -86,12 +86,9 @@ const SignUpForm = ({ setRole }) => {
     axios.post('http://localhost:3000/accounts/signup', formData)
       .then((res, err) => {
         console.log(res.data);
-        setRole(res.data.user.type); 
+        setRole(res.data.type); 
         navigate('/login');
       })
-      .catch((res, err) => {
-        console.log(res.response.data);
-      });
     console.log(formData);
   };
 

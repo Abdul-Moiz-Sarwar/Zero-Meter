@@ -61,7 +61,7 @@ const login = async (req, res) => {
     if (req.cookies[`${existingUser._id}`]) {
         req.cookies[`${existingUser._id}`] = ""
     }
-    res.cookie(String(existingUser._id), token, {
+    res.cookie(String("jwtToken"), token, {
         path:"/",
         expires: new Date(Date.now() + 1000 * 30 * 3600),
         httpOnly: true,
@@ -265,10 +265,12 @@ const verifyToken = (req, res, next) => {
     if (!cookies) {
         return res.status(404).json({ message: "Cookies not found" });
     }
-    const token = cookies.split('=')[1];
-    if (!token) {
+    const cookiePairs = cookies.split(';').map(cookie => cookie.trim().split('='));
+    const tokenPair = cookiePairs.find(([key]) => key === 'jwtToken');
+    if (!tokenPair) {
         return res.status(404).json({ message: "Token not found" });
     }
+    const token = tokenPair[1];
     jwt.verify(String(token), JWT_SECRET_KEY, (err, user) => {
         if (err) {
             return res.status(400).json({ message: "Invalid Token" });
@@ -283,69 +285,79 @@ const verifyRefresh = (req,res) => {
     if (!cookies) {
         return res.status(404).json({ message: "Cookies not found" });
     }
-    const token = cookies.split('=')[1];
-    if (!token) {
+    const cookiePairs = cookies.split(';').map(cookie => cookie.trim().split('='));
+    const tokenPair = cookiePairs.find(([key]) => key === 'jwtToken');
+    if (!tokenPair) {
         return res.status(404).json({ message: "Token not found" });
     }
-    jwt.verify(String(token), JWT_SECRET_KEY, (err,user) => {
-        if (err){
-            return res.status(400).json({message: "Invalid Token"})
+    const token = tokenPair[1];
+    jwt.verify(String(token), JWT_SECRET_KEY, (err, user) => {
+        if (err) {
+            return res.status(400).json({ message: "Invalid Token" });
         }
         req.id = user.id;
+        next();
     });
-    return res.status(200).json({ message: "Token Refreshed and Verified Successfully" });
 }
 
 const refreshToken = (req,res,next) => {
     
     const cookies = req.headers.cookie;
     if (!cookies) {
-        return res.status(400).json({message: "Couldn't find cookies"})
+        return res.status(400).json({ message: "Couldn't find cookies" });
     }
-    const prevToken = cookies.split('=')[1];
-    if (!prevToken) {
-        return res.status(400).json({message: "Couldn't find token"})
-    }
-    jwt.verify(String(prevToken), JWT_SECRET_KEY, (err,user) => {
-        if (err){
-            console.log(err);
-            return res.status(403).json({message: "Authentication failed"});
-        }
-        res.clearCookie(`${user.id}`);
-        req.cookies[`${user.id}`] = "";
 
-        const token = jwt.sign({id: user.id}, JWT_SECRET_KEY, {
+    const prevToken = cookies.split('; ').find(cookie => cookie.startsWith('jwtToken='));
+    if (!prevToken) {
+        return res.status(400).json({ message: "Couldn't find token" });
+    }
+
+    const prevTokenValue = prevToken.split('=')[1];
+    jwt.verify(prevTokenValue, JWT_SECRET_KEY, (err, user) => {
+        if (err) {
+            console.log(err);
+            return res.status(403).json({ message: "Authentication failed" });
+        }
+
+        const token = jwt.sign({ id: user.id }, JWT_SECRET_KEY, {
             expiresIn: "1hr"
         });
         console.log("Re-generated Token\n", token);
-        res.cookie(String(user.id), token, {
+
+        res.cookie(String("jwtToken"), token, {
             path:"/",
-            expires: new Date(Date.now() + 1000 * 30),
+            expires: new Date(Date.now() + 1000 * 30 * 3600),
             httpOnly: true,
             sameSite: "lax",
         })
+
         req.id = user.id;
+        next();
     });
-    next();
 }
 
 const logout = (req, res) => {
     const cookies = req.headers.cookie;
-    const prevToken = cookies.split('=')[1];
-    if (!prevToken) {
-        return res.status(400).json({message: "Couldn't find token"})
+    if (!cookies) {
+        return res.status(400).json({ message: "Couldn't find cookies" });
     }
-    jwt.verify(String(prevToken), JWT_SECRET_KEY, (err,user) => {
-        if (err){
+
+    const prevToken = cookies.split('; ').find(cookie => cookie.startsWith('jwtToken='));
+    if (!prevToken) {
+        return res.status(400).json({ message: "Couldn't find token" });
+    }
+
+    const prevTokenValue = prevToken.split('=')[1];
+    jwt.verify(prevTokenValue, JWT_SECRET_KEY, (err, user) => {
+        if (err) {
             console.log(err);
-            return res.status(403).json({message: "Authentication failed"});
+            return res.status(403).json({ message: "Authentication failed" });
         }
-        res.clearCookie(`${user.id}`);
-        req.cookies[`${user.id}`] = "";
-        return res.status(200).json({message: "Successfully Logged Out"});
+
+        res.clearCookie('jwtToken');
+        return res.status(200).json({ message: "Successfully Logged Out" });
     });
-    
-}
+};
 
 const getUser = async(req, res) => {
     let user;
