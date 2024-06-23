@@ -1,4 +1,8 @@
 ### Node ###
+
+# Secrets files
+backend/secret.js
+
 # Logs
 logs
 *.log
