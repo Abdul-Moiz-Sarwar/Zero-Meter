@@ -22,7 +22,7 @@ app.use(cors({
     credentials: true,
 }));
 
-mongoose.connect(uri)
+mongoose.connect(uri.uri)
 .then( () => {
     console.log("connecting to mongo DB");
     } )

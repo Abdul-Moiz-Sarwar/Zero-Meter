@@ -33,10 +33,9 @@ const SignUpForm = ({ setRole }) => {
   });
 
   const navigate = useNavigate();
-
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyCiet4SByi8rNwFqyBa5_HJv13hqMzNz9c",
+    googleMapsApiKey: "Google Maps API KEY",
     libraries: ['places']
   });
 

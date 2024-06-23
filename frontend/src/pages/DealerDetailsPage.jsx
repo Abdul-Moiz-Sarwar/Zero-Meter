@@ -15,6 +15,7 @@ const DealerDetailsPage = () => {
   const [center, setCenter] = useState(defaultCenter);
   const [currentPosition, setCurrentPosition] = useState(null);
   const [directionsResponse, setDirectionsResponse] = useState(null);
+  const uri = require("./../../../backend/secret")
 
   useEffect(() => {
     const fetchDealers = async () => {
@@ -42,7 +43,7 @@ const DealerDetailsPage = () => {
 
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: "AIzaSyCiet4SByi8rNwFqyBa5_HJv13hqMzNz9c",
+    googleMapsApiKey: "Google Maps API KEY",
     libraries: ['places']
   });
 
