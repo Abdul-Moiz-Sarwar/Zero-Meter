@@ -49,7 +49,7 @@ To get started with Zero Meter, follow these steps:
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/yourusername/zerometer.git
+    git clone https://github.com/Abdul-Moiz-Sarwar/Zero-Meter
     ```
 2. **Install dependencies** for both the backend and frontend:
     ```bash
